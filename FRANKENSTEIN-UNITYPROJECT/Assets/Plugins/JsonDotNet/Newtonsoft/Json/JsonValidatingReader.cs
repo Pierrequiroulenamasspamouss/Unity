@@ -42,8 +42,10 @@ namespace Newtonsoft.Json
 			{
 				_tokenType = tokenType;
 				_schemas = schemas;
-				_requiredProperties = global::System.Linq.Enumerable.ToDictionary<string, string, bool>(global::System.Linq.Enumerable.Distinct<string>(global::System.Linq.Enumerable.SelectMany<global::Newtonsoft.Json.Schema.JsonSchemaModel, string>(schemas, GetRequiredProperties)), (string p) => p, (string p) => false);
-			}
+                var requiredProps = global::System.Linq.Enumerable.SelectMany(schemas, (global::Newtonsoft.Json.Schema.JsonSchemaModel s) => GetRequiredProperties(s));
+                var distinctProps = global::System.Linq.Enumerable.Distinct(requiredProps);
+                _requiredProperties = global::System.Linq.Enumerable.ToDictionary(distinctProps, (string p) => p, (string p) => false);
+            }
 
 			private global::System.Collections.Generic.IEnumerable<string> GetRequiredProperties(global::Newtonsoft.Json.Schema.JsonSchemaModel schema)
 			{
@@ -51,7 +53,7 @@ namespace Newtonsoft.Json
 				{
 					return global::System.Linq.Enumerable.Empty<string>();
 				}
-				return global::System.Linq.Enumerable.Select<global::System.Collections.Generic.KeyValuePair<string, global::Newtonsoft.Json.Schema.JsonSchemaModel>, string>(global::System.Linq.Enumerable.Where<global::System.Collections.Generic.KeyValuePair<string, global::Newtonsoft.Json.Schema.JsonSchemaModel>>(schema.Properties, (global::System.Collections.Generic.KeyValuePair<string, global::Newtonsoft.Json.Schema.JsonSchemaModel> p) => p.Value.Required), (global::System.Collections.Generic.KeyValuePair<string, global::Newtonsoft.Json.Schema.JsonSchemaModel> p) => p.Key);
+				return global::System.Linq.Enumerable.Select(global::System.Linq.Enumerable.Where(schema.Properties, (global::System.Collections.Generic.KeyValuePair<string, global::Newtonsoft.Json.Schema.JsonSchemaModel> p) => p.Value.Required), (global::System.Collections.Generic.KeyValuePair<string, global::Newtonsoft.Json.Schema.JsonSchemaModel> p) => p.Key);
 			}
 		}
 
@@ -381,14 +383,14 @@ namespace Newtonsoft.Json
 			case global::Newtonsoft.Json.JsonToken.StartObject:
 			{
 				ProcessValue();
-				global::System.Collections.Generic.IList<global::Newtonsoft.Json.Schema.JsonSchemaModel> schemas2 = global::System.Linq.Enumerable.ToList<global::Newtonsoft.Json.Schema.JsonSchemaModel>(global::System.Linq.Enumerable.Where<global::Newtonsoft.Json.Schema.JsonSchemaModel>(CurrentMemberSchemas, ValidateObject));
+				global::System.Collections.Generic.IList<global::Newtonsoft.Json.Schema.JsonSchemaModel> schemas2 = global::System.Linq.Enumerable.ToList(global::System.Linq.Enumerable.Where(CurrentMemberSchemas, ValidateObject));
 				Push(new global::Newtonsoft.Json.JsonValidatingReader.SchemaScope(global::Newtonsoft.Json.Linq.JTokenType.Object, schemas2));
 				break;
 			}
 			case global::Newtonsoft.Json.JsonToken.StartArray:
 			{
 				ProcessValue();
-				global::System.Collections.Generic.IList<global::Newtonsoft.Json.Schema.JsonSchemaModel> schemas = global::System.Linq.Enumerable.ToList<global::Newtonsoft.Json.Schema.JsonSchemaModel>(global::System.Linq.Enumerable.Where<global::Newtonsoft.Json.Schema.JsonSchemaModel>(CurrentMemberSchemas, ValidateArray));
+				global::System.Collections.Generic.IList<global::Newtonsoft.Json.Schema.JsonSchemaModel> schemas = global::System.Linq.Enumerable.ToList(global::System.Linq.Enumerable.Where(CurrentMemberSchemas, ValidateArray));
 				Push(new global::Newtonsoft.Json.JsonValidatingReader.SchemaScope(global::Newtonsoft.Json.Linq.JTokenType.Array, schemas));
 				break;
 			}
@@ -483,7 +485,7 @@ namespace Newtonsoft.Json
 			global::System.Collections.Generic.Dictionary<string, bool> requiredProperties = _currentScope.RequiredProperties;
 			if (requiredProperties != null)
 			{
-				global::System.Collections.Generic.List<string> list = global::System.Linq.Enumerable.ToList<string>(global::System.Linq.Enumerable.Select<global::System.Collections.Generic.KeyValuePair<string, bool>, string>(global::System.Linq.Enumerable.Where<global::System.Collections.Generic.KeyValuePair<string, bool>>(requiredProperties, (global::System.Collections.Generic.KeyValuePair<string, bool> kv) => !kv.Value), (global::System.Collections.Generic.KeyValuePair<string, bool> kv) => kv.Key));
+				global::System.Collections.Generic.List<string> list = global::System.Linq.Enumerable.ToList(global::System.Linq.Enumerable.Select(global::System.Linq.Enumerable.Where(requiredProperties, (global::System.Collections.Generic.KeyValuePair<string, bool> kv) => !kv.Value), (global::System.Collections.Generic.KeyValuePair<string, bool> kv) => kv.Key));
 				if (list.Count > 0)
 				{
 					RaiseError(global::Newtonsoft.Json.Utilities.StringUtils.FormatWith("Required properties are missing from object: {0}.", global::System.Globalization.CultureInfo.InvariantCulture, string.Join(", ", list.ToArray())), schema);

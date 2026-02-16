@@ -85,10 +85,6 @@
                     swrveService.SharingUsage(telemetryService.SharingUsageEnabled());
                     swrveService.COPPACompliance();
                 }
-
-                // [FIX] Ensure we proceed with game loading even if using Mock Swrve.
-                // Real Swrve would trigger this via callback, but Mock does not.
-                MoveForwardWithoutSwrve();
             }
 
             // --------------------------------------------------------------------

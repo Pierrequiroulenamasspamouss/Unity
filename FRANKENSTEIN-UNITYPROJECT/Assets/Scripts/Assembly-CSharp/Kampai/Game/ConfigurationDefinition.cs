@@ -190,6 +190,14 @@ namespace Kampai.Game
                     reader.Read();
                     videoUri = global::Kampai.Util.ReaderUtil.ReadString(reader, converters);
                     break;
+                case "ASSETBUNDLES":
+                    reader.Read();
+                    // Consume and ignore
+                    break;
+                case "CLIENT_TELEMETRY_URL":
+                    reader.Read();
+                    // Consume and ignore
+                    break;
                 default:
                     return false;
             }

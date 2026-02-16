@@ -48,40 +48,11 @@ public class LoadDefinitionsCommand : global::strange.extensions.command.impl.Co
 				logger.Debug("LoadDefinitionsCommand:Execute reading from path " + path);
 				json = global::System.IO.File.ReadAllText(path);
 			}
-			catch (global::System.Exception ex)
+			catch (global::System.IO.IOException ex)
 			{
-				logger.Log(global::Kampai.Util.Logger.Level.Warning, "Reading definitions file failed: {0}. Error: {1}. Proceeding with fallback.", path, ex.Message);
+				logger.Log(global::Kampai.Util.Logger.Level.Error, "Unable to read {0} : {1}", path, ex.Message);
 			}
 		}
-		if (json == null)
-		{
-			// Try StreamingAssets
-			string streamingPath = global::System.IO.Path.Combine(global::UnityEngine.Application.streamingAssetsPath, "definitions.json");
-			if (global::System.IO.File.Exists(streamingPath))
-			{
-				logger.Debug("LoadDefinitions: Loading from StreamingAssets: " + streamingPath);
-				try
-				{
-					json = global::System.IO.File.ReadAllText(streamingPath);
-				}
-				catch (global::System.Exception ex)
-				{
-					logger.Error("Available definitions.json in StreamingAssets reading failed? " + ex.Message);
-					json = null;
-				}
-			}
-		}
-
-		if (json == null)
-		{
-			logger.Debug("LoadDefinitionsCommand:Execute reading from Resources 'definitions'");
-			global::UnityEngine.TextAsset textAsset = global::UnityEngine.Resources.Load<global::UnityEngine.TextAsset>("definitions");
-			if (textAsset != null)
-			{
-				json = textAsset.text;
-			}
-		}
-
 		telemetryService.Send_Telemetry_EVT_USER_GAME_LOAD_FUNNEL("80 - Loaded Definitions", playerService.SWRVEGroup);
 		if (json == null)
 		{
@@ -117,9 +88,7 @@ public class LoadDefinitionsCommand : global::strange.extensions.command.impl.Co
 	{
 		try
 		{
-			logger.Debug("LoadDefinitionsCommand: About to call service.Deserialize");
 			service.Deserialize(json);
-			logger.Debug("LoadDefinitionsCommand: Finished calling service.Deserialize");
 			return true;
 		}
 		catch (global::Kampai.Util.FatalException ex)

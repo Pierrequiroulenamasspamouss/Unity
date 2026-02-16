@@ -437,7 +437,7 @@ namespace Newtonsoft.Json
 
 		private bool ParsePostValue(char currentChar)
 		{
-			while (true)
+			do
 			{
 				switch (currentChar)
 				{
@@ -455,29 +455,25 @@ namespace Newtonsoft.Json
 					return true;
 				case ',':
 					SetStateBasedOnCurrent();
-					_lastChar = null;
 					return false;
 				case '\t':
 				case '\n':
 				case '\r':
 				case ' ':
-					break;
-				default:
-					if (char.IsWhiteSpace(currentChar)) break;
-
-                    // ROBUSTNESS: Missing comma handled by resetting state and re-processing char in next ReadInternal loop
-                    SetStateBasedOnCurrent();
-                    _lastChar = currentChar;
-                    return false;
+					continue;
 				}
-				currentChar = MoveNext();
-				if (currentChar == '\0' && _end) return false;
+				if (!char.IsWhiteSpace(currentChar))
+				{
+					throw CreateJsonReaderException("After parsing a value an unexpected character was encountered: {0}. Line {1}, position {2}.", currentChar, _currentLineNumber, _currentLinePosition);
+				}
 			}
+			while ((currentChar = MoveNext()) != 0 || !_end);
+			return false;
 		}
 
 		private bool ParseObject(char currentChar)
 		{
-			while (true)
+			do
 			{
 				switch (currentChar)
 				{
@@ -491,45 +487,39 @@ namespace Newtonsoft.Json
 				case '\n':
 				case '\r':
 				case ' ':
-					break;
-				default:
-					if (char.IsWhiteSpace(currentChar))
-					{
-						break;
-					}
+					continue;
+				}
+				if (!char.IsWhiteSpace(currentChar))
+				{
 					return ParseProperty(currentChar);
 				}
-				currentChar = MoveNext();
-				if (currentChar == '\0' && _end)
-				{
-					return false;
-				}
 			}
+			while ((currentChar = MoveNext()) != 0 || !_end);
+			return false;
 		}
 
 		private bool ParseProperty(char firstChar)
 		{
 			char c = firstChar;
 			char c2;
-
-			if (c == '"' || c == '\'')
-			{
-				c2 = c;
-				ReadStringIntoBuffer(c2);
-				c = MoveNext();
-			}
-			else if (ValidIdentifierChar(c))
+			if (ValidIdentifierChar(c))
 			{
 				c2 = '\0';
 				c = ParseUnquotedProperty(c);
 			}
 			else
 			{
-				throw CreateJsonReaderException("Invalid property identifier character: {0}. Line {1}, position {2}.", c, _currentLineNumber, _currentLinePosition);
+				if (c != '"' && c != '\'')
+				{
+					throw CreateJsonReaderException("Invalid property identifier character: {0}. Line {1}, position {2}.", c, _currentLineNumber, _currentLinePosition);
+				}
+				c2 = c;
+				ReadStringIntoBuffer(c2);
+				c = MoveNext();
 			}
-
 			if (c != ':')
 			{
+				c = MoveNext();
 				EatWhitespace(c, false, out c);
 				if (c != ':')
 				{
@@ -544,9 +534,6 @@ namespace Newtonsoft.Json
 
 		private bool ValidIdentifierChar(char value)
 		{
-            // NEW: Blacklist quotes definitively
-            if (value == '"' || value == '\'') return false;
-
 			if (!char.IsLetterOrDigit(value) && value != '_')
 			{
 				return value == '$';

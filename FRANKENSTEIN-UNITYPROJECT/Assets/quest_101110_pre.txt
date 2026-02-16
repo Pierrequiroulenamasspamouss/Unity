@@ -1,0 +1,24 @@
+-- Start of Leisure Quest Step 1
+
+qs.setFtueLevelCompleted(2)
+
+qs.setBuildMenuEnabled(false)
+qs.enableCallButtons(false)
+
+tikiBarId = 313
+qsutil.waitForDialog('ftue_q2_narrative_funflow')
+qs.stopMinionCamping()
+
+-- Camera pan to the Tikibar
+qs.panCameraToInstance(tikiBarId)
+
+qs.wait(2)
+
+qs.setDialogType('Normal')
+qs.setCharacterImage(40000)
+qs.setDialogSound('Play_menu_popUp_01')
+qsutil.waitForDialog('ftue_leisure_narrative_01')
+
+qs.openTikiHut(true)
+-- Activate tikibar in pick controller again
+qs.setIgnoreInstance(tikiBarId, false);

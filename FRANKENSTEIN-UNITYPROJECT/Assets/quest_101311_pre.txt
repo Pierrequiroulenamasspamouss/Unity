@@ -1,0 +1,27 @@
+-- FTUE Fill Order, Step 2
+
+-- Narrative dialog opens
+local isQuesting = qs.isStuartQuesting()
+if isQuesting == 0 then
+	qs.enableDeleteButton(false)
+	qs.setDialogType('Normal')
+	qs.setCharacterImage(40000)
+	qs.setDialogSound('Play_menu_popUp_01')
+	qsutil.waitForDialog('ftue_fillorder_narrative_02')
+
+	-- Enable Way finder
+	local orderBoardDefId = 3022
+	orderBoard = qs.getInstanceId(orderBoardDefId)
+	qs.showWayFinder(orderBoard, true)
+
+	if qs.hasSeenPlayerTraining(19000016) == false then
+		-- wait for player training modal
+		qs.waitSignal('TrainingClosedSignal', 0)
+		--we don't want to zoom to beach anymore, the unlock modal is blocking stuart.
+		--qs.cameraZoomToBeach()
+		qs.showWayFinder(orderBoard, false)
+	end
+	qs.sendTelemetry('tutorial', '6')
+end
+qs.enableDeleteButton(true)
+-- end step 2

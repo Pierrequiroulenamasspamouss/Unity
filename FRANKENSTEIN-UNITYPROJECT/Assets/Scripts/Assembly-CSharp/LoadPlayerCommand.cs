@@ -45,9 +45,6 @@ public class LoadPlayerCommand : global::strange.extensions.command.impl.Command
 	[Inject]
 	public global::Kampai.Splash.SplashProgressUpdateSignal splashProgressUpdateSignal { get; set; }
 
-    [Inject]
-    public global::Kampai.Game.DefinitionsChangedSignal definitionsChangedSignal { get; set; }
-
     private string TryLoadLocalPlayer()
     {
         string path = global::UnityEngine.Application.persistentDataPath + "/player_save.json";
@@ -86,25 +83,6 @@ public class LoadPlayerCommand : global::strange.extensions.command.impl.Command
     }
 
     public override void Execute()
-    {
-        if (!defService.Has(46002)) // Check for AspirationalBuilding definition
-        {
-             logger.Info("[LoadPlayerCommand] Definitions not ready. Waiting...");
-             Retain();
-             definitionsChangedSignal.AddOnce(OnDefinitionsReady);
-             return;
-        }
-        RunLoadPlayer();
-    }
-
-    private void OnDefinitionsReady()
-    {
-         logger.Info("[LoadPlayerCommand] Definitions ready. Proceeding.");
-         RunLoadPlayer();
-         Release();
-    }
-
-    private void RunLoadPlayer()
     {
         logger.EventStart("LoadPlayerCommand.Execute");
         global::Kampai.Util.TimeProfiler.StartSection("load player");

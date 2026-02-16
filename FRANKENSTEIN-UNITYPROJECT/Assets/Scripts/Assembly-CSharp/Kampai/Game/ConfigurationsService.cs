@@ -51,9 +51,10 @@ namespace Kampai.Game
 
             if (response.Success)
             {
+                string jsonBody = response.Body;
                 try
                 {
-                    string jsonBody = response.Body;
+
 
                     // Remove BOM if present
                     if (!string.IsNullOrEmpty(jsonBody) && jsonBody[0] == '\uFEFF')
@@ -69,6 +70,14 @@ namespace Kampai.Game
                 {
                     logger.Log(global::Kampai.Util.Logger.Level.Warning, "Warning Parsing (" + ex.Message + ")");
                     UnityEngine.Debug.LogWarning("Full parsing error: " + ex.ToString());
+                    UnityEngine.Debug.LogWarning("JSON Body: " + jsonBody);
+                    try {
+                         // Sanity check: can we parse a simple valid JSON?
+                         var testObj = global::Newtonsoft.Json.JsonConvert.DeserializeObject<object>("{\"test\":1}");
+                         UnityEngine.Debug.LogWarning("Sanity check passed: simple JSON parsed.");
+                    } catch (System.Exception sanityEx) {
+                         UnityEngine.Debug.LogError("Sanity check failed: " + sanityEx.Message);
+                    }
                 }
             }
 

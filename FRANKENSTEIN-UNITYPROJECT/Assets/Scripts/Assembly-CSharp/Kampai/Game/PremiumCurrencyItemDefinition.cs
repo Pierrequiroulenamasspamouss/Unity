@@ -35,12 +35,18 @@ namespace Kampai.Game
 		{
 			switch (propertyName)
 			{
-            case "PLATFORMSTORESKU":
-                reader.Read();
-                PlatformStoreSku = global::Kampai.Util.ReaderUtil.ReadPlatformStoreSkuDefinition(reader, converters);
-                break;
 			default:
+					{
+						int num;
+                        num = 1; //added this line to remove use of unassigned variable
+                        if (num == 1)
+				{
+					reader.Read();
+					PlatformStoreSku = global::Kampai.Util.ReaderUtil.ReadPlatformStoreSkuDefinition(reader, converters);
+					break;
+				}
 				return base.DeserializeProperty(propertyName, reader, converters);
+			}
 			case "SKU":
 				reader.Read();
 				SKU = global::Kampai.Util.ReaderUtil.ReadString(reader, converters);

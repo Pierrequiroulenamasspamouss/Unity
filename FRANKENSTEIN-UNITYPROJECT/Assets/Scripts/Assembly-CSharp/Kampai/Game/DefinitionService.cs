@@ -34,7 +34,7 @@ namespace Kampai.Game
 		{
 			if (!string.IsNullOrEmpty(json))
 			{
-				global::Kampai.Game.GameDefinitions definitions = null;
+				global::Kampai.Game.Definitions definitions = null;
 				try
 				{
 					JsonConverters jsonConverters = new JsonConverters();
@@ -45,7 +45,7 @@ namespace Kampai.Game
 					jsonConverters.playerVersionConverter = new global::Kampai.Game.PlayerDefinitionFastConverter(this);
 					jsonConverters.plotDefinitionConverter = new global::Kampai.Game.PlotDefinitionFastConverter(logger);
 					jsonConverters.namedCharacterDefinitionConverter = new global::Kampai.Game.NamedCharacterDefinitionFastConverter();
-					definitions = global::Kampai.Util.FastJSONDeserializer.Deserialize<global::Kampai.Game.GameDefinitions>(json, jsonConverters);
+					definitions = global::Kampai.Util.FastJSONDeserializer.Deserialize<global::Kampai.Game.Definitions>(json, jsonConverters);
 				}
 				catch (global::Newtonsoft.Json.JsonSerializationException ex)
 				{
@@ -79,7 +79,7 @@ namespace Kampai.Game
 			throw new global::Kampai.Util.FatalException(global::Kampai.Util.FatalCode.DS_EMPTY_JSON, "DefinitionService.Deserialize(): empty json");
 		}
 
-		private void MarkDefinitions(global::Kampai.Game.GameDefinitions definitions)
+		private void MarkDefinitions(global::Kampai.Game.Definitions definitions)
 		{
 			MarkDefinitionsAsUsed(definitions.weightedDefinitions);
 			MarkDefinitionsAsUsed(definitions.transactions);
@@ -97,7 +97,7 @@ namespace Kampai.Game
 			MarkDefinitionsAsUsed(definitions.footprintDefinitions);
 		}
 
-		private void MarkMoreDefinitions(global::Kampai.Game.GameDefinitions definitions)
+		private void MarkMoreDefinitions(global::Kampai.Game.Definitions definitions)
 		{
 			MarkDefinitionsAsUsed(definitions.gachaConfig.GatchaAnimationDefinitions);
 			MarkDefinitionsAsUsed(definitions.gachaConfig.DistributionTables);
@@ -123,7 +123,7 @@ namespace Kampai.Game
 			MarkDefinitionAsUsed(definitions.socialSettingsDefinition);
 		}
 
-		private void MarkMarketplaceDefinitions(global::Kampai.Game.GameDefinitions definitions)
+		private void MarkMarketplaceDefinitions(global::Kampai.Game.Definitions definitions)
 		{
 			MarkDefinitionAsUsed(definitions.marketplaceDefinition);
 			MarkDefinitionsAsUsed(definitions.marketplaceDefinition.itemDefinitions);
@@ -493,7 +493,7 @@ namespace Kampai.Game
 			}
 		}
 
-		private void AddLevelUpDefinition(global::Kampai.Game.GameDefinitions definitions)
+		private void AddLevelUpDefinition(global::Kampai.Game.Definitions definitions)
 		{
 			if (AllDefinitions.ContainsKey(88888))
 			{
@@ -502,7 +502,7 @@ namespace Kampai.Game
 			AllDefinitions[88888] = definitions.levelUpDefinition;
 		}
 
-		private void AddDropLevelBandDefinition(global::Kampai.Game.GameDefinitions definitions)
+		private void AddDropLevelBandDefinition(global::Kampai.Game.Definitions definitions)
 		{
 			if (AllDefinitions.ContainsKey(88889))
 			{
@@ -511,7 +511,7 @@ namespace Kampai.Game
 			AllDefinitions[88889] = definitions.randomDropLevelBandDefinition;
 		}
 
-		private void AddLevelXPTable(global::Kampai.Game.GameDefinitions definitions)
+		private void AddLevelXPTable(global::Kampai.Game.Definitions definitions)
 		{
 			if (AllDefinitions.ContainsKey(99999))
 			{
@@ -545,7 +545,7 @@ namespace Kampai.Game
 			return used;
 		}
 
-		private global::Kampai.Game.TaskDefinition GetTaskDefintion(global::Kampai.Game.GameDefinitions defs)
+		private global::Kampai.Game.TaskDefinition GetTaskDefintion(global::Kampai.Game.Definitions defs)
 		{
 			global::Kampai.Game.TaskDefinition tasks = defs.tasks;
 			if (tasks != null)
@@ -557,7 +557,7 @@ namespace Kampai.Game
 			return tasks;
 		}
 
-		private global::System.Collections.Generic.IList<global::Kampai.Game.RushTimeBandDefinition> GetRushDefinitions(global::Kampai.Game.GameDefinitions defs)
+		private global::System.Collections.Generic.IList<global::Kampai.Game.RushTimeBandDefinition> GetRushDefinitions(global::Kampai.Game.Definitions defs)
 		{
 			global::System.Collections.Generic.IList<global::Kampai.Game.RushTimeBandDefinition> list = defs.rushDefinitions;
 			if (list != null)

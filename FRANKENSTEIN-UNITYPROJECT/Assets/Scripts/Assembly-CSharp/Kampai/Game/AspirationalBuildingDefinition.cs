@@ -10,24 +10,22 @@ namespace Kampai.Game
 		{
 			switch (propertyName)
 			{
-                			case "BUILDINGDEFINITIONID":
+			default:
+			{
+				int num;
+						num = 1; //added this line to remove use of unassigned variable
+				if (num == 1)
+				{
+					reader.Read();
+					Location = global::Kampai.Util.ReaderUtil.ReadLocation(reader, converters);
+					break;
+				}
+				return base.DeserializeProperty(propertyName, reader, converters);
+			}
+			case "BUILDINGDEFINITIONID":
 				reader.Read();
 				BuildingDefinitionID = global::System.Convert.ToInt32(reader.Value);
 				break;
-
-                case "LOCATION":
-                reader.Read(); // Move to StartObject or null
-                if (reader.TokenType == global::Newtonsoft.Json.JsonToken.StartObject)
-                {
-                    Location = global::Kampai.Util.ReaderUtil.ReadLocation(reader, converters);
-                }
-                else
-                {
-                    global::UnityEngine.Debug.LogWarning("AspirationalBuildingDefinition: Expected StartObject for LOCATION, got " + reader.TokenType);
-                }
-                break;
-            default:
-				return base.DeserializeProperty(propertyName, reader, converters);
 			}
 			return true;
 		}

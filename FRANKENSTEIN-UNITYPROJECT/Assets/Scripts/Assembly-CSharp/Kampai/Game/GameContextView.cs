@@ -50,16 +50,9 @@ namespace Kampai.Game
                 }
 
                 waitFrames++;
-                if (waitFrames % 60 == 0 && strange.extensions.context.impl.Context.firstContext != null)
-                {
-                    Debug.Log("[GameContextView] Waiting... firstContext is: " + strange.extensions.context.impl.Context.firstContext.GetType().Name);
-                }
-
                 if (waitFrames > 600) // 10 seconds at 60fps (increased timeout)
                 {
                     Debug.LogError("[GameContextView] Timed out waiting for MainContext (IPlayerService)!");
-                    if (strange.extensions.context.impl.Context.firstContext != null)
-                         Debug.LogError("[GameContextView] firstContext was: " + strange.extensions.context.impl.Context.firstContext.GetType().Name);
                     yield break;
                 }
                 yield return null;
