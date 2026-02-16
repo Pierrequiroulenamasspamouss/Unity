@@ -123,15 +123,29 @@ namespace Kampai.Game
 			MarkDefinitionAsUsed(definitions.socialSettingsDefinition);
 		}
 
-		private void MarkMarketplaceDefinitions(global::Kampai.Game.Definitions definitions)
-		{
-			MarkDefinitionAsUsed(definitions.marketplaceDefinition);
-			MarkDefinitionsAsUsed(definitions.marketplaceDefinition.itemDefinitions);
-			MarkDefinitionsAsUsed(definitions.marketplaceDefinition.slotDefinitions);
-			MarkDefinitionAsUsed(definitions.marketplaceDefinition.refreshTimerDefinition);
-		}
+        private void MarkMarketplaceDefinitions(global::Kampai.Game.Definitions definitions)
+        {
+            // LE FIX EST ICI : On vérifie si la définition existe avant de toucher à ses sous-éléments
+            if (definitions.marketplaceDefinition == null)
+            {
+                UnityEngine.Debug.LogWarning("DefinitionService: 'marketplaceDefinition' est manquant dans le JSON. On ignore.");
+                return;
+            }
 
-		private void MarkNamedDefinitions(global::System.Collections.Generic.IList<global::Kampai.Game.NamedCharacterDefinition> namedCharacterDefinitions)
+            MarkDefinitionAsUsed(definitions.marketplaceDefinition);
+
+            // Sécurités supplémentaires au cas où les sous-listes seraient nulles aussi
+            if (definitions.marketplaceDefinition.itemDefinitions != null)
+                MarkDefinitionsAsUsed(definitions.marketplaceDefinition.itemDefinitions);
+
+            if (definitions.marketplaceDefinition.slotDefinitions != null)
+                MarkDefinitionsAsUsed(definitions.marketplaceDefinition.slotDefinitions);
+
+            if (definitions.marketplaceDefinition.refreshTimerDefinition != null)
+                MarkDefinitionAsUsed(definitions.marketplaceDefinition.refreshTimerDefinition);
+        }
+
+        private void MarkNamedDefinitions(global::System.Collections.Generic.IList<global::Kampai.Game.NamedCharacterDefinition> namedCharacterDefinitions)
 		{
 			if (namedCharacterDefinitions == null)
 			{
