@@ -81,7 +81,7 @@ public class HockeyAppAndroid : MonoBehaviour
         }
 #else
         // FIX WINDOWS: On ne fait rien pour éviter le crash JNI.
-        Debug.Log("MOCK HOCKEYAPP: StartCrashManager called (Safe Mode)");
+        //Debug.Log("MOCK HOCKEYAPP: StartCrashManager called (Safe Mode)");
 #endif
     }
 

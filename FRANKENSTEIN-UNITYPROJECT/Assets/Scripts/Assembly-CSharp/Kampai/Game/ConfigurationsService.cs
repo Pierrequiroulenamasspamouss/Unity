@@ -57,14 +57,19 @@ namespace Kampai.Game
 
 
                     // Remove BOM if present
-                    if (!string.IsNullOrEmpty(jsonBody) && jsonBody[0] == '\uFEFF')
+                    if (!string.IsNullOrEmpty(jsonBody))
                     {
-                        jsonBody = jsonBody.Substring(1);
+                        if (jsonBody[0] == '\uFEFF') jsonBody = jsonBody.Substring(1);
+                        jsonBody = jsonBody.Trim().Replace("\0", "");
                     }
 
-                    // Try using standard Newtonsoft.Json deserialization instead of FastJSONDeserializer
-                    // This bypasses whatever custom parser is causing the "JavaScript property identifier" error
-                    configDef = global::Newtonsoft.Json.JsonConvert.DeserializeObject<global::Kampai.Game.ConfigurationDefinition>(jsonBody);
+                    UnityEngine.Debug.LogWarning("JSON Length: " + (jsonBody != null ? jsonBody.Length.ToString() : "null"));
+
+                    // Use JToken.Parse first to validate the JSON syntax strictly
+                    var jToken = global::Newtonsoft.Json.Linq.JToken.Parse(jsonBody);
+                    
+                    // Convert the parsed JToken to the target object
+                    configDef = jToken.ToObject<global::Kampai.Game.ConfigurationDefinition>();
                 }
                 catch (global::System.Exception ex)
                 {

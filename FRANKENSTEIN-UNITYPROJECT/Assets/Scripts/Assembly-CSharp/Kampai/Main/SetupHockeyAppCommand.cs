@@ -18,7 +18,7 @@ namespace Kampai.Main
 
 		public override void Execute()
 		{
-			logger.EventStart("SetupHockeyAppCommand.Execute");
+			//logger.EventStart("SetupHockeyAppCommand.Execute");
 			global::UnityEngine.GameObject gameObject = new global::UnityEngine.GameObject("HockeyApp");
 			gameObject.transform.parent = managers.transform;
 			gameObject.SetActive(false);
@@ -35,7 +35,7 @@ namespace Kampai.Main
 			};
 			hockeyAppAndroid.autoUpload = true;
 			gameObject.SetActive(true);
-			logger.EventStop("SetupHockeyAppCommand.Execute");
+			//logger.EventStop("SetupHockeyAppCommand.Execute");
 		}
 	}
 }

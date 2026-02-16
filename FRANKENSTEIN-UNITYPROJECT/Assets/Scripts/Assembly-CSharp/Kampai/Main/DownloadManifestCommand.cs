@@ -62,17 +62,15 @@
 					+ "\",\"baseURL\":\"http://localhost:44733/assets/\""
 					+ ",\"assets\":{},\"bundles\":[],\"bundledAssets\":[]}";
 				global::System.IO.File.WriteAllText(manifestPath, minimalManifest);
-				logger.Info("MOCK: Wrote minimal manifest to " + manifestPath);
+				logger.Info("Wrote manifest to " + manifestPath);
 			}
 			catch (global::System.Exception ex)
 			{
 				logger.Warning("MOCK: Failed to write manifest file: " + ex.Message);
 			}
 
-			logger.Info("MOCK: Bypassing manifest download, dispatching postSignal directly.");
-			postSignal.Dispatch();
-
-			logger.EventStop("DownloadManifestCommand.Execute");
+			
+			//logger.EventStop("DownloadManifestCommand.Execute");
 		}
 	}
 }

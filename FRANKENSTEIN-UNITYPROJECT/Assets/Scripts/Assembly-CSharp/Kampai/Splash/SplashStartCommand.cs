@@ -16,7 +16,7 @@ namespace Kampai.Splash
 
 		public override void Execute()
 		{
-			logger.Debug("Loggly test: This log should have a user ID attached in Loggly!");
+			//logger.Debug("Loggly test: This log should have a user ID attached in Loggly!");
 			global::UnityEngine.GameObject gameObject = global::UnityEngine.GameObject.Find("SplashRoot");
 			if (gameObject != null)
 			{
