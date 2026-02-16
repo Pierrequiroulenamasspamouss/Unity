@@ -1,0 +1,64 @@
+namespace Kampai.Game
+{
+	internal sealed class DefinitionsChangedCommand : global::strange.extensions.command.impl.Command
+	{
+		private const string lowestQualityName = "VeryLow";
+
+		[Inject]
+		public global::Kampai.Util.IMinionBuilder minionBuilder { get; set; }
+
+		[Inject]
+		public global::Kampai.Game.IDLCService dlcService { get; set; }
+
+		[Inject]
+		public global::Kampai.Game.LoadPlayerSignal loadPlayerSignal { get; set; }
+
+		[Inject]
+		public global::Kampai.Game.IDefinitionService definitionService { get; set; }
+
+		[Inject]
+		public global::Kampai.Main.ReloadGameSignal reloadGameSignal { get; set; }
+
+		[Inject]
+		public global::Kampai.Game.LoadMarketplaceOverridesSignal loadMarketplaceOverridesSignal { get; set; }
+
+		[Inject]
+		public global::Kampai.Game.IConfigurationsService configurationsService { get; set; }
+
+		[Inject]
+		public global::Kampai.Util.ILogger logger { get; set; }
+
+		[Inject]
+		public ILocalPersistanceService localPersistanceService { get; set; }
+
+		public override void Execute()
+		{
+			configurationsService.GetConfigurations().definitions = localPersistanceService.GetData("DefinitionsUrl");
+			logger.Error("DefinitionsChangedCommand:: Definitions URL: {0}", configurationsService.GetConfigurations().definitions);
+			global::Kampai.Util.TargetPerformance lOD = (global::Kampai.Util.TargetPerformance)(int)global::System.Enum.Parse(typeof(global::Kampai.Util.TargetPerformance), dlcService.GetDownloadQualityLevel().ToUpper());
+			minionBuilder.SetLOD(lOD);
+			int num = -1;
+			int num2 = 0;
+			string[] names = global::UnityEngine.QualitySettings.names;
+			for (int i = 0; i < names.Length; i++)
+			{
+				string text = names[i];
+				if (text.Equals(dlcService.GetDownloadQualityLevel(), global::System.StringComparison.OrdinalIgnoreCase))
+				{
+					num = i;
+				}
+				if (text.Equals("VeryLow", global::System.StringComparison.OrdinalIgnoreCase))
+				{
+					num2 = i;
+				}
+			}
+			if (num < 0)
+			{
+				num = num2;
+			}
+			global::UnityEngine.QualitySettings.SetQualityLevel(num);
+			loadPlayerSignal.Dispatch();
+			loadMarketplaceOverridesSignal.Dispatch();
+		}
+	}
+}

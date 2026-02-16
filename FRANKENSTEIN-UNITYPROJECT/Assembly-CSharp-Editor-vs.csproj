@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{84DF99D5-D1E5-3ED9-3F45-FA849ACE4941}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-CSharp-Editor</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+	<BaseDirectory>Assets</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_7_0;UNITY_4_7;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_IL2CPP;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;UNITY5_SCRIPTING_IN_UNITY4;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_MONO;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;ENABLE_DUCK_TYPING</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="System" />
+    <Reference Include="System.XML" />
+	<Reference Include="System.Core" />
+	<Reference Include="System.Xml.Linq" />
+	<Reference Include="UnityEngine">
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	</Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\Scripts\Assembly-CSharp\Kampai\Editor\KampaiSplineTool.cs" />
+     <None Include="Assets\Resources\lua\ltn12.txt" />
+     <None Include="Assets\quest_101003_pre.txt" />
+     <None Include="Assets\bluePrint.shader" />
+     <None Include="Assets\quest_31050_post.txt" />
+     <None Include="Assets\quest_333118_pre.txt" />
+     <None Include="Assets\minionMatCap_shader_LOD1.shader" />
+     <None Include="Assets\quest_31053_pre.txt" />
+     <None Include="Assets\quest_31074_pre.txt" />
+     <None Include="Assets\quest_101002_pre.txt" />
+     <None Include="Assets\Shader\Particle Alpha Blend.shader" />
+     <None Include="Assets\Resources\lua\socket\url.txt" />
+     <None Include="Assets\quest_31049_pre.txt" />
+     <None Include="Assets\quest_101120_pre.txt" />
+     <None Include="Assets\Shader\Unlit.shader" />
+     <None Include="Assets\quest_31046_pre.txt" />
+     <None Include="Assets\quest_101311_pre.txt" />
+     <None Include="Assets\quest_101206_pre.txt" />
+     <None Include="Assets\Shader\Terrain_Waves.shader" />
+     <None Include="Assets\Shader\AlphaMask.shader" />
+     <None Include="Assets\quest_101131_pre.txt" />
+     <None Include="Assets\environment.txt" />
+     <None Include="Assets\quest_3849290_pre.txt" />
+     <None Include="Assets\quest_101300_pre.txt" />
+     <None Include="Assets\Shader\MatcapAnim.shader" />
+     <None Include="Assets\Shader\TransparentMatCapGlass.shader" />
+     <None Include="Assets\Resources\scripts\VillainFarewell.txt" />
+     <None Include="Assets\quest_101201_pre.txt" />
+     <None Include="Assets\quest_101220_pre.txt" />
+     <None Include="Assets\quest_3849289_pre.txt" />
+     <None Include="Assets\quest_333010_pre.txt" />
+     <None Include="Assets\Shader\Alpha-VertexLit.shader" />
+     <None Include="Assets\quest_101211_pre.txt" />
+     <None Include="Assets\Resources\quests\costume\dareDevilQuest.txt" />
+     <None Include="Assets\quest_3849294_pre.txt" />
+     <None Include="Assets\quest_3849294_step_2_post.txt" />
+     <None Include="Assets\Shader\Particle Premultiply Blend_0.shader" />
+     <None Include="Assets\Shader\Particle Premultiply Blend_2.shader" />
+     <None Include="Assets\Resources\lua\socket.txt" />
+     <None Include="Assets\Resources\lua\socket\headers.txt" />
+     <None Include="Assets\Resources\quests\costume\hazardQuest_old_qs.txt" />
+     <None Include="Assets\quest_101221_pre.txt" />
+     <None Include="Assets\Resources\lua\mobdebug.txt" />
+     <None Include="Assets\UnlitSpecular.shader" />
+     <None Include="Assets\quest_101350_pre.txt" />
+     <None Include="Assets\Shader\UnlitSpecular.shader" />
+     <None Include="Assets\quest_31072_pre.txt" />
+     <None Include="Assets\Shader\minionMatCap_shader.shader" />
+     <None Include="Assets\quest_2000000162_pre.txt" />
+     <None Include="Assets\quest_333119_pre.txt" />
+     <None Include="Assets\VertAnimation.shader" />
+     <None Include="Assets\quest_101310_pre.txt" />
+     <None Include="Assets\Shader\Particle Premultiply Blend.shader" />
+     <None Include="Assets\quest_31068_pre.txt" />
+     <None Include="Assets\quest_333013_pre.txt" />
+     <None Include="Assets\Shader\GrayscaleMask.shader" />
+     <None Include="Assets\Shader\WaterSlide.shader" />
+     <None Include="Assets\quest_31048_pre.txt" />
+     <None Include="Assets\Shader\VertAnimation.shader" />
+     <None Include="Assets\Resources\lua\socket\http.txt" />
+     <None Include="Assets\quest_333011_pre.txt" />
+     <None Include="Assets\quest_333116_pre.txt" />
+     <None Include="Assets\quest_31073_pre.txt" />
+     <None Include="Assets\Shader\WaterFlow.shader" />
+     <None Include="Assets\quest_101130_pre.txt" />
+     <None Include="Assets\Shader\UnlitVertexColor.shader" />
+     <None Include="Assets\Outline.shader" />
+     <None Include="Assets\quest_333112_pre.txt" />
+     <None Include="Assets\quest_3849292_reward.txt" />
+     <None Include="Assets\quest_101351_pre.txt" />
+     <None Include="Assets\Shader\TransparentSteppedUV.shader" />
+     <None Include="Assets\Shader\Particle Premultiply Blend_4.shader" />
+     <None Include="Assets\quest_3849292_pre.txt" />
+     <None Include="Assets\Shader\camera_vignette.shader" />
+     <None Include="Assets\Resources\lua\Utilities.txt" />
+     <None Include="Assets\quest_333110_pre.txt" />
+     <None Include="Assets\Resources\lua\socket\smtp.txt" />
+     <None Include="Assets\Shader\3_color_mixer.shader" />
+     <None Include="Assets\Matcap.shader" />
+     <None Include="Assets\Unlit.shader" />
+     <None Include="Assets\Resources\quests\costume\hazardQuest.txt" />
+     <None Include="Assets\camera_vignette.shader" />
+     <None Include="Assets\UnlitVertexColor.shader" />
+     <None Include="Assets\Resources\scripts\VillainWelcome.txt" />
+     <None Include="Assets\quest_101222_pre.txt" />
+     <None Include="Assets\Shader\Particle Premultiply Blend_1.shader" />
+     <None Include="Assets\WaterFlow.shader" />
+     <None Include="Assets\quest_333012_pre.txt" />
+     <None Include="Assets\Shader\Particle Premultiply Blend_3.shader" />
+     <None Include="Assets\quest_31047_pre.txt" />
+     <None Include="Assets\GrayscaleMask.shader" />
+     <None Include="Assets\minionMatCap_shader.shader" />
+     <None Include="Assets\3_color_mixer.shader" />
+     <None Include="Assets\ES-PR.txt" />
+     <None Include="Assets\Resources\lua\socket\tp.txt" />
+     <None Include="Assets\WaterSlide.shader" />
+     <None Include="Assets\Resources\quests\costume\overallsQuest_old_qs.txt" />
+     <None Include="Assets\quest_333120_pre.txt" />
+     <None Include="Assets\Shader\Alpha-Diffuse.shader" />
+     <None Include="Assets\TransparentSteppedUV.shader" />
+     <None Include="Assets\quest_101001_pre.txt" />
+     <None Include="Assets\Shader\minionMatCap_shader_LOD1.shader" />
+     <None Include="Assets\tree.txt" />
+     <None Include="Assets\Shader\Hidden.shader" />
+     <None Include="Assets\Resources\lua\socket\ftp.txt" />
+     <None Include="Assets\quest_3849289_reward.txt" />
+     <None Include="Assets\quest_101200_pre.txt" />
+     <None Include="Assets\quest_333666_post.txt" />
+     <None Include="Assets\quest_333666_step_1_pre.txt" />
+     <None Include="Assets\Resources\quests\costume\overallsQuest.txt" />
+     <None Include="Assets\quest_3849295_pre.txt" />
+     <None Include="Assets\quest_101110_pre.txt" />
+     <None Include="Assets\quest_101132_pre.txt" />
+     <None Include="Assets\TransparentMatCapGlass.shader" />
+     <None Include="Assets\Resources\lua\mime.txt" />
+     <None Include="Assets\quest_2000001022_pre.txt" />
+     <None Include="Assets\Resources\quests\costume\dareDevilQuest_old_qs.txt" />
+     <None Include="Assets\AlphaMask.shader" />
+     <None Include="Assets\Terrain_Waves.shader" />
+     <None Include="Assets\quest_333666_step_1_post.txt" />
+     <None Include="Assets\Shader\Matcap.shader" />
+     <None Include="Assets\Hidden.shader" />
+     <None Include="Assets\Shader\ParticleAlphaChooser.shader" />
+     <None Include="Assets\quest_333666_pre.txt" />
+     <None Include="Assets\quest_101133_pre.txt" />
+     <None Include="Assets\quest_101301_pre.txt" />
+ <Reference Include="UnityEngine.UI">
+ <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.7.0/Standalone/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.UI">
+ <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.7.0/Editor/UnityEditor.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Graphs">
+ <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
+      <Project>{7E761303-7BC8-477B-E722-F730249D436F}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
+    <ProjectReference Include="Assembly-CSharp-vs.csproj">
+      <Project>{6BC6E7BA-1F09-4460-9145-112127E6FE56}</Project>      <Name>Assembly-CSharp-vs</Name>    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>

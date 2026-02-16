@@ -1,0 +1,20 @@
+namespace Kampai.Game
+{
+	public class LevelUpDefinition : global::Kampai.Game.Definition
+	{
+		public global::System.Collections.Generic.IList<int> transactionList { get; set; }
+
+		protected override bool DeserializeProperty(string propertyName, global::Newtonsoft.Json.JsonReader reader, JsonConverters converters)
+		{
+			switch (propertyName)
+			{
+			case "TRANSACTIONLIST":
+				reader.Read();
+				transactionList = global::Kampai.Util.ReaderUtil.PopulateListInt32(reader);
+				return true;
+			default:
+				return base.DeserializeProperty(propertyName, reader, converters);
+			}
+		}
+	}
+}

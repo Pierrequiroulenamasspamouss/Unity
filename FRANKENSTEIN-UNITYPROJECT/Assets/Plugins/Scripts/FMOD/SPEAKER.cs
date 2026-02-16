@@ -1,0 +1,15 @@
+namespace FMOD
+{
+	public enum SPEAKER
+	{
+		FRONT_LEFT = 0,
+		FRONT_RIGHT = 1,
+		FRONT_CENTER = 2,
+		LOW_FREQUENCY = 3,
+		SURROUND_LEFT = 4,
+		SURROUND_RIGHT = 5,
+		BACK_LEFT = 6,
+		BACK_RIGHT = 7,
+		MAX = 8
+	}
+}

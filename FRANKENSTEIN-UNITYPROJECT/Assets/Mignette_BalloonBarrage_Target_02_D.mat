@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Mignette_BalloonBarrage_Target_02_D
+  m_Shader: {fileID: 4800000, guid: e2aa0e4c7ce27ef4bb5e6f1dea15b011, type: 3}
+  m_ShaderKeywords: []
+  m_CustomRenderQueue: -1
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _TransparencyMask
+        second:
+          m_Texture: {fileID: 2800000, guid: 272520fda2f26f347ac5e4d848e406f7, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: _Cutoff
+        second: 0.5
+      data:
+        first:
+          name: _color_boost
+        second: 1
+    m_Colors:
+      data:
+        first:
+          name: _colorB
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _colorG
+        second: {r: 0, g: 0, b: 0, a: 1}
+      data:
+        first:
+          name: _colorR
+        second: {r: 0.85882354, g: 0.09019608, b: 0.09019608, a: 1}

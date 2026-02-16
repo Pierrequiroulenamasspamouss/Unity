@@ -1,0 +1,15 @@
+namespace Kampai.Game
+{
+	public enum FtueLevel
+	{
+		NOT_STARTED = 0,
+		REPAIR_TIKI_BAR = 1,
+		FETCH_COCONUTS = 2,
+		REPAIR_STORAGE = 3,
+		HARVEST_COCONUTS = 4,
+		REPAIR_ORDER_BOARD = 5,
+		FILL_ORDER = 6,
+		PUSH_NOTIFICATIONS = 7,
+		FTUE_COMPLETED = 999999
+	}
+}
