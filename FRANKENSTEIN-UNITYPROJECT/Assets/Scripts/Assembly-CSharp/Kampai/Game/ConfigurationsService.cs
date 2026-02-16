@@ -56,14 +56,21 @@ namespace Kampai.Game
                 {
 
 
-                    // Remove BOM if present
-                    if (!string.IsNullOrEmpty(jsonBody))
-                    {
-                        if (jsonBody[0] == '\uFEFF') jsonBody = jsonBody.Substring(1);
-                        jsonBody = jsonBody.Trim().Replace("\0", "");
-                    }
-
                     UnityEngine.Debug.LogWarning("JSON Length: " + (jsonBody != null ? jsonBody.Length.ToString() : "null"));
+                    
+                    if (!string.IsNullOrEmpty(jsonBody) && jsonBody.Length > 600)
+                    {
+                        var sb = new global::System.Text.StringBuilder();
+                        sb.Append("Chars around 580: ");
+                        int start = 570;
+                        int end = 600;
+                        for (int i = start; i < end; i++)
+                        {
+                            char c = jsonBody[i];
+                            sb.AppendFormat("'{0}':{1:X2} ", c, (int)c);
+                        }
+                        UnityEngine.Debug.LogWarning(sb.ToString());
+                    }
 
                     // Use JToken.Parse first to validate the JSON syntax strictly
                     var jToken = global::Newtonsoft.Json.Linq.JToken.Parse(jsonBody);

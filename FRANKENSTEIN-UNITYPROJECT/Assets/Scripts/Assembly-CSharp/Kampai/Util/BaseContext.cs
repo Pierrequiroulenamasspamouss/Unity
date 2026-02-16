@@ -325,10 +325,7 @@ namespace Kampai.Util
 				injectionBinder.Bind<global::Kampai.Game.QuestScriptKernel>().ToSingleton().CrossContext();
 				// DIAGNOSTIC
 				var _ccb = (injectionBinder as strange.extensions.injector.impl.CrossContextInjectionBinder);
-				UnityEngine.Debug.Log("[BaseContext.DIAG] QSK bound CrossContext. binder=" + injectionBinder.GetHashCode() 
-					+ " CCB=" + (_ccb != null && _ccb.CrossContextBinder != null ? _ccb.CrossContextBinder.GetHashCode().ToString() : "null")
-					+ " QSK_CCB=" + (_ccb != null && _ccb.CrossContextBinder != null ? "" + _ccb.CrossContextBinder.GetBinding<global::Kampai.Game.QuestScriptKernel>() : "null")
-					+ " thisType=" + this.GetType().Name);
+				
 			injectionBinder.Bind<global::Kampai.Game.QuestScriptController>().CrossContext();
 				injectionBinder.Bind<global::Kampai.Game.IQuestScriptRunner>().To<global::Kampai.Game.LuaScriptRunner>().ToName(global::Kampai.Game.QuestRunnerLanguage.Lua)
 					.CrossContext();

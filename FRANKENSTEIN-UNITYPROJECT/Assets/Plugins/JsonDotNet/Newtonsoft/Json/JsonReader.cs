@@ -322,5 +322,16 @@ namespace Newtonsoft.Json
 			_value = null;
 			_valueType = null;
 		}
+		public void LogStack()
+		{
+			var sb = new global::System.Text.StringBuilder();
+			sb.Append("State: " + _currentState + ", Token: " + _token + ", Depth: " + Depth + "\nStack: ");
+			foreach (var item in _stack)
+			{
+				sb.Append(item + " -> ");
+			}
+			sb.Append("\nCurrentTypeContext: " + _currentTypeContext);
+			UnityEngine.Debug.LogError(sb.ToString());
+		}
 	}
 }
