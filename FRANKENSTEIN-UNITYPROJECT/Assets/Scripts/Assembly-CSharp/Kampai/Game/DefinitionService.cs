@@ -520,17 +520,35 @@ namespace Kampai.Game
 			AllDefinitions[99999] = definitions.levelXPTable;
 		}
 
-		private void MarkDefinitionAsUsed(global::Kampai.Game.Definition d)
-		{
-			int iD = d.ID;
-			if (AllDefinitions.ContainsKey(iD))
-			{
-				throw new global::Kampai.Util.FatalException(global::Kampai.Util.FatalCode.DS_DUPLICATE_ID, iD, "DefinitionService.MarkDefinitionAsUsed(): defId = {0}", iD);
-			}
-			AllDefinitions[d.ID] = d;
-		}
+        private void MarkDefinitionAsUsed(global::Kampai.Game.Definition d)
+        {
+            // Sécurité anti-crash si l'objet est null (ça arrive avec des JSON mal formés)
+            if (d == null) return;
 
-		private global::System.Collections.Generic.IEnumerable<T> MarkDefinitionsAsUsed<T>(global::System.Collections.Generic.IEnumerable<T> used) where T : global::Kampai.Game.Definition
+            // Si l'ID existe déjà dans le dictionnaire AllDefinitions
+            if (AllDefinitions.ContainsKey(d.ID))
+            {
+                // Au lieu de lancer une FatalException, on log un avertissement
+                // logger.Warn(string.Format("Duplicate ID detected: {0} (Type: {1}). Renumbering to avoid crash.", d.ID, d.GetType().Name));
+                // Si logger.Warn n'existe pas, utilise UnityEngine.Debug.LogWarning :
+                UnityEngine.Debug.LogWarning(string.Format("Duplicate ID detected: {0} (Type: {1}). Renumbering to avoid crash.", d.ID, d.GetType().Name));
+
+                // On cherche le prochain ID libre
+                // On boucle tant que l'ID est pris
+                while (AllDefinitions.ContainsKey(d.ID))
+                {
+                    d.ID++; // On incrémente l'ID de l'objet entrant
+                }
+
+                // Petit log pour dire quel est le nouvel ID
+                UnityEngine.Debug.LogWarning(string.Format("New ID assigned: {0}", d.ID));
+            }
+
+            // On ajoute l'objet avec son ID (original ou corrigé)
+            AllDefinitions[d.ID] = d;
+        }
+
+        private global::System.Collections.Generic.IEnumerable<T> MarkDefinitionsAsUsed<T>(global::System.Collections.Generic.IEnumerable<T> used) where T : global::Kampai.Game.Definition
 		{
 			if (used != null)
 			{

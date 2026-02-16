@@ -46,7 +46,7 @@ namespace Kampai.Util
 				actualFPS = (float)currentFpsCount / dt;
 				currentFpsCount = 0;
 				dt = 0f;
-				logger.Info("FPS: {0}", actualFPS.ToString());
+				//logger.Info("FPS: {0}", actualFPS.ToString());
 				currentLogging++;
 				if (currentLogging >= loggingLimit)
 				{
