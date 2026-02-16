@@ -239,15 +239,11 @@ namespace Kampai.UI
 				{
 					try
 					{
-						localState = global::Newtonsoft.Json.JsonConvert.DeserializeObject<global::Kampai.UI.BuildMenuLocalState>(dataPlayer);
+						localState = global::Kampai.Util.FastJsonParser.Deserialize<global::Kampai.UI.BuildMenuLocalState>(dataPlayer);
 					}
-					catch (global::Newtonsoft.Json.JsonSerializationException e)
+					catch (global::System.Exception e)
 					{
 						HandleJsonException(e);
-					}
-					catch (global::Newtonsoft.Json.JsonReaderException e2)
-					{
-						HandleJsonException(e2);
 					}
 				}
 			}

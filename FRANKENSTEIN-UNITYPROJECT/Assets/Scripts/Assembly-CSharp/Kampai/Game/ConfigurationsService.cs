@@ -55,40 +55,19 @@ namespace Kampai.Game
                 try
                 {
 
+                    // Use FastJsonParser to bypass Newtonsoft text parsing bug
+                    configDef = global::Kampai.Util.FastJsonParser.Deserialize<global::Kampai.Game.ConfigurationDefinition>(jsonBody);
 
-                    UnityEngine.Debug.LogWarning("JSON Length: " + (jsonBody != null ? jsonBody.Length.ToString() : "null"));
-                    
-                    if (!string.IsNullOrEmpty(jsonBody) && jsonBody.Length > 600)
+                    if (configDef == null)
                     {
-                        var sb = new global::System.Text.StringBuilder();
-                        sb.Append("Chars around 580: ");
-                        int start = 570;
-                        int end = 600;
-                        for (int i = start; i < end; i++)
-                        {
-                            char c = jsonBody[i];
-                            sb.AppendFormat("'{0}':{1:X2} ", c, (int)c);
-                        }
-                        UnityEngine.Debug.LogWarning(sb.ToString());
+                        throw new global::System.Exception("Failed to deserialize ConfigurationDefinition");
                     }
-
-                    // Use JToken.Parse first to validate the JSON syntax strictly
-                    var jToken = global::Newtonsoft.Json.Linq.JToken.Parse(jsonBody);
-                    
-                    // Convert the parsed JToken to the target object
-                    configDef = jToken.ToObject<global::Kampai.Game.ConfigurationDefinition>();
                 }
                 catch (global::System.Exception ex)
                 {
                     logger.Log(global::Kampai.Util.Logger.Level.Warning, "Warning Parsing (" + ex.Message + ")");
                     UnityEngine.Debug.LogWarning("Full parsing error: " + ex.ToString());
                     UnityEngine.Debug.LogWarning("JSON Body: " + jsonBody);
-                    try {
-                         // Sanity check: can we parse a simple valid JSON?
-                         var testObj = global::Newtonsoft.Json.JsonConvert.DeserializeObject<object>("{\"test\":1}");
-                         UnityEngine.Debug.LogWarning("Sanity check passed: simple JSON parsed.");
-                    } catch (System.Exception sanityEx) {
-                         UnityEngine.Debug.LogError("Sanity check failed: " + sanityEx.Message);
                     }
                 }
             }

@@ -221,6 +221,7 @@ namespace Newtonsoft.Json
 		protected void SetStateBasedOnCurrent()
 		{
 			global::Newtonsoft.Json.Linq.JTokenType jTokenType = Peek();
+            UnityEngine.Debug.LogWarning("SetStateBasedOnCurrent: Peek=" + jTokenType);
 			switch (jTokenType)
 			{
 			case global::Newtonsoft.Json.Linq.JTokenType.Object:
@@ -238,6 +239,7 @@ namespace Newtonsoft.Json
 			default:
 				throw new global::Newtonsoft.Json.JsonReaderException(global::Newtonsoft.Json.Utilities.StringUtils.FormatWith("While setting the reader state back to current object an unexpected JsonType was encountered: {0}", global::System.Globalization.CultureInfo.InvariantCulture, jTokenType));
 			}
+            UnityEngine.Debug.LogWarning("SetStateBasedOnCurrent: Set state to " + _currentState);
 		}
 
 		internal static bool IsPrimitiveToken(global::Newtonsoft.Json.JsonToken token)

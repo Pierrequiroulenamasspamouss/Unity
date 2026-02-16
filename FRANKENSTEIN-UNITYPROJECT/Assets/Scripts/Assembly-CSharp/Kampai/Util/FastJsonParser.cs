@@ -15,6 +15,46 @@ namespace Kampai.Util
             return parser.ParseValue();
         }
 
+        public static T Deserialize<T>(string json)
+        {
+            object parsed = Deserialize(json);
+            if (parsed == null) return default(T);
+            
+            // Convert to JToken first using manual conversion to avoid serializer bugs
+            global::Newtonsoft.Json.Linq.JToken token = ConvertToJToken(parsed);
+            if (token == null) return default(T);
+
+            // Use Newtonsoft's ToObject mapping
+            return token.ToObject<T>();
+        }
+
+        public static global::Newtonsoft.Json.Linq.JToken ConvertToJToken(object obj)
+        {
+            if (obj == null)
+                return global::Newtonsoft.Json.Linq.JValue.CreateString(null);
+
+            Dictionary<string, object> dict = obj as Dictionary<string, object>;
+            if (dict != null)
+            {
+                global::Newtonsoft.Json.Linq.JObject jo = new global::Newtonsoft.Json.Linq.JObject();
+                foreach (KeyValuePair<string, object> kvp in dict)
+                    jo[kvp.Key] = ConvertToJToken(kvp.Value);
+                return jo;
+            }
+
+            List<object> list = obj as List<object>;
+            if (list != null)
+            {
+                global::Newtonsoft.Json.Linq.JArray ja = new global::Newtonsoft.Json.Linq.JArray();
+                foreach (object item in list)
+                    ja.Add(ConvertToJToken(item));
+                return ja;
+            }
+
+            // primitives (long, double, bool, string)
+            return new global::Newtonsoft.Json.Linq.JValue(obj);
+        }
+
         sealed class Parser
         {
             const string WORD_BREAK = "{}[],:\"";

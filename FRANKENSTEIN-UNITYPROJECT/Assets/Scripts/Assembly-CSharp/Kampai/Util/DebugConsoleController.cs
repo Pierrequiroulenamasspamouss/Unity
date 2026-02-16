@@ -1334,7 +1334,7 @@ namespace Kampai.Util
 		public void DLCPreInstall(string[] args)
 		{
 			string value = global::System.IO.File.ReadAllText(global::Kampai.Util.GameConstants.PREINSTALL_JSON_PATH);
-			global::Kampai.Util.PreinstallBundles preinstallBundles = global::Newtonsoft.Json.JsonConvert.DeserializeObject<global::Kampai.Util.PreinstallBundles>(value);
+			global::Kampai.Util.PreinstallBundles preinstallBundles = global::Kampai.Util.FastJsonParser.Deserialize<global::Kampai.Util.PreinstallBundles>(value);
 			foreach (string bundle in preinstallBundles.Bundles)
 			{
 				outBuilder.AppendLine(bundle);

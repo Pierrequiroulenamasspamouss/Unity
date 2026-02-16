@@ -20,7 +20,7 @@ namespace Kampai.Main
 				logger.Error("Failed to load bundle resources manifest");
 				return;
 			}
-			global::Kampai.Main.LocalResourcesManifest localResourcesManifest = global::Newtonsoft.Json.JsonConvert.DeserializeObject<global::Kampai.Main.LocalResourcesManifest>(textAsset.text);
+			global::Kampai.Main.LocalResourcesManifest localResourcesManifest = global::Kampai.Util.FastJsonParser.Deserialize<global::Kampai.Main.LocalResourcesManifest>(textAsset.text);
 			global::UnityEngine.Resources.UnloadAsset(textAsset);
 			resourceNamesMap = new global::System.Collections.Generic.Dictionary<string, string>(localResourcesManifest.bundledAssets.Count);
 			foreach (string bundledAsset in localResourcesManifest.bundledAssets)

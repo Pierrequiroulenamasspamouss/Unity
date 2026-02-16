@@ -12,7 +12,7 @@ namespace Kampai.Util.AnimatorStateInfo
 		public override void Execute()
 		{
 			global::UnityEngine.TextAsset textAsset = global::UnityEngine.Resources.Load<global::UnityEngine.TextAsset>("Debug/animator_state_info");
-			global::System.Collections.Generic.Dictionary<int, string> o = global::Newtonsoft.Json.JsonConvert.DeserializeObject<global::System.Collections.Generic.Dictionary<int, string>>(textAsset.text);
+			global::System.Collections.Generic.Dictionary<int, string> o = global::Kampai.Util.FastJsonParser.Deserialize<global::System.Collections.Generic.Dictionary<int, string>>(textAsset.text);
 			base.injectionBinder.Bind<global::System.Collections.Generic.Dictionary<int, string>>().ToValue(o).ToName(global::Kampai.Util.UtilElement.ANIMATOR_STATE_DEBUG_INFO)
 				.CrossContext()
 				.Weak();
