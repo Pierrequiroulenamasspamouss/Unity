@@ -6,31 +6,30 @@ namespace Kampai.Game
 
 		public global::System.Collections.Generic.IList<global::Kampai.Game.BuildingAnimationDefinition> AnimationDefinitions { get; set; }
 
-		protected override bool DeserializeProperty(string propertyName, global::Newtonsoft.Json.JsonReader reader, JsonConverters converters)
-		{
-			switch (propertyName)
-			{
-			default:
-			{
-				int num;
-						num = 1; // Added this line to remove use of unassigned variable error
-				if (num == 1)
-				{
-					reader.Read();
-					GagFrequency = global::System.Convert.ToInt32(reader.Value);
-					break;
-				}
-				return base.DeserializeProperty(propertyName, reader, converters);
-			}
-			case "ANIMATIONDEFINITIONS":
-				reader.Read();
-				AnimationDefinitions = global::Kampai.Util.ReaderUtil.PopulateList<global::Kampai.Game.BuildingAnimationDefinition>(reader, converters);
-				break;
-			}
-			return true;
-		}
+        protected override bool DeserializeProperty(string propertyName, global::Newtonsoft.Json.JsonReader reader, JsonConverters converters)
+        {
+            switch (propertyName)
+            {
+                case "GAGFREQUENCY": // On gère explicitement le GagFrequency ici
+                    reader.Read();
+                    // Utilise SafeParseInt si tu l'as ajouté à ReaderUtil, 
+                    // sinon garde Convert.ToInt32 mais avec la sécurité du case.
+                    GagFrequency = global::Kampai.Util.ReaderUtil.SafeParseInt(reader.Value);
+                    return true;
 
-		public virtual global::System.Collections.Generic.IList<string> AnimationControllerKeys()
+                case "ANIMATIONDEFINITIONS":
+                    reader.Read();
+                    AnimationDefinitions = global::Kampai.Util.ReaderUtil.PopulateList<global::Kampai.Game.BuildingAnimationDefinition>(reader, converters);
+                    return true;
+
+                default:
+                    // Si la propriété n'est pas connue par cette classe, 
+                    // on laisse la classe parente (RepairableBuildingDefinition) s'en occuper.
+                    return base.DeserializeProperty(propertyName, reader, converters);
+            }
+        }
+
+        public virtual global::System.Collections.Generic.IList<string> AnimationControllerKeys()
 		{
 			global::System.Collections.Generic.IList<string> list = new global::System.Collections.Generic.List<string>();
 			if (AnimationDefinitions != null && AnimationDefinitions.Count > 0)

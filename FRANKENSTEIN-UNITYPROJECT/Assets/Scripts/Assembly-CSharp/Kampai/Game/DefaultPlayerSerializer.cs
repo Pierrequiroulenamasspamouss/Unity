@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+//using Newtonsoft.Json; // NOT USING NEWTONSOFT FOR THE MAIN DESERIALIZATION STEP TO AVOID TEXT PARSING BUGS
 using Newtonsoft.Json.Linq;
 using Kampai.Util;
 

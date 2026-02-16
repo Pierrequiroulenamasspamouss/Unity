@@ -24,7 +24,7 @@ namespace Kampai.Game
 
         public override void Execute()
         {
-            logger.Info("MOCK: CheckUpgradeCommand - Bypassing version verification. ");
+            //logger.Info("MOCK: CheckUpgradeCommand - Bypassing version verification. ");
             return;
         }
     }
