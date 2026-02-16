@@ -68,7 +68,6 @@ namespace Kampai.Game
                     logger.Log(global::Kampai.Util.Logger.Level.Warning, "Warning Parsing (" + ex.Message + ")");
                     UnityEngine.Debug.LogWarning("Full parsing error: " + ex.ToString());
                     UnityEngine.Debug.LogWarning("JSON Body: " + jsonBody);
-                    }
                 }
             }
 
