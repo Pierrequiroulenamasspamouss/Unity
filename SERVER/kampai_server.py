@@ -130,14 +130,14 @@ def create_app(port):
             "assetBundles": f"{BASE_HOST}:44733/assetbundles",
             "client_telemetry_url": f"{BASE_HOST}:44733/rest/telemetry/client"
         })
-
+    """
     @app.route('/rest/healthMetrics/meters', methods=['POST'])
     def health_metrics():
         return jsonify({
             "logglyConfig": { "logLevel": 0, "samplePercentage": 0 },
             "killSwitches": []
         })
-
+    """
     @app.route('/rest/dlc/manifest/<version>', methods=['GET'])
     def get_manifest(version):
         return jsonify({ "id": version, "baseURL": f"{BASE_HOST}:44733/assets/", "assets": {}, "bundles": [], "bundledAssets": [] })
@@ -241,6 +241,16 @@ def create_app(port):
     @app.route('/metrics', methods=['POST'])
     def telemetry():
         return jsonify({"status": "ok"})
+
+    @app.route('/rest/healthMetrics/', defaults={'subpath': ''}, methods=['POST', 'GET'])
+    @app.route('/rest/healthMetrics/<path:subpath>', methods=['POST', 'GET'])
+    def health_metrics(subpath):
+        return jsonify({"status": "ok"})
+
+    @app.route('/rest/social/', defaults={'subpath': ''}, methods=['GET', 'POST'])
+    @app.route('/rest/social/<path:subpath>', methods=['GET', 'POST'])
+    def social_stub(subpath):
+        return jsonify({"status": "ok", "data": []})
 
     return app
 

@@ -16,7 +16,10 @@ namespace Kampai.Util
 			mb = contextView.GetComponent<global::Kampai.Util.RoutineRunnerBehaviour>();
 			if (mb == null)
 			{
-				mb = contextView.AddComponent<global::Kampai.Util.RoutineRunnerBehaviour>();
+				// contextView (SplashRoot) may be inactive — create a dedicated runner object
+				global::UnityEngine.GameObject runnerGo = new global::UnityEngine.GameObject("RoutineRunner");
+				global::UnityEngine.Object.DontDestroyOnLoad(runnerGo);
+				mb = runnerGo.AddComponent<global::Kampai.Util.RoutineRunnerBehaviour>();
 			}
 		}
 

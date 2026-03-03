@@ -168,11 +168,20 @@ namespace Kampai.Game
 
 
             // --- FIX: LOCALIZED EVENT SYSTEM ---
-            // Removed .CrossContext() to prevent "Conflicts: UnityEngine.GameObject"
-            UnityEngine.GameObject eventSystem = new UnityEngine.GameObject("EventSystem");
-            eventSystem.AddComponent<UnityEngine.EventSystems.EventSystem>();
-            eventSystem.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
-            injectionBinder.Bind<UnityEngine.GameObject>()
+            // Only create if none exists — Unity throws a warning for multiple EventSystems
+            global::UnityEngine.EventSystems.EventSystem existingES = global::UnityEngine.Object.FindObjectOfType<global::UnityEngine.EventSystems.EventSystem>();
+            global::UnityEngine.GameObject eventSystem;
+            if (existingES != null)
+            {
+                eventSystem = existingES.gameObject;
+            }
+            else
+            {
+                eventSystem = new global::UnityEngine.GameObject("EventSystem");
+                eventSystem.AddComponent<global::UnityEngine.EventSystems.EventSystem>();
+                eventSystem.AddComponent<global::UnityEngine.EventSystems.StandaloneInputModule>();
+            }
+            injectionBinder.Bind<global::UnityEngine.GameObject>()
                 .ToValue(eventSystem).ToName(global::Kampai.Main.MainElement.UI_EVENTSYSTEM);
 
             // IDLCService stub (normally in DownloadContext, bind local stub)
@@ -252,7 +261,8 @@ namespace Kampai.Game
             // Bind Camera (Local) - ToValue implies singleton, do not add .ToSingleton()
             injectionBinder.Bind<global::UnityEngine.Camera>()
                 .ToValue(main)
-                .ToName(global::Kampai.Main.MainElement.CAMERA); 
+                .ToName(global::Kampai.Main.MainElement.CAMERA)
+                .CrossContext(); 
 
             // Bind Camera GameObject - ToValue implies singleton
             injectionBinder.Bind<global::UnityEngine.GameObject>()
@@ -265,8 +275,8 @@ namespace Kampai.Game
             if (cameraUtils == null) cameraUtils = mainCameraGo.AddComponent<global::Kampai.Game.View.CameraUtils>();
             
             if (cameraUtils == null) throw new global::System.Exception("[GameContext] Failed to create CameraUtils");
-            
-            injectionBinder.Bind<global::Kampai.Game.View.CameraUtils>().ToValue(cameraUtils);
+
+            injectionBinder.Bind<global::Kampai.Game.View.CameraUtils>().ToValue(cameraUtils).CrossContext();
 
             global::UnityEngine.Vector3 inNormal = new global::UnityEngine.Vector3(0f, 1f, 0f);
             global::UnityEngine.Vector3 inPoint = new global::UnityEngine.Vector3(0f, 0f, 0f);
@@ -645,7 +655,9 @@ namespace Kampai.Game
             base.commandBinder.Bind<global::Kampai.Game.GenerateTemporaryMinionsStageSignal>().To<global::Kampai.Game.GenerateTemporaryMinionsStageCommand>();
             base.commandBinder.Bind<global::Kampai.Game.LoadCruiseShipSignal>().To<global::Kampai.Game.LoadCruiseShipCommand>();
             base.commandBinder.Bind<global::Kampai.Game.SwitchCameraSignal>().To<global::Kampai.Game.SwitchCameraCommand>();
+            injectionBinder.Bind<global::Kampai.Game.BuildingZoomSignal>().ToSingleton();
             // [REMOVED] BuildingZoomSignal - BaseContext already binds it at line 382, duplicate causes conflict
+
             base.commandBinder.Bind<global::Kampai.Game.SelectLandExpansionSignal>().To<global::Kampai.Game.SelectLandExpansionCommand>();
             base.commandBinder.Bind<global::Kampai.Game.PurchaseLandExpansionSignal>().To<global::Kampai.Game.PurchaseLandExpansionCommand>();
             base.commandBinder.Bind<global::Kampai.Game.HighlightLandExpansionSignal>().To<global::Kampai.Game.HighlightLandExpansionCommand>();
@@ -743,7 +755,7 @@ namespace Kampai.Game
                 result = gameObject.AddComponent<T>();
             }
 
-            injectionBinder.Bind<global::UnityEngine.GameObject>().ToValue(gameObject).ToName(bindingName);
+            injectionBinder.Bind<global::UnityEngine.GameObject>().ToValue(gameObject).ToName(bindingName).CrossContext();
             return result;
         }
 
@@ -767,7 +779,8 @@ namespace Kampai.Game
             }
             injectionBinder.Bind<global::UnityEngine.GameObject>()
                 .ToValue(landExpansionParent)
-                .ToName(global::Kampai.Game.GameElement.LAND_EXPANSION_PARENT);
+                .ToName(global::Kampai.Game.GameElement.LAND_EXPANSION_PARENT)
+                .CrossContext();
 
             // Inject TimeEventService dependencies NOW, after all BaseContext bindings are ready
             if (timeEventServiceInstance != null)

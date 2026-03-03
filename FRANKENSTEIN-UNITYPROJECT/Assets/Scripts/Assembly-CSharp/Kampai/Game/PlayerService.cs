@@ -301,65 +301,34 @@ namespace Kampai.Game
                 if (!string.IsNullOrEmpty(serialized))
                 {
                     serialized = serialized.Trim();
-                    // Check for BOM
                     if (serialized.StartsWith("\ufeff")) serialized = serialized.Substring(1);
 
-                    // [FIX] Detect missing opening brace (headless JSON)
-                    // If the string starts with a property like "version": or "ID": but no brace
                     if (!serialized.StartsWith("{"))
                     {
                          if (serialized.IndexOf("\"version\":") >= 0 || serialized.IndexOf("\"ID\":") >= 0)
-                         {
-                             logger.Warning("[PlayerService] Detected missing opening brace. Change 'garbage' to '{' ...");
                              serialized = "{" + serialized;
-                         }
                     }
 
-                    // Find limits of JSON object
                     int firstBrace = serialized.IndexOf('{');
                     int lastBrace = serialized.LastIndexOf('}');
-
-                    // [FIX] Sanity check: If firstBrace is suspiciously deep (e.g. inside inventory), reject it or warn
-                    // The inventory item typically starts with {"ID":309...
-                    if (firstBrace > 10 && (serialized.Contains("\"ID\":309") || serialized.Contains("\"ID\": 309"))) 
-                    {
-                        logger.Warning("[PlayerService] firstBrace found at " + firstBrace + " which seems to be inside an Inventory Item. Investigating context...");
-                        
-                        // Try to find if we missed the start
-                        string inspection = serialized.Substring(0, firstBrace);
-                        logger.Warning("[PlayerService] Pre-brace content: " + inspection);
-                        
-                        // If we have "version":3 before the brace, we definitely missed a brace
-                        if (inspection.Contains("\"version\":") || inspection.Contains("\"ID\":"))
-                        {
-                             logger.Warning("[PlayerService] repairing missing root brace based on context.");
-                             serialized = "{" + serialized;
-                             firstBrace = 0; 
-                             lastBrace = serialized.LastIndexOf('}');
-                        }
-                    }
-
                     if (firstBrace >= 0 && lastBrace > firstBrace)
-                    {
-                        // Extract only the valid JSON part
                         serialized = serialized.Substring(firstBrace, (lastBrace - firstBrace) + 1);
-                    }
                 }
 
                 bool loadFailed = false;
 
-                // 2. Try Deserialize (Using V3 Serializer directly)
+                // 2. Try Deserialize into a LOCAL variable — do NOT touch this.player here.
+                // SanityCheck calls this method to get a comparison snapshot; overwriting this.player
+                // mid-game corrupts all live game systems and causes a native crash.
                 if (!string.IsNullOrEmpty(serialized))
                 {
                     try
                     {
-                        // Use the specific V3 serializer to avoid the Version Checker crash
                         global::Kampai.Game.PlayerSerializerV3 serializer = new global::Kampai.Game.PlayerSerializerV3();
-                        player = serializer.Deserialize(serialized, definitionService, logger);
+                        loadedPlayer = serializer.Deserialize(serialized, definitionService, logger);
                     }
-                    catch (global::System.Exception e)
+                    catch (global::System.Exception)
                     {
-                        //logger.Error("[MOCK] Load Failed: " + e.Message + " | JSON: " + serialized);
                         loadFailed = true;
                     }
                 }
@@ -368,30 +337,18 @@ namespace Kampai.Game
                     loadFailed = true;
                 }
 
-                // 3. Fallback Creation
-                if (loadFailed || player == null)
+                // 3. Fallback
+                if (loadFailed || loadedPlayer == null)
                 {
-                    //logger.Warning("[MOCK] Creating Fallback Player.");
-                    player = new global::Kampai.Game.Player(definitionService, logger);
-                    player.ID = 1001;
-                    player.HighestFtueLevel = 999;
-                    player.Version = 3;
+                    loadedPlayer = new global::Kampai.Game.Player(definitionService, logger);
+                    loadedPlayer.ID = 1001;
+                    loadedPlayer.HighestFtueLevel = 999;
+                    loadedPlayer.Version = 3;
                 }
 
-                // 4. CRITICAL: SETUP ENVIRONMENT FOR LOCALIZATION & SWRVE
-                // This writes to Unity's permanent storage. The Localization Service
-                // reads this during its initialization phase.
-                if (!global::UnityEngine.PlayerPrefs.HasKey("Language"))
-                {
-                    logger.Warning("[FIX] Setting Default Language to en-US");
-                    global::UnityEngine.PlayerPrefs.SetString("Language", "en-US");
-                    global::UnityEngine.PlayerPrefs.SetString("Region", "US");
-                    global::UnityEngine.PlayerPrefs.Save();
-                }
-
-                EnsureCriticalDataIntegrity(player);
+                EnsureCriticalDataIntegrity(loadedPlayer);
             }
-            return player;
+            return loadedPlayer;
         }
 
         private global::Kampai.Game.BlackMarketBoardDefinition CreateFallbackOrderBoardDefinition()
@@ -476,6 +433,15 @@ namespace Kampai.Game
             var loaded = LoadPlayerData(serialized);
             player = loaded;
             LastSave = loaded;
+
+            // One-time init: set default language for Localization Service
+            if (!global::UnityEngine.PlayerPrefs.HasKey("Language"))
+            {
+                logger.Warning("[FIX] Setting Default Language to en-US");
+                global::UnityEngine.PlayerPrefs.SetString("Language", "en-US");
+                global::UnityEngine.PlayerPrefs.SetString("Region", "US");
+                global::UnityEngine.PlayerPrefs.Save();
+            }
         }
 
         public byte[] SavePlayerData(global::Kampai.Game.Player playerData)

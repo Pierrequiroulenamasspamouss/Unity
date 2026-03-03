@@ -163,7 +163,6 @@ namespace Kampai.Game
 			// global::UnityEngine.GameObject gameObject4 = new global::UnityEngine.GameObject("LandExpansions");
 			// gameObject4.transform.parent = contextView.transform;
 			// base.injectionBinder.Bind<global::UnityEngine.GameObject>().ToValue(gameObject4).ToName(global::Kampai.Game.GameElement.LAND_EXPANSION_PARENT);
-			SetupCamera(gameObject);
 			routineRunner.StartCoroutine(StartGame());
 		}
 
