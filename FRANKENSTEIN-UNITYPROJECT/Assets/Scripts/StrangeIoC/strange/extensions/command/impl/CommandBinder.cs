@@ -113,8 +113,15 @@ namespace strange.extensions.command.impl
 				return command;
 			}
 			injectionBinder.Bind<global::strange.extensions.command.api.ICommand>().To(type);
-			global::strange.extensions.command.api.ICommand instance = injectionBinder.GetInstance<global::strange.extensions.command.api.ICommand>();
-			injectionBinder.Unbind<global::strange.extensions.command.api.ICommand>();
+			global::strange.extensions.command.api.ICommand instance = null;
+			try
+			{
+				instance = injectionBinder.GetInstance<global::strange.extensions.command.api.ICommand>();
+			}
+			finally
+			{
+				injectionBinder.Unbind<global::strange.extensions.command.api.ICommand>();
+			}
 			return instance;
 		}
 

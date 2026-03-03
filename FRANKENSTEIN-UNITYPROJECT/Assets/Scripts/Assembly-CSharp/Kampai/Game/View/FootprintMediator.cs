@@ -25,8 +25,8 @@ namespace Kampai.Game.View
 
 		public override void OnRemove()
 		{
-			showSignal.RemoveListener(ToggleFootprint);
-			updateSignal.RemoveListener(UpdateFootprint);
+			if (showSignal != null) showSignal.RemoveListener(ToggleFootprint);
+			if (updateSignal != null) updateSignal.RemoveListener(UpdateFootprint);
 		}
 
 		private void UpdateFootprint(bool valid)

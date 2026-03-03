@@ -59,14 +59,14 @@
 				}
 
 				string minimalManifest = "{\"id\":\"" + manifestId
-					+ "\",\"baseURL\":\"http://localhost:44733/assets/\""
+					+ "\",\"baseURL\":\"" + global::Kampai.Util.GameConstants.Server.CDN_METADATA_URL + "/assets/\""
 					+ ",\"assets\":{},\"bundles\":[],\"bundledAssets\":[]}";
 				global::System.IO.File.WriteAllText(manifestPath, minimalManifest);
 				logger.Info("Wrote manifest to " + manifestPath);
 			}
 			catch (global::System.Exception ex)
 			{
-				logger.Warning("MOCK: Failed to write manifest file: " + ex.Message);
+				logger.Warning("Failed to write manifest file: " + ex.Message);
 			}
 
 			logger.EventStop("DownloadManifestCommand.Execute");

@@ -72,11 +72,18 @@ namespace strange.extensions.command.impl
 					throw new global::strange.extensions.signal.impl.SignalException(string.Concat("SignalCommandBinder attempted to bind a null value from a signal to Command: ", cmd.GetType(), " to type: ", type2), global::strange.extensions.signal.api.SignalExceptionType.COMMAND_NULL_INJECTION);
 				}
 			}
-			global::strange.extensions.command.api.ICommand command = getCommand(cmd);
-			command.data = data;
-			foreach (global::System.Type signalType in signalTypes)
+			global::strange.extensions.command.api.ICommand command = null;
+			try
 			{
-				base.injectionBinder.Unbind(signalType);
+				command = getCommand(cmd);
+				command.data = data;
+			}
+			finally
+			{
+				foreach (global::System.Type signalType in signalTypes)
+				{
+					base.injectionBinder.Unbind(signalType);
+				}
 			}
 			return command;
 		}
