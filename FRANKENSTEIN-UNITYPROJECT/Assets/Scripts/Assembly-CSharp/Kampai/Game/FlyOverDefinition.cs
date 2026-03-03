@@ -10,18 +10,12 @@ namespace Kampai.Game
 		{
 			switch (propertyName)
 			{
+			case "PATH":
+				reader.Read();
+				path = global::Kampai.Util.ReaderUtil.PopulateList<global::Kampai.Game.FlyOverNode>(reader, converters, global::Kampai.Util.ReaderUtil.ReadFlyOverNode);
+				break;
 			default:
-					{
-						int num;
-                        num = 1; //added this line to remove use of unassigned variable
-                        if (num == 1)
-				{
-					reader.Read();
-					path = global::Kampai.Util.ReaderUtil.PopulateList<global::Kampai.Game.FlyOverNode>(reader, converters, global::Kampai.Util.ReaderUtil.ReadFlyOverNode);
-					break;
-				}
 				return base.DeserializeProperty(propertyName, reader, converters);
-			}
 			case "TIME":
 				reader.Read();
 				time = global::System.Convert.ToSingle(reader.Value);

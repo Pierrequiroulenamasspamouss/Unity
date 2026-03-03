@@ -15,18 +15,12 @@ namespace Kampai.Game
 		{
 			switch (propertyName)
 			{
+			case "BUILDINGNUMBER":
+				reader.Read();
+				BuildingNumber = global::System.Convert.ToInt32(reader.Value);
+				break;
 			default:
-					{
-						int num;
-                        num = 1; //added this line to remove use of unassigned variable
-                        if (num == 1)
-				{
-					reader.Read();
-					BuildingNumber = global::System.Convert.ToInt32(reader.Value);
-					break;
-				}
 				return base.DeserializeProperty(propertyName, reader, converters);
-			}
 			case "AVAILABLEHARVEST":
 				reader.Read();
 				AvailableHarvest = global::System.Convert.ToInt32(reader.Value);

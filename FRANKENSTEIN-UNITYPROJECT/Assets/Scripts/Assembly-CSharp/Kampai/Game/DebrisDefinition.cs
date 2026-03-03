@@ -10,18 +10,12 @@ namespace Kampai.Game
 		{
 			switch (propertyName)
 			{
+			case "LOCATION":
+				reader.Read();
+				Location = global::Kampai.Util.ReaderUtil.ReadLocation(reader, converters);
+				break;
 			default:
-					{
-						int num;
-                        num = 1; //added this line to remove use of unassigned variable
-                        if (num == 1)
-				{
-					reader.Read();
-					Location = global::Kampai.Util.ReaderUtil.ReadLocation(reader, converters);
-					break;
-				}
 				return base.DeserializeProperty(propertyName, reader, converters);
-			}
 			case "BUILDINGDEFINITIONID":
 				reader.Read();
 				BuildingDefinitionID = global::System.Convert.ToInt32(reader.Value);

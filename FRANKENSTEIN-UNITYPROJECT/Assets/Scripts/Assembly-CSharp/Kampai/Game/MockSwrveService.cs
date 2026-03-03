@@ -1,4 +1,4 @@
-using Kampai.Common;
+﻿using Kampai.Common;
 using Kampai.Game.Transaction;
 using System.Collections.Generic;
 using System.Linq;
@@ -113,6 +113,13 @@ namespace Kampai.Game
 #endif
         }
 
+        public void SetPlayerServiceReference(global::Kampai.Game.IPlayerService playerService)
+        {
+#if UNITY_EDITOR
+            Debug.Log("[MockSwrve] SetPlayerServiceReference");
+#endif
+        }
+
         public void COPPACompliance()
         {
 #if UNITY_EDITOR
@@ -141,7 +148,6 @@ namespace Kampai.Game
                 parts.Add(kvp.Key+ "=" + kvp.Value);
             }
             return string.Join(", ", parts.ToArray());
-
         }
 #endif
     }

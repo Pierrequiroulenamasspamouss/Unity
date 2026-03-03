@@ -32,18 +32,12 @@ namespace Kampai.Game
 		{
 			switch (propertyName)
 			{
+			case "CABANABUILDINGID":
+				reader.Read();
+				CabanaBuildingId = global::System.Convert.ToInt32(reader.Value);
+				break;
 			default:
-					{
-						int num;
-                        num = 1; //added this line to remove use of unassigned variable
-                        if (num == 1)
-				{
-					reader.Read();
-					CabanaBuildingId = global::System.Convert.ToInt32(reader.Value);
-					break;
-				}
 				return base.DeserializeProperty(propertyName, reader, converters);
-			}
 			case "CABANA":
 				reader.Read();
 				Cabana = (global::Kampai.Game.CabanaBuilding)converters.instanceConverter.ReadJson(reader, converters);

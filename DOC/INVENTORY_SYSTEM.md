@@ -35,9 +35,9 @@ Definitions are registered into `AllDefinitions` (a `Dictionary<int, Definition>
 1. `itemDefinitions` ← **top priority** (IDs 0-10 are currencies/items)
 2. `minionDefinitions`
 3. `currencyItemDefinitions`
-4. `storeItemDefinitions`
-5. `buildingDefinitions`
-6. `plotDefinitions`
+4. `buildingDefinitions`
+5. `plotDefinitions`
+6. `storeItemDefinitions`
 7. `purchasedExpansionDefinitions`
 8. `commonExpansionDefinitions`
 9. `expansionDefinitions`
@@ -54,11 +54,12 @@ The server sends player data as JSON. The `DefaultPlayerSerializer` parses it.
 ```json
 {
   "version": 3,
-  "ID": "1001",
+  "ID": "25255309",
   "nextId": 1000,
   "inventory": [
     { "def": 0, "id": 100, "quantity": 500 },
-    { "def": 70000, "id": 101, "name": "Phil" }
+    { "def": 70000, "id": 101, "name": "Phil" },
+    { "def": 3022, "id": 999, "State": "FINISHED", "tickets": [] } 
   ],
   "unlocks": [],
   "villainQueue": [],
@@ -76,3 +77,5 @@ The server sends player data as JSON. The `DefaultPlayerSerializer` parses it.
 
 - `"def"` or `"Definition"` — identifies the definition ID in `AllDefinitions`
 - `"id"` — the instance's runtime ID (must be unique within the player's inventory)
+
+*(Updated: `OrderBoard` (def: 3022) is now natively provisioned in the base server payload `definitions.json` -> `initialPlayer`, skipping the `[FIX] Repairing missing OrderBoard` log locally.)*

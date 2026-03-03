@@ -336,8 +336,10 @@ namespace Kampai.Game
 			}
 			else
 			{
-				logger.Warning("[FIX] Footprint resource missing. Creating dummy.");
+				logger.Debug("[FIX] Footprint resource missing. Creating dummy.");
 				footprint = new global::UnityEngine.GameObject("Footprint_Dummy");
+				global::Kampai.Game.View.FootprintView footprintView = footprint.AddComponent<global::Kampai.Game.View.FootprintView>();
+				footprintView.Init();
 			}
 			footprint.transform.parent = contextView.transform;
 			footprint.AddComponent<global::Kampai.Game.View.FootprintView>();

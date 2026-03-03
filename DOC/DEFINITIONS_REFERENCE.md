@@ -60,8 +60,9 @@ IDs: 4000–4999 (gacha/drop pools)
 ## Transactions (transactions)
 IDs: 18–5999+ (crafting recipes)
 
-> [!IMPORTANT]
-> Transactions must NOT have IDs that overlap with `itemDefinitions` (0–10+) or building IDs. The `DefinitionService` now registers items before transactions, and skips duplicates (first-wins), so item ownership of low IDs is guaranteed.
+~~> [!IMPORTANT]~~
+~~> Transactions must NOT have IDs that overlap with `itemDefinitions` (0–10+) or building IDs. The `DefinitionService` now registers items before transactions, and skips duplicates (first-wins), so item ownership of low IDs is guaranteed.~~
+*(Updated: The C# `DeserializeProperty(propertyName)` decompilation bug zeroing out IDs has been thoroughly rectified across the codebase. Base-call property inheritance successfully parses IDs, eliminating collisions naturally.)*
 
 ## Currency Item Definitions (currencyItemDefinitions)
 IAP Packs — IDs: 8001–8999
@@ -80,3 +81,4 @@ IAP Packs — IDs: 8001–8999
 | 88888 | LevelUpDefinition | Registered by AddLevelUpDefinition() |
 | 88889 | DropLevelBandDefinition | Registered by AddDropLevelBandDefinition() |
 | 99999 | LevelXPTable | Registered by AddLevelXPTable() |
+| N/A | MarketplaceDefinition | (Injected natively into `/rest/definitions` server endpoint payload base) |

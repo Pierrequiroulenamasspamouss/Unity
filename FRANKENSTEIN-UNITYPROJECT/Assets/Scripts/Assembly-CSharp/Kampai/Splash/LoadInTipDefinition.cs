@@ -10,18 +10,12 @@ namespace Kampai.Splash
 		{
 			switch (propertyName)
 			{
+			case "BUCKETS":
+				reader.Read();
+				Buckets = global::Kampai.Util.ReaderUtil.PopulateList<global::Kampai.Splash.BucketAssignment>(reader, converters, global::Kampai.Util.ReaderUtil.ReadBucketAssignment);
+				break;
 			default:
-					{
-						int num;
-                        num = 1; //added this line to remove use of unassigned variable
-                        if (num == 1)
-				{
-					reader.Read();
-					Buckets = global::Kampai.Util.ReaderUtil.PopulateList<global::Kampai.Splash.BucketAssignment>(reader, converters, global::Kampai.Util.ReaderUtil.ReadBucketAssignment);
-					break;
-				}
 				return base.DeserializeProperty(propertyName, reader, converters);
-			}
 			case "TEXT":
 				reader.Read();
 				Text = global::Kampai.Util.ReaderUtil.ReadString(reader, converters);

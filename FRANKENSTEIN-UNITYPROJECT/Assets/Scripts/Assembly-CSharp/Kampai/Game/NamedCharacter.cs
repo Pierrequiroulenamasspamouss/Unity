@@ -64,18 +64,12 @@ namespace Kampai.Game
 		{
 			switch (propertyName)
 			{
+			case "NAME":
+				reader.Read();
+				Name = global::Kampai.Util.ReaderUtil.ReadString(reader, converters);
+				break;
 			default:
-			{
-				int num;
-                        num = 1; //added this line to remove use of unassigned variable
-                        if (num == 1)
-				{
-					reader.Read();
-					Name = global::Kampai.Util.ReaderUtil.ReadString(reader, converters);
-					break;
-				}
 				return false;
-			}
 			case "ID":
 				reader.Read();
 				ID = global::System.Convert.ToInt32(reader.Value);

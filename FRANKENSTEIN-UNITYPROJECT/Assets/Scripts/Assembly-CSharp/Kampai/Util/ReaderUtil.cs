@@ -240,7 +240,7 @@ namespace Kampai.Util
 
                 // LE FIX : On ne déclenche la lecture de l'élément QUE si on est sur un début d'objet.
                 // Tout le reste (commentaires, virgules mal interprétées, tokens orphelins) est ignoré.
-                if (reader.TokenType == JsonToken.StartObject)
+                if (reader.TokenType == JsonToken.StartObject || reader.TokenType == JsonToken.String || reader.TokenType == JsonToken.Integer || reader.TokenType == JsonToken.Float || reader.TokenType == JsonToken.Boolean)
                 {
                     T item = elementReader(reader, converters);
                     if (item != null) list.Add(item);

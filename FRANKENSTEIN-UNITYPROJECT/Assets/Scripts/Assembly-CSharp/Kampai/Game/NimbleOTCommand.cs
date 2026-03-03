@@ -1,4 +1,4 @@
-namespace Kampai.Game
+﻿namespace Kampai.Game
 {
 	public class NimbleOTCommand : global::strange.extensions.command.impl.Command
 	{
@@ -26,6 +26,7 @@ namespace Kampai.Game
 
 		public override void Execute()
 		{
+			Retain();
 			routineRunner.StartCoroutine(PeriodicReloadConfigs());
 		}
 
@@ -71,3 +72,4 @@ namespace Kampai.Game
 		}
 	}
 }
+

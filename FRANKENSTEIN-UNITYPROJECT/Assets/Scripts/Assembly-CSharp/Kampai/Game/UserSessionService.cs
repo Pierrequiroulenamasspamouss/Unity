@@ -1,7 +1,4 @@
-using System.Collections.Generic;
-
-
-namespace Kampai.Game
+ï»¿namespace Kampai.Game
 {
     public class UserSessionService : global::Kampai.Game.IUserSessionService
     {
@@ -27,47 +24,49 @@ namespace Kampai.Game
 
         public global::Kampai.Game.UserSession UserSession { get { return Session; } set { Session = value; } }
 
-        public void LoginRequestCallback(global::Ea.Sharkbite.HttpPlugin.Http.Api.IResponse response)
+                public void LoginRequestCallback(global::Ea.Sharkbite.HttpPlugin.Http.Api.IResponse response)
         {
             global::Kampai.Util.TimeProfiler.EndSection("login");
 
-            // MOCK: On force toujours le succès, même si le serveur tousse
-            // if (response.Success) 
+            if (response.Success)
             {
                 string body = response.Body;
                 logger.Info("[MOCK LOGIN] Body: " + body);
 
                 try
                 {
-                    // On essaie de parser, sinon on crée un fake
                     if (!string.IsNullOrEmpty(body))
-                        UserSession = global::Newtonsoft.Json.JsonConvert.DeserializeObject<global::Kampai.Game.UserSession>(body);
+                    {
+                        var dict = global::Kampai.Util.FastJsonParser.Deserialize(body) as System.Collections.Generic.Dictionary<string, object>;
+                        if (dict != null)
+                        {
+                            UserSession = new global::Kampai.Game.UserSession();
+                            if (dict.ContainsKey("userId")) UserSession.UserID = dict["userId"].ToString();
+                            if (dict.ContainsKey("synergyId")) UserSession.SynergyID = dict["synergyId"].ToString();
+                            if (dict.ContainsKey("sessionId")) UserSession.SessionID = dict["sessionId"].ToString();
+                            if (dict.ContainsKey("isNewUser")) UserSession.IsNewUser = (bool)dict["isNewUser"];
+                            if (dict.ContainsKey("isTester")) UserSession.IsTester = (bool)dict["isTester"];
+                            if (dict.ContainsKey("country")) UserSession.Country = dict["country"].ToString();
+                        }
+                    }
                 }
                 catch { }
 
-                if (UserSession == null)
+                if (UserSession == null || string.IsNullOrEmpty(UserSession.UserID))
                 {
-                    UserSession = new global::Kampai.Game.UserSession();
-                    UserSession.UserID = global::UnityEngine.PlayerPrefs.GetString("MOCK_UserID", "1001");
+                    logger.Error("Login response did not provide a UserID.");
+                    return;
                 }
-                if (UserSession.UserID.Length > 20)
-                {
-                    logger.Warning("[FIX] Found massive UserID (" + UserSession.UserID.Length + " chars). Resetting to 1001.");
-                    UserSession.UserID = "1001";
-                }
-                // Sauvegarde de secours
+                
                 global::UnityEngine.PlayerPrefs.SetString("MOCK_UserID", UserSession.UserID);
                 global::UnityEngine.PlayerPrefs.Save();
 
-                // 1. On dit que la session est bonne
                 userSessionGrantedSignal.Dispatch();
                 LocalPersistService.PutData("LoadMode", "remote");
 
-                // 2. IMPORTANT : ON LANCE LE CHARGEMENT DU JOUEUR ICI
                 logger.Info("[MOCK] Triggering LoadPlayerSignal manually...");
                 loadPlayerSignal.Dispatch();
 
-                // La suite standard...
                 try { updateSynergyId(UserSession); } catch { }
 
                 SetupDataMitigation.Dispatch(new global::Kampai.Common.SetupDataMitigationParameters { UserID = UserSession.UserID, ClientIP = "127.0.0.1" });
@@ -83,10 +82,7 @@ namespace Kampai.Game
             }
         }
 
-        // ==============================================================================
-        // FIX RADICAL: Sauvegarde directe dans PlayerPrefs sans passer par les services
-        // ==============================================================================
-        public void RegisterRequestCallback(global::Ea.Sharkbite.HttpPlugin.Http.Api.IResponse response)
+                public void RegisterRequestCallback(global::Ea.Sharkbite.HttpPlugin.Http.Api.IResponse response)
         {
             global::Kampai.Util.TimeProfiler.EndSection("register");
             if (response.Success)
@@ -94,33 +90,32 @@ namespace Kampai.Game
                 string body = response.Body;
                 logger.Info("[MOCK REGISTER] Raw Body: " + body);
 
-                global::Kampai.Game.UserIdentity userIdentity = global::Newtonsoft.Json.JsonConvert.DeserializeObject<global::Kampai.Game.UserIdentity>(body);
-
-                // Parsing manuel pour récupérer les clés manquantes
-                string sSecret = "mock_secret";
-                string sKey = "mock_key";
+                global::Kampai.Game.UserIdentity userIdentity = new global::Kampai.Game.UserIdentity();
+                string sSecret = "";
+                string sKey = "";
+                string sID = "";
+                
                 try
                 {
-                    var rawData = global::Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(body);
-                    if (rawData.ContainsKey("secret")) sSecret = rawData["secret"].ToString();
-                    if (rawData.ContainsKey("sessionKey")) sKey = rawData["sessionKey"].ToString();
+                    var rawData = global::Kampai.Util.FastJsonParser.Deserialize(body) as System.Collections.Generic.Dictionary<string, object>;
+                    if (rawData != null) {
+                        if (rawData.ContainsKey("secret")) sSecret = rawData["secret"].ToString();
+                        if (rawData.ContainsKey("sessionKey")) sKey = rawData["sessionKey"].ToString();
+                        if (rawData.ContainsKey("userId")) sID = rawData["userId"].ToString();
+                    }
                 }
                 catch { }
 
-                string sID = userIdentity.UserID;
-                if (sID.Length > 20)
-                {
-                    logger.Warning("[FIX] Registered massive UserID. Resetting to 1001.");
-                    sID = "1001";
-                    userIdentity.UserID = sID;
-                }
-                logger.Info(string.Format("[MOCK REGISTER] FORCE SAVING -> ID: {0}, Secret: {1}, Key: {2}", sID, sSecret, sKey));
+                userIdentity.UserID = sID;
+                userIdentity.Secret = sSecret;
+                userIdentity.SessionKey = sKey;
+                
+                logger.Info(string.Format("[REGISTER] ID: {0}, Secret: {1}, Key: {2}", sID, sSecret, sKey));
 
-                // ECRITURE DIRECTE (On bypass LocalPersistService)
                 global::UnityEngine.PlayerPrefs.SetString("MOCK_UserID", sID);
                 global::UnityEngine.PlayerPrefs.SetString("MOCK_Secret", sSecret);
                 global::UnityEngine.PlayerPrefs.SetString("MOCK_AnonID", sKey);
-                global::UnityEngine.PlayerPrefs.Save(); // Sauvegarde physique immédiate
+                global::UnityEngine.PlayerPrefs.Save(); 
 
                 setupHockeyAppUser.Dispatch(userIdentity.UserID);
                 userRegisteredSignal.Dispatch(userIdentity);
@@ -149,3 +144,4 @@ namespace Kampai.Game
         }
     }
 }
+

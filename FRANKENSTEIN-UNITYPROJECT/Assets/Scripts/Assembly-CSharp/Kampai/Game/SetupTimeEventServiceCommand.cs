@@ -1,4 +1,4 @@
-namespace Kampai.Game
+﻿namespace Kampai.Game
 {
 	internal sealed class SetupTimeEventServiceCommand : global::strange.extensions.command.impl.Command
 	{
@@ -9,9 +9,9 @@ namespace Kampai.Game
 		{
 			global::UnityEngine.GameObject gameObject = new global::UnityEngine.GameObject("TimeEventService");
 			global::Kampai.Game.TimeEventService o = gameObject.AddComponent<global::Kampai.Game.TimeEventService>();
-			base.injectionBinder.Bind<global::Kampai.Game.ITimeEventService>().ToValue(o).CrossContext()
-				.Weak();
+			// Removed double bind causing BinderExceptions
 			gameObject.transform.parent = contextView.transform;
 		}
 	}
 }
+

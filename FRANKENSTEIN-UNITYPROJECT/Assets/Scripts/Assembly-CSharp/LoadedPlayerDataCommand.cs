@@ -1,4 +1,4 @@
-public class LoadedPlayerDataCommand : global::strange.extensions.command.impl.Command
+﻿public class LoadedPlayerDataCommand : global::strange.extensions.command.impl.Command
 {
 	[Inject]
 	public string playerJSON { get; set; }
@@ -74,10 +74,9 @@ public class LoadedPlayerDataCommand : global::strange.extensions.command.impl.C
 					telemetryService.SetPlayerServiceReference(playerService);
 					telemetryService.SetPlayerDurationServiceReference(playerDurationService);
 				}
-				global::Kampai.Common.SwrveService swrveService = this.swrveService as global::Kampai.Common.SwrveService;
-				if (swrveService != null)
+				if (this.swrveService != null)
 				{
-					swrveService.SetPlayerServiceReference(playerService);
+					this.swrveService.SetPlayerServiceReference(playerService);
 				}
 				else
 				{
@@ -119,3 +118,4 @@ public class LoadedPlayerDataCommand : global::strange.extensions.command.impl.C
 		return false;
 	}
 }
+

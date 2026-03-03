@@ -11,7 +11,8 @@ c:\Unity\
       Splash/                    # Splash/loading screens
       UI/                        # UI layer
   SERVER/                        # Local mock server
-    kampai_server.py             # Flask server
+    kampai_server.py             # Flask server (ENTRYPOINT)
+    server/                      # Modular backend routes (user, game, metrics, profile)
     definitions.json             # Game definitions (all game data)
     player_data/                 # Per-user saved state
   DOC/                           # This documentation
@@ -21,7 +22,8 @@ c:\Unity\
 
 ## Server Architecture
 
-The mock server (`kampai_server.py`) runs two Flask instances on ports **44732** and **44733** and exposes these endpoints:
+~~The mock server (`kampai_server.py`) runs two Flask instances on ports **44732** and **44733** and exposes these endpoints:~~
+*(Updated: `kampai_server.py` has been refactored into a modular Flask application mapped by Route decorators in the `server/routes` directory.)*
 
 | Endpoint | Method | Purpose |
 |---|---|---|
@@ -37,20 +39,18 @@ The mock server (`kampai_server.py`) runs two Flask instances on ports **44732**
 ---
 
 ## Client Initialization Pipeline
+The Minions Paradise client relies extensively on an Inverse of Control (IoC) driven architecture via **StrangeIoC**.
 
-```
-App Start
-  → ConfigurationsService.Deserialize()      ← GET /rest/config/...
-  → DefinitionService.Deserialize()          ← GET /rest/definitions/prod_v1
-      → Definitions.Deserialize() (JSON)
-      → MarkDefinitions() / MarkMoreDefinitions()  (builds AllDefinitions dict)
-  → LoginCommand                             ← POST /rest/user/login
-  → LoadPlayerCommand                        ← GET /rest/gamestate/<userId>
-      → DefaultPlayerSerializer.Deserialize()
-          → InventoryFastConverter (per item)
-              → definitionService.Get(defId)
-              → Instance constructor
-```
+1. **SplashContext**
+    - Boots the application, initializes basic `LoadInService` and `VideoService`.
+    - Shows the initial loading tip/video.
+2. **MainContext**
+    - Responsible for setting up the `GameStartCommand`.
+    - Triggers the user login phase (`UserSessionService.LoginRequestCallback()`). The client generates `isNewUser: True` dynamic checks.
+3. **GameContext**
+    - Mounts the actual game map, injects `PlayerService`, `DefinitionService`, etc.
+    - Executes `LoadPlayerCommand` to fetch `/rest/gamestate/<userId>`.
+    - ~~Resolves local vs server persistence fallbacks.~~ *(Updated: The game now operates in strictly online remote mode `LoadMode = 'remote'`).*
 
 ---
 
@@ -76,29 +76,27 @@ The game uses a **custom fast JSON parser** (not full Newtonsoft.Json) for perfo
 
 The `Definition.Deserialize()` base method reads property names `.ToUpper()` before dispatch, so all `DeserializeProperty` switch cases must use **UPPERCASE** keys (e.g. `"OUTPUTS"`, `"ID"`, `"LOCALIZEDKEY"`).
 
+~~Newtonsoft.Json originally caused InvalidCastException across payloads like BuildMenuLocalState and LocalResourcesManifest.~~ *(We have successfully eradicated Newtonsoft parsing in favor of FastJsonParser for core startup components like `UserSessionService`).*
+
 ---
 
 ## Known Decompilation Artifacts
 
 The codebase was decompiled from IL bytecode. A recurring decompilation artifact introduces broken switch-case `default:` blocks:
 
-```csharp
-// BROKEN (decompiler artifact):
-default:
-{
-    int num;
-    num = 1;  // artificially added
-    if (num == 1)
-    {
-        // ... reads some field ...
-        break;
-    }
-    return false;  // unreachable
-}
-```
+~~// BROKEN (decompiler artifact):~~
+~~default:~~
+~~{~~
+~~    int num;~~
+~~    num = 1;  // artificially added~~
+~~    if (num == 1)~~
+~~    {~~
+~~        // ... reads some field ...~~
+~~        break;~~
+~~    }~~
+~~    return false;  // unreachable~~
+~~}~~
 
-This causes the `default:` case to **always** execute for any unrecognized property, swallowing the value and breaking the parser. 
+~~This causes the `default:` case to **always** execute for any unrecognized property, swallowing the value and breaking the parser.~~ 
 
-**Fixed files:**
-- `TransactionDefinition.cs` — `OUTPUTS` is now an explicit case; `default:` falls through to `base`
-- `Plot.cs` — `ID` is now an explicit case; `default:` returns `false`
+*(Updated: All 15+ Definition classes suffering from this artifact have been manually repaired. Explicit standard case-switch blocks fall cleanly through to `base.DeserializeProperty(...)`.)*

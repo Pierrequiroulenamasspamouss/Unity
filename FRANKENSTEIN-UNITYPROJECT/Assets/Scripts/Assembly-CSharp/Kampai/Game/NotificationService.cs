@@ -7,6 +7,7 @@ namespace Kampai.Game
 
 		public void Initialize()
 		{
+#if UNITY_ANDROID && !UNITY_EDITOR
 			using (global::UnityEngine.AndroidJavaClass androidJavaClass = new global::UnityEngine.AndroidJavaClass("com.ea.gp.minions.utils.FileUtils"))
 			{
 				try
@@ -27,6 +28,7 @@ namespace Kampai.Game
 					global::System.IO.File.Create(path).Dispose();
 				}
 			}
+#endif
 		}
 
 		public void ScheduleLocalNotification(global::Kampai.Game.Notification notification)

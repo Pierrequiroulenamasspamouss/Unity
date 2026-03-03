@@ -43,18 +43,12 @@ namespace Kampai.Game
 		{
 			switch (propertyName)
 			{
+			case "USERIDWHITELIST":
+				reader.Read();
+				userIdWhitelist = global::Kampai.Util.ReaderUtil.PopulateList<string>(reader, converters, global::Kampai.Util.ReaderUtil.ReadString);
+				break;
 			default:
-					{
-						int num;
-                        num = 1; //added this line to remove use of unassigned variable
-                        if (num == 1)
-				{
-					reader.Read();
-					userIdWhitelist = global::Kampai.Util.ReaderUtil.PopulateList<string>(reader, converters, global::Kampai.Util.ReaderUtil.ReadString);
-					break;
-				}
 				return false;
-			}
 			case "ACCESSPERCENTAGE":
 				reader.Read();
 				accessPercentage = global::System.Convert.ToInt32(reader.Value);
