@@ -72,22 +72,16 @@ namespace Kampai.Game
 		{
 			switch (propertyName)
 			{
-			default:
-					{
-						int num;
-                        num = 1; //added this line to remove use of unassigned variable
-                        if (num == 1)
-				{
-					reader.Read();
-					ID = global::System.Convert.ToInt32(reader.Value);
-					break;
-				}
-				return false;
-			}
+			case "ID":
+				reader.Read();
+				ID = global::System.Convert.ToInt32(reader.Value);
+				break;
 			case "LOCATION":
 				reader.Read();
 				Location = global::Kampai.Util.ReaderUtil.ReadLocation(reader, converters);
 				break;
+			default:
+				return false;
 			}
 			return true;
 		}

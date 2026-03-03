@@ -117,7 +117,13 @@ namespace Kampai.Game
 				{
 					return new global::Kampai.Game.MarketplaceRefreshTimer((global::Kampai.Game.MarketplaceRefreshTimerDefinition)def);
 				}
-				logger.Log(global::Kampai.Util.Logger.Level.Error, "Unable to map inventory type of " + type);
+                if (type == typeof(global::Kampai.Game.Transaction.TransactionDefinition))
+                {
+                    logger.Log(global::Kampai.Util.Logger.Level.Error, "TransactionDefinition in inventory, skipping: " + def.ID);
+                    return null;
+                }
+
+                logger.Log(global::Kampai.Util.Logger.Level.Error, "Unable to map inventory type of " + type);
 				throw new global::Newtonsoft.Json.JsonSerializationException(string.Format("InventoryFastConverter.Create: Unable to map inventory type of {0}", type));
 			}
 			throw new global::Newtonsoft.Json.JsonSerializationException("InventoryFastConverter.Create(): null definition.");

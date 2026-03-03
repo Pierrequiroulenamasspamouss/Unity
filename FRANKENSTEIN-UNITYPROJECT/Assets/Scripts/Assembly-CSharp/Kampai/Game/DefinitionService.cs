@@ -81,20 +81,22 @@ namespace Kampai.Game
 
 		private void MarkDefinitions(global::Kampai.Game.Definitions definitions)
 		{
-			MarkDefinitionsAsUsed(definitions.weightedDefinitions);
-			MarkDefinitionsAsUsed(definitions.transactions);
-			MarkDefinitionsAsUsed(definitions.buildingDefinitions);
-			MarkDefinitionsAsUsed(definitions.plotDefinitions);
+			// Register gameplay-critical defs FIRST so their IDs are never displaced
 			MarkDefinitionsAsUsed(definitions.itemDefinitions);
 			MarkDefinitionsAsUsed(definitions.minionDefinitions);
 			MarkDefinitionsAsUsed(definitions.currencyItemDefinitions);
 			MarkDefinitionsAsUsed(definitions.storeItemDefinitions);
+			MarkDefinitionsAsUsed(definitions.buildingDefinitions);
+			MarkDefinitionsAsUsed(definitions.plotDefinitions);
 			MarkDefinitionsAsUsed(definitions.purchasedExpansionDefinitions);
 			MarkDefinitionsAsUsed(definitions.commonExpansionDefinitions);
 			MarkDefinitionsAsUsed(definitions.expansionDefinitions);
 			MarkDefinitionsAsUsed(definitions.debrisDefinitions);
 			MarkDefinitionsAsUsed(definitions.aspirationalBuildingDefinitions);
 			MarkDefinitionsAsUsed(definitions.footprintDefinitions);
+			// Transactions registered last: gameplay items take priority on any ID collision
+			MarkDefinitionsAsUsed(definitions.weightedDefinitions);
+			MarkDefinitionsAsUsed(definitions.transactions);
 		}
 
 		private void MarkMoreDefinitions(global::Kampai.Game.Definitions definitions)
@@ -125,7 +127,7 @@ namespace Kampai.Game
 
         private void MarkMarketplaceDefinitions(global::Kampai.Game.Definitions definitions)
         {
-            // LE FIX EST ICI : On vérifie si la définition existe avant de toucher à ses sous-éléments
+            // LE FIX EST ICI : On vï¿½rifie si la dï¿½finition existe avant de toucher ï¿½ ses sous-ï¿½lï¿½ments
             if (definitions.marketplaceDefinition == null)
             {
                 UnityEngine.Debug.LogWarning("DefinitionService: 'marketplaceDefinition' est manquant dans le JSON. On ignore.");
@@ -134,7 +136,7 @@ namespace Kampai.Game
 
             MarkDefinitionAsUsed(definitions.marketplaceDefinition);
 
-            // Sécurités supplémentaires au cas où les sous-listes seraient nulles aussi
+            // Sï¿½curitï¿½s supplï¿½mentaires au cas oï¿½ les sous-listes seraient nulles aussi
             if (definitions.marketplaceDefinition.itemDefinitions != null)
                 MarkDefinitionsAsUsed(definitions.marketplaceDefinition.itemDefinitions);
 
@@ -536,29 +538,18 @@ namespace Kampai.Game
 
         private void MarkDefinitionAsUsed(global::Kampai.Game.Definition d)
         {
-            // Sécurité anti-crash si l'objet est null (ça arrive avec des JSON mal formés)
             if (d == null) return;
 
-            // Si l'ID existe déjà dans le dictionnaire AllDefinitions
             if (AllDefinitions.ContainsKey(d.ID))
             {
-                // Au lieu de lancer une FatalException, on log un avertissement
-                // logger.Warn(string.Format("Duplicate ID detected: {0} (Type: {1}). Renumbering to avoid crash.", d.ID, d.GetType().Name));
-                // Si logger.Warn n'existe pas, utilise UnityEngine.Debug.LogWarning :
-                UnityEngine.Debug.LogWarning(string.Format("Duplicate ID detected: {0} (Type: {1}). Renumbering to avoid crash.", d.ID, d.GetType().Name));
-
-                // On cherche le prochain ID libre
-                // On boucle tant que l'ID est pris
-                while (AllDefinitions.ContainsKey(d.ID))
-                {
-                    d.ID++; // On incrémente l'ID de l'objet entrant
-                }
-
-                // Petit log pour dire quel est le nouvel ID
-                UnityEngine.Debug.LogWarning(string.Format("New ID assigned: {0}", d.ID));
+                // Skip duplicate - keep the first registration.
+                // Do NOT renumber: renumbering silently displaced item defs and caused load failures.
+                UnityEngine.Debug.LogWarning(string.Format(
+                    "[DefinitionService] Duplicate ID {0} (incoming: {1}, existing: {2}). Skipping.",
+                    d.ID, d.GetType().Name, AllDefinitions[d.ID].GetType().Name));
+                return;
             }
 
-            // On ajoute l'objet avec son ID (original ou corrigé)
             AllDefinitions[d.ID] = d;
         }
 

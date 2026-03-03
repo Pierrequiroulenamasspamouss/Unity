@@ -45,87 +45,87 @@ public class LoadPlayerCommand : global::strange.extensions.command.impl.Command
 	[Inject]
 	public global::Kampai.Splash.SplashProgressUpdateSignal splashProgressUpdateSignal { get; set; }
 
-    private string TryLoadLocalPlayer()
-    {
-        string path = global::UnityEngine.Application.persistentDataPath + "/player_save.json";
+	private string TryLoadLocalPlayer()
+	{
+		string path = global::UnityEngine.Application.persistentDataPath + "/player_save.json";
 
-        if (!global::System.IO.File.Exists(path))
-            return null;
+		if (!global::System.IO.File.Exists(path))
+			return null;
 
-        try
-        {
-            logger.Info("[LoadPlayerCommand] Loading local save: " + path);
-            byte[] bytes = global::System.IO.File.ReadAllBytes(path);
-            string json = System.Text.Encoding.UTF8.GetString(bytes);
+		try
+		{
+			logger.Info("[LoadPlayerCommand] Loading local save: " + path);
+			byte[] bytes = global::System.IO.File.ReadAllBytes(path);
+			string json = System.Text.Encoding.UTF8.GetString(bytes);
 
-            return string.IsNullOrEmpty(json) ? null : json;
-        }
-        catch (System.Exception e)
-        {
-            logger.Error("[LoadPlayerCommand] Failed to read local save: " + e);
-            return null;
-        }
-    }
-    private string LoadLegacyLocal()
-    {
-        string id = localPersistService.GetData("LocalID");
-        return string.IsNullOrEmpty(id)
-            ? null
-            : localPersistService.GetData("Player_" + id);
-    }
+			return string.IsNullOrEmpty(json) ? null : json;
+		}
+		catch (System.Exception e)
+		{
+			logger.Error("[LoadPlayerCommand] Failed to read local save: " + e);
+			return null;
+		}
+	}
+	private string LoadLegacyLocal()
+	{
+		string id = localPersistService.GetData("LocalID");
+		return string.IsNullOrEmpty(id)
+			? null
+			: localPersistService.GetData("Player_" + id);
+	}
 
-    private string LoadFile()
-    {
-        string path = localPersistService.GetData("LocalFileName");
-        return string.IsNullOrEmpty(path)
-            ? null
-            : resourceService.LoadText(path);
-    }
+	private string LoadFile()
+	{
+		string path = localPersistService.GetData("LocalFileName");
+		return string.IsNullOrEmpty(path)
+			? null
+			: resourceService.LoadText(path);
+	}
 
-    public override void Execute()
-    {
-        logger.EventStart("LoadPlayerCommand.Execute");
-        global::Kampai.Util.TimeProfiler.StartSection("load player");
+	public override void Execute()
+	{
+		logger.EventStart("LoadPlayerCommand.Execute");
+		global::Kampai.Util.TimeProfiler.StartSection("load player");
 
-        string playerJson = TryLoadLocalPlayer();
-        if (!string.IsNullOrEmpty(playerJson))
-        {
-            loadedFromLocal = true;
-        }
+		string playerJson = TryLoadLocalPlayer();
+		if (!string.IsNullOrEmpty(playerJson))
+		{
+			loadedFromLocal = true;
+		}
 
-        if (string.IsNullOrEmpty(playerJson))
-        {
-            string mode = localPersistService.GetData("LoadMode");
-            switch (mode)
-            {
-                case "local":
-                    playerJson = LoadLegacyLocal();
-                    break;
+		if (string.IsNullOrEmpty(playerJson))
+		{
+			string mode = localPersistService.GetData("LoadMode");
+			switch (mode)
+			{
+				case "local":
+					playerJson = LoadLegacyLocal();
+					break;
 
-                case "file":
-                    playerJson = LoadFile();
-                    break;
+				case "file":
+					playerJson = LoadFile();
+					break;
 
-                case "remote":
-                case "externalLogin":
-                    RemoteLoadPlayerData();
-                    return;
+				case "remote":
+				case "externalLogin":
+					RemoteLoadPlayerData();
+					return;
 
-                default:
-                    break;
-            }
-        }
+				default:
+					break;
+			}
+		}
 
-        if (string.IsNullOrEmpty(playerJson))
-        {
-            playerJson = defService.GetInitialPlayer();
-        }
+		if (string.IsNullOrEmpty(playerJson))
+		{
+			playerJson = defService.GetInitialPlayer();
+		}
 
-        loadedPlayerDataSignal.Dispatch(playerJson);
-        splashProgressUpdateSignal.Dispatch(35, 10f);
+		loadedPlayerDataSignal.Dispatch(playerJson);
+		splashProgressUpdateSignal.Dispatch(35, 10f);
 
-        logger.EventStop("LoadPlayerCommand.Execute");
-    }
+		logger.EventStop("LoadPlayerCommand.Execute");
+	}
 
 
 
@@ -133,6 +133,8 @@ public class LoadPlayerCommand : global::strange.extensions.command.impl.Command
 	private void RemoteLoadPlayerData()
 	{
 		global::Kampai.Game.UserSession userSession = userSessionService.UserSession;
+
+		// Cas normal : On a une session, on contacte le serveur
 		if (userSession != null)
 		{
 			string userID = userSession.UserID;
@@ -144,13 +146,30 @@ public class LoadPlayerCommand : global::strange.extensions.command.impl.Command
 			downloadService.Perform(request);
 			logger.Debug("LoadPlayerCommand: Requesting player data with user id {0}", userSession.UserID);
 		}
+		// LE FIX EST ICI : Pas de session ? Pas de panique.
 		else
-		{
-			logger.Fatal(global::Kampai.Util.FatalCode.CMD_LOAD_PLAYER, "No user session");
-		}
-	}
+			// Au lieu de Fatal, on met un Warning pour info
+			logger.Warning("LoadPlayerCommand: No user session found. Falling back to Initial Player (Offline/New Game Mode).");
 
-	private void LoadCurrentSocialTeam()
+		// On récupère le JSON du joueur par défaut (défini dans definitions.json)
+		string initialPlayerJson = defService.GetInitialPlayer();
+
+		// Si même le joueur initial est vide, là on a un vrai problème
+		if (string.IsNullOrEmpty(initialPlayerJson))
+		{
+			// Fallback ultime : un JSON minimaliste fait main pour éviter le crash coûte que coûte
+			initialPlayerJson = "{ \"inventory\": [], \"version\": 1 }";
+			logger.Error("LoadPlayerCommand: Initial player data was empty, using emergency backup.");
+		}
+
+		// On simule ce que "Execute" aurait fait à la fin : on envoie les données
+		loadedPlayerDataSignal.Dispatch(initialPlayerJson);
+
+		// On met à jour la barre de chargement pour que ça ne reste pas bloqué visuellement
+		splashProgressUpdateSignal.Dispatch(35, 10f);
+	}
+    
+    private void LoadCurrentSocialTeam()
 	{
 		global::Kampai.Game.TimedSocialEventDefinition currentSocialEvent = socialEventService.GetCurrentSocialEvent();
 		if (currentSocialEvent != null)

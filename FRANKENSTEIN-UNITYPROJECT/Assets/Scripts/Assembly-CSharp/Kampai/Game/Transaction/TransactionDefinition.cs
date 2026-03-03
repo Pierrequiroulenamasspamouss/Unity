@@ -11,22 +11,16 @@ namespace Kampai.Game.Transaction
 		{
 			switch (propertyName)
 			{
-			default:
-			{
-				int num;
-				num = 1; //added this line to remove use of unassigned variable
-                        if (num == 1)
-				{
-					reader.Read();
-					Outputs = global::Kampai.Util.ReaderUtil.PopulateList<global::Kampai.Util.QuantityItem>(reader, converters);
-					break;
-				}
-				return base.DeserializeProperty(propertyName, reader, converters);
-			}
+			case "OUTPUTS":
+				reader.Read();
+				Outputs = global::Kampai.Util.ReaderUtil.PopulateList<global::Kampai.Util.QuantityItem>(reader, converters);
+				break;
 			case "INPUTS":
 				reader.Read();
 				Inputs = global::Kampai.Util.ReaderUtil.PopulateList<global::Kampai.Util.QuantityItem>(reader, converters);
 				break;
+			default:
+				return base.DeserializeProperty(propertyName, reader, converters);
 			}
 			return true;
 		}
