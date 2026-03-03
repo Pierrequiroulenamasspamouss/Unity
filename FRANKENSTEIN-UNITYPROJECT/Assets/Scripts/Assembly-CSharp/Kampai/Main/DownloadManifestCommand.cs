@@ -69,8 +69,15 @@
 				logger.Warning("MOCK: Failed to write manifest file: " + ex.Message);
 			}
 
-			
-			//logger.EventStop("DownloadManifestCommand.Execute");
+			logger.EventStop("DownloadManifestCommand.Execute");
+			if (postSignal != null)
+			{
+				postSignal.Dispatch();
+			}
+			else
+			{
+				logger.Error("postSignal is null in DownloadManifestCommand!");
+			}
 		}
 	}
 }

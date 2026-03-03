@@ -47,6 +47,7 @@ namespace Kampai.Game
             
             global::UnityEngine.GameObject timeEventGo = new global::UnityEngine.GameObject("TimeEventService");
             timeEventServiceInstance = timeEventGo.AddComponent<global::Kampai.Game.TimeEventService>();
+            injectionBinder.Unbind<global::Kampai.Game.ITimeEventService>();
             injectionBinder.Bind<global::Kampai.Game.ITimeEventService>().ToValue(timeEventServiceInstance).CrossContext();
 
 
@@ -54,18 +55,21 @@ namespace Kampai.Game
             // This coexists with MainContext's BaseElement.CONTEXT binding because
             // BaseElement and GameElement are different enum types — their boxed values
             // are different dictionary keys even though both have integer value 0.
+            injectionBinder.Unbind<global::strange.extensions.context.api.ICrossContextCapable>(global::Kampai.Game.GameElement.CONTEXT);
             injectionBinder.Bind<global::strange.extensions.context.api.ICrossContextCapable>()
                 .ToValue(this).ToName(global::Kampai.Game.GameElement.CONTEXT).CrossContext();
 
             // [CRITICAL FIX] Bind MISSING named ILocalizationService instances
             // QuestService and other services need these named bindings
             // BaseContext only binds the default (unnamed) instance
+            injectionBinder.Unbind<global::Kampai.Main.ILocalizationService>(global::Kampai.Main.LocalizationServices.EVENT);
             injectionBinder.Bind<global::Kampai.Main.ILocalizationService>()
                 .To<global::Kampai.Main.MockHALService>()
                 .ToSingleton()
                 .ToName(global::Kampai.Main.LocalizationServices.EVENT)
                 .CrossContext();
             
+            injectionBinder.Unbind<global::Kampai.Main.ILocalizationService>(global::Kampai.Main.LocalizationServices.PLAYER);
             injectionBinder.Bind<global::Kampai.Main.ILocalizationService>()
                 .To<global::Kampai.Main.MockHALService>()
                 .ToSingleton()
@@ -101,7 +105,7 @@ namespace Kampai.Game
 
             // IFMODService - commands need local access even though MainContext has it CrossContext
             injectionBinder.Unbind<global::Kampai.Common.Service.Audio.IFMODService>();
-            injectionBinder.Bind<global::Kampai.Common.Service.Audio.IFMODService>().To<global::Kampai.Game.MockFMODService>().ToSingleton();
+            injectionBinder.Bind<global::Kampai.Common.Service.Audio.IFMODService>().To<global::Kampai.Common.Service.Audio.FMODService>().ToSingleton();
 
             // ISwrveService - commands need local access even though MainContext has it CrossContext
             injectionBinder.Unbind<global::Kampai.Common.ISwrveService>();
@@ -196,6 +200,7 @@ namespace Kampai.Game
 
             // [FIX] Bind placeholder UI_GLASSCANVAS - will be overridden by UIContext when it creates the real canvas
             global::UnityEngine.GameObject placeholderCanvas = new global::UnityEngine.GameObject("PlaceholderGlassCanvas");
+            injectionBinder.Unbind<global::UnityEngine.GameObject>(global::Kampai.Main.MainElement.UI_GLASSCANVAS);
             injectionBinder.Bind<global::UnityEngine.GameObject>().ToValue(placeholderCanvas).ToName(global::Kampai.Main.MainElement.UI_GLASSCANVAS).CrossContext().Weak();
 
             // [RESTORED] Audio Signals - MainContext has them as Weak(), which might fail here.
@@ -215,9 +220,13 @@ namespace Kampai.Game
             injectionBinder.Bind<global::Kampai.Game.KillSwitchChangedSignal>().ToSingleton();
 
             // Local Game Scope Services
+            injectionBinder.Unbind<global::Kampai.Game.ICurrencyService>();
             injectionBinder.Bind<global::Kampai.Game.ICurrencyService>().To<global::Kampai.Game.NimbleCurrencyService>().ToSingleton().CrossContext();
+            injectionBinder.Unbind<global::Kampai.Game.ShowDialogSignal>();
             injectionBinder.Bind<global::Kampai.Game.ShowDialogSignal>().ToSingleton().CrossContext();
+            injectionBinder.Unbind<global::Kampai.Game.StartPremiumPurchaseSignal>();
             injectionBinder.Bind<global::Kampai.Game.StartPremiumPurchaseSignal>().ToSingleton().CrossContext();
+            injectionBinder.Unbind<global::Kampai.Game.OrderBoardUpdateTicketOnBoardSignal>();
             injectionBinder.Bind<global::Kampai.Game.OrderBoardUpdateTicketOnBoardSignal>().ToSingleton().CrossContext();
             injectionBinder.Bind<global::Kampai.Game.IInput>().To<global::Kampai.Game.TouchInput>().ToSingleton();
 
@@ -259,12 +268,14 @@ namespace Kampai.Game
             }
 
             // Bind Camera (Local) - ToValue implies singleton, do not add .ToSingleton()
+            injectionBinder.Unbind<global::UnityEngine.Camera>(global::Kampai.Main.MainElement.CAMERA);
             injectionBinder.Bind<global::UnityEngine.Camera>()
                 .ToValue(main)
                 .ToName(global::Kampai.Main.MainElement.CAMERA)
                 .CrossContext(); 
 
             // Bind Camera GameObject - ToValue implies singleton
+            injectionBinder.Unbind<global::UnityEngine.GameObject>(global::Kampai.Main.MainElement.CAMERA);
             injectionBinder.Bind<global::UnityEngine.GameObject>()
                 .ToValue(mainCameraGo)
                 .ToName(global::Kampai.Main.MainElement.CAMERA)
@@ -276,6 +287,7 @@ namespace Kampai.Game
             
             if (cameraUtils == null) throw new global::System.Exception("[GameContext] Failed to create CameraUtils");
 
+            injectionBinder.Unbind<global::Kampai.Game.View.CameraUtils>();
             injectionBinder.Bind<global::Kampai.Game.View.CameraUtils>().ToValue(cameraUtils).CrossContext();
 
             global::UnityEngine.Vector3 inNormal = new global::UnityEngine.Vector3(0f, 1f, 0f);
@@ -294,6 +306,7 @@ namespace Kampai.Game
             injectionBinder.Bind<global::Kampai.Game.MinionAppearSignal>().ToSingleton();
             injectionBinder.Bind<global::Kampai.Game.AnimateSelectedMinionSignal>().ToSingleton();
             injectionBinder.Bind<global::Kampai.Game.DebugUpdateGridSignal>().ToSingleton();
+            injectionBinder.Unbind<global::Kampai.Game.DebugKeyHitSignal>();
             injectionBinder.Bind<global::Kampai.Game.DebugKeyHitSignal>().ToSingleton().CrossContext();
             injectionBinder.Bind<global::Kampai.Game.StartGroupGachaSignal>().ToSingleton();
             injectionBinder.Bind<global::Kampai.Game.StartMinionRouteSignal>().ToSingleton();
