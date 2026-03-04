@@ -44,6 +44,10 @@ namespace strange.extensions.injector.impl
 					return;
 				}
 				Unbind(key, binding.name);
+				if (CrossContextBinder.GetBinding(key, binding.name) != null)
+				{
+					CrossContextBinder.Unbind(key, binding.name);
+				}
 				CrossContextBinder.ResolveBinding(binding, key);
 			}
 			else
