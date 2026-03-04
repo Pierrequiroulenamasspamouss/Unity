@@ -51,7 +51,7 @@ public class CustomFMOD_StudioEventEmitter : global::UnityEngine.MonoBehaviour
 		}
 		else
 		{
-			global::FMOD.Studio.UnityUtil.Log("Tried to play event without a valid instance: " + path);
+			global::UnityEngine.Debug.Log("Tried to play event without a valid instance: " + path);
 		}
 	}
 
@@ -158,15 +158,15 @@ public class CustomFMOD_StudioEventEmitter : global::UnityEngine.MonoBehaviour
 		{
 			if (asset != null)
 			{
-				evt = FMOD_StudioSystem.instance.GetEvent(asset.id);
+				evt = global::FMODUnity.RuntimeManager.CreateInstance(new global::System.Guid(asset.id));
 			}
 			else if (!string.IsNullOrEmpty(path))
 			{
-				evt = FMOD_StudioSystem.instance.GetEvent(path);
+				evt = global::FMODUnity.RuntimeManager.CreateInstance(path);
 			}
 			else
 			{
-				global::FMOD.Studio.UnityUtil.LogError("No asset or path specified for Event Emitter");
+				global::UnityEngine.Debug.LogError("No asset or path specified for Event Emitter");
 			}
 		}
 	}
@@ -182,7 +182,7 @@ public class CustomFMOD_StudioEventEmitter : global::UnityEngine.MonoBehaviour
 			global::FMOD.Studio.ParameterInstance instance;
 			if (float.IsNaN(eventParameter.Value))
 			{
-				global::FMOD.Studio.UnityUtil.LogError("NAN passed in as float value for param:" + eventParameter.Key);
+				global::UnityEngine.Debug.LogError("NAN passed in as float value for param:" + eventParameter.Key);
 			}
 			else if (ERRCHECK(evt.getParameter(eventParameter.Key, out instance)) == global::FMOD.RESULT.OK && instance != null)
 			{
@@ -202,12 +202,12 @@ public class CustomFMOD_StudioEventEmitter : global::UnityEngine.MonoBehaviour
 		{
 			return;
 		}
-		global::FMOD.Studio.UnityUtil.Log("Destroy called");
+		global::UnityEngine.Debug.Log("Destroy called");
 		if (evt != null && evt.isValid())
 		{
 			if (getPlaybackState() != global::FMOD.Studio.PLAYBACK_STATE.STOPPED)
 			{
-				global::FMOD.Studio.UnityUtil.Log("Release evt: " + path);
+				global::UnityEngine.Debug.Log("Release evt: " + path);
 				ERRCHECK(evt.stop(global::FMOD.Studio.STOP_MODE.IMMEDIATE));
 			}
 			ERRCHECK(evt.release());
@@ -230,7 +230,7 @@ public class CustomFMOD_StudioEventEmitter : global::UnityEngine.MonoBehaviour
 		}
 		else
 		{
-			global::FMOD.Studio.UnityUtil.LogError("Event retrieval failed: " + path);
+			global::UnityEngine.Debug.LogError("Event retrieval failed: " + path);
 		}
 		hasStarted = true;
 	}
@@ -289,14 +289,17 @@ public class CustomFMOD_StudioEventEmitter : global::UnityEngine.MonoBehaviour
 	{
 		if (evt != null && evt.isValid())
 		{
-			global::FMOD.Studio.ATTRIBUTES_3D attributes = ((!shiftPosition) ? global::FMOD.Studio.UnityUtil.to3DAttributes(base.gameObject, cachedRigidBody) : global::FMOD.Studio.UnityUtil.to3DAttributes(base.gameObject, cachedRigidBody));
+			global::FMOD.ATTRIBUTES_3D attributes = ((!shiftPosition) ? global::FMODUnity.RuntimeUtils.To3DAttributes(base.gameObject, cachedRigidBody) : global::FMODUnity.RuntimeUtils.To3DAttributes(base.gameObject, cachedRigidBody));
 			ERRCHECK(evt.set3DAttributes(attributes));
 		}
 	}
 
 	private global::FMOD.RESULT ERRCHECK(global::FMOD.RESULT result)
 	{
-		global::FMOD.Studio.UnityUtil.ERRCHECK(result);
+		if (result != global::FMOD.RESULT.OK)
+		{
+			global::UnityEngine.Debug.LogError(string.Format("FMOD Error: {0}", result));
+		}
 		return result;
 	}
 }

@@ -31,9 +31,8 @@ namespace Kampai.Game
 			base.injectionBinder.Bind<global::UnityEngine.GameObject>().ToValue(gameObject).ToName(global::Kampai.Main.MainElement.AUDIO_LISTENER)
 				.CrossContext();
 			gameObject.transform.parent = contextView.transform;
-			gameObject.gameObject.AddComponent<FMOD_Listener>();
-			global::UnityEngine.GameObject gameObject2 = global::UnityEngine.GameObject.Find("FMOD_StudioSystem");
-			gameObject2.transform.parent = managers.transform;
+			gameObject.gameObject.AddComponent<global::FMODUnity.StudioListener>();
+			// Pruned GameObject.Find("FMOD_StudioSystem") since the new framework instantiates organically.
 			global::UnityEngine.GameObject gameObject3 = new global::UnityEngine.GameObject("EnvironmentAudioManager");
 			gameObject3.AddComponent<EnvironmentAudioManagerView>();
 			gameObject3.transform.localPosition = new global::UnityEngine.Vector3(0f, 0f, 0f);

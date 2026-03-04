@@ -13,17 +13,16 @@ namespace Kampai.Game
 
 		public void Execute(string audioSource)
 		{
-			FMOD_StudioSystem instance = FMOD_StudioSystem.instance;
 			string guid = fmodService.GetGuid(audioSource);
-			global::FMOD.Studio.EventInstance eventInstance = instance.GetEvent(guid);
-			if (eventInstance == null)
+			if (string.IsNullOrEmpty(guid))
 			{
 				logger.Log(global::Kampai.Util.Logger.Level.Error, "Failed to Load Audio Source: " + audioSource);
 				return;
 			}
-			eventInstance.set3DAttributes(global::FMOD.Studio.UnityUtil.to3DAttributes(audioListener));
+			global::FMOD.Studio.EventInstance eventInstance = global::FMODUnity.RuntimeManager.CreateInstance(new global::System.Guid(guid));
+			eventInstance.set3DAttributes(global::FMODUnity.RuntimeUtils.To3DAttributes(audioListener));
 			global::FMOD.RESULT rESULT = eventInstance.start();
-			if (!global::FMOD.Studio.UnityUtil.ERRCHECK(rESULT))
+			if (rESULT != global::FMOD.RESULT.OK)
 			{
 				logger.Log(global::Kampai.Util.Logger.Level.Error, "Failed to Play (Error Code: " + rESULT.ToString() + ") Audio Source: " + audioSource);
 			}

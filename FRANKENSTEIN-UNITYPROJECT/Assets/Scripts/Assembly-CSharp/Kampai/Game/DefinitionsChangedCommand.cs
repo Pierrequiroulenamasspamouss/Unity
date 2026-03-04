@@ -57,7 +57,6 @@ namespace Kampai.Game
 				num = num2;
 			}
 			global::UnityEngine.QualitySettings.SetQualityLevel(num);
-			loadPlayerSignal.Dispatch();
 			loadMarketplaceOverridesSignal.Dispatch();
 		}
 	}

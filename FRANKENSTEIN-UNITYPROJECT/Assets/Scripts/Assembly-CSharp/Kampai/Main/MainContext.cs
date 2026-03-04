@@ -21,10 +21,10 @@ namespace Kampai.Main
 
 
 
-            // 2. MOCK AUDIO (FMOD)
+            // 2. REAL AUDIO (FMOD)
             injectionBinder.Unbind<global::Kampai.Common.Service.Audio.IFMODService>(); // <--- IMPORTANT
             injectionBinder.Bind<global::Kampai.Common.Service.Audio.IFMODService>()
-                           .To<global::Kampai.Game.MockFMODService>()
+                           .To<global::Kampai.Common.Service.Audio.FMODService>()
                            .ToSingleton()
                            .CrossContext();
 

@@ -16,33 +16,38 @@ namespace Kampai.Game
                 return null;
             }
 
+            // FIX: Reset state so it never leaks from a previous object!
+            buildingType = BuildingType.BuildingTypeIdentifier.UNKNOWN;
+
             // 1. On charge l'objet
             global::Newtonsoft.Json.Linq.JObject jObject = global::Newtonsoft.Json.Linq.JObject.Load(reader);
 
             // 2. LE FIX : On cherche "type" (minuscule) OU "TYPE" (majuscule)
-            // Le script Python a mis "TYPE", donc le code d'origine Èchouait ici.
+            // Le script Python a mis "TYPE", donc le code d'origine √©chouait ici.
             global::Newtonsoft.Json.Linq.JProperty jProperty = jObject.Property("type");
             if (jProperty == null) jProperty = jObject.Property("TYPE");
+            if (jProperty == null) jProperty = jObject.Property("BuildingType");
+            if (jProperty == null) jProperty = jObject.Property("Type");
 
             if (jProperty != null)
             {
                 string value = jProperty.Value.ToString();
                 try
                 {
-                    // 3. LE FIX : On ajoute 'true' ‡ la fin de Enum.Parse pour ignorer la casse
-                    // «a marchera que le JSON contienne "Crafting", "CRAFTING" ou "crafting"
+                    // 3. LE FIX : On ajoute 'true' √† la fin de Enum.Parse pour ignorer la casse
+                    // √áa marchera que le JSON contienne "Crafting", "CRAFTING" ou "crafting"
                     buildingType = (BuildingType.BuildingTypeIdentifier)global::System.Enum.Parse(typeof(BuildingType.BuildingTypeIdentifier), value, true);
                 }
                 catch
                 {
-                    // Si le type est invalide, on ne fait rien, Áa tombera dans le default du Create()
+                    // Si le type est invalide, on ne fait rien, √ßa tombera dans le default du Create()
                     // ou on peut logger un warning ici.
                     Debug.LogWarning("BuildingDefinitionFastConverter: Impossible de parser le type: " + value);
                 }
             }
             else
             {
-                Debug.LogWarning("BuildingDefinitionFastConverter: PropriÈtÈ 'type' introuvable dans le JSON.");
+                Debug.LogWarning("BuildingDefinitionFastConverter: Propri√©t√© 'type' introuvable dans le JSON.");
             }
 
             reader = jObject.CreateReader();
@@ -91,7 +96,7 @@ namespace Kampai.Game
                     return new global::Kampai.Game.MailboxBuildingDefinition();
 
                 default:
-                    // FIX DE SURVIE : Si le type est inconnu (ex: "UNKNOWN"), on renvoie un b‚timent gÈnÈrique
+                    // FIX DE SURVIE : Si le type est inconnu (ex: "UNKNOWN"), on renvoie un b√¢timent g√©n√©rique
                     // au lieu de faire crasher tout le jeu.
                     Debug.LogWarning("BuildingDefinitionFastConverter: Type inconnu ou null (" + buildingType + "). Fallback sur Decoration.");
                     return new global::Kampai.Game.DecorationBuildingDefinition();

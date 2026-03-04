@@ -46,7 +46,7 @@ namespace Kampai.Game
 		{
 			if (!string.IsNullOrEmpty(guid))
 			{
-				eventInstance = FMOD_StudioSystem.instance.GetEvent(guid);
+				eventInstance = global::FMODUnity.RuntimeManager.CreateInstance(new global::System.Guid(guid));
 			}
 		}
 
@@ -80,7 +80,10 @@ namespace Kampai.Game
 
 		private global::FMOD.RESULT ERRCHECK(global::FMOD.RESULT result)
 		{
-			global::FMOD.Studio.UnityUtil.ERRCHECK(result);
+			if (result != global::FMOD.RESULT.OK)
+			{
+				global::UnityEngine.Debug.LogError(string.Format("FMOD Error: {0}", result));
+			}
 			return result;
 		}
 	}

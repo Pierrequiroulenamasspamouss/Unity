@@ -10,8 +10,7 @@ namespace Kampai.Game
 
 		public override void Execute()
 		{
-			FMOD_StudioSystem instance = FMOD_StudioSystem.instance;
-			instance.PlayOneShot(audioClip, audioListener.transform.position);
+			global::FMODUnity.RuntimeManager.PlayOneShot(audioClip, audioListener.transform.position);
 		}
 	}
 }

@@ -316,6 +316,7 @@ public class AlligatorAgent : global::UnityEngine.MonoBehaviour
 		StartGameViewCallback();
 	}
 
+	[System.CLSCompliant(false)]
 	public void IntroPointArrived(AbstractGoTween tween)
 	{
 		AlligatorAnimator.Play(global::UnityEngine.Animator.StringToHash("Chomp"), 0);

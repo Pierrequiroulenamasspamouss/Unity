@@ -14,7 +14,7 @@ namespace Kampai.Util
 			{
 				global::UnityEngine.Handheld.ClearShaderCache();
 			}
-			global::FMOD.Studio.UnityUtil.ForceLoadLowLevelBinary();
+			// global::FMOD.Studio.UnityUtil.ForceLoadLowLevelBinary(); -> Handled implicitly by new RuntimeManager config.
 			global::UnityEngine.Screen.sleepTimeout = -2;
 		}
 	}

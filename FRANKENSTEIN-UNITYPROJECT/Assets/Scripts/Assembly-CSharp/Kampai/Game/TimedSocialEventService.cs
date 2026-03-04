@@ -294,10 +294,57 @@ namespace Kampai.Game
 			if (response.Success)
 			{
 				string body = response.Body;
-				global::Kampai.Game.SocialTeamResponse socialTeamResponse = global::Newtonsoft.Json.JsonConvert.DeserializeObject<global::Kampai.Game.SocialTeamResponse>(body, new global::Newtonsoft.Json.JsonConverter[1]
-				{
-					new global::Kampai.Game.SocialTeamConverter(definitionService)
-				});
+
+                // FIX: Use FastJsonParser instead of FastJSONDeserializer to get a generic object dictionary
+                global::System.Collections.Generic.Dictionary<string, object> dict = global::Kampai.Util.FastJsonParser.Deserialize(body) as global::System.Collections.Generic.Dictionary<string, object>;
+                global::Kampai.Game.SocialTeamResponse socialTeamResponse = new global::Kampai.Game.SocialTeamResponse();
+                
+                if (dict != null)
+                {
+                    if (dict.ContainsKey("eventId"))
+                    {
+                        socialTeamResponse.EventId = global::System.Convert.ToInt32(dict["eventId"]);
+                    }
+                    if (dict.ContainsKey("team") && dict["team"] != null)
+                    {
+                        var teamDict = dict["team"] as global::System.Collections.Generic.Dictionary<string, object>;
+                        if (teamDict != null)
+                        {
+                            global::Kampai.Game.TimedSocialEventDefinition def = null;
+                            if (teamDict.ContainsKey("socialEventId"))
+                            {
+                                int socialEventId = global::System.Convert.ToInt32(teamDict["socialEventId"]);
+                                def = definitionService.Get<global::Kampai.Game.TimedSocialEventDefinition>(socialEventId);
+                            }
+                            
+                            // Initialize SocialTeam using its explicit parameterized constructor
+                            socialTeamResponse.Team = new global::Kampai.Game.SocialTeam(def);
+
+                            // Bypass string serialization entirely. FastJsonParser parses arrays to List<object>, which FastJSONSerializer chokes on.
+                            // Convert the dictionary directly to a JToken and deserialize it.
+                            try 
+                            {
+                                global::Newtonsoft.Json.Linq.JToken token = global::Kampai.Util.FastJsonParser.ConvertToJToken(teamDict);
+                                global::Newtonsoft.Json.JsonReader reader = new global::Newtonsoft.Json.Linq.JTokenReader(token);
+                                JsonConverters converters = new JsonConverters();
+                                socialTeamResponse.Team.Deserialize(reader, converters);
+                            }
+                            catch (global::System.Exception e)
+                            {
+                                logger.Error("TSE Team parse fallback failed: " + e.Message);
+                            }
+                        }
+                    }
+                    if (dict.ContainsKey("userEvent") && dict["userEvent"] != null)
+                    {
+                        try 
+                        {
+                            global::Newtonsoft.Json.Linq.JToken token = global::Kampai.Util.FastJsonParser.ConvertToJToken(dict["userEvent"]);
+                            socialTeamResponse.UserEvent = token.ToObject<global::Kampai.Game.SocialTeamUserEvent>();
+                        }
+                        catch {}
+                    }
+                }
 				socialEventCache[socialTeamResponse.EventId] = socialTeamResponse;
 				UpdateClaimRewardForPastEvent(socialTeamResponse);
 				if (resultSignal != null)

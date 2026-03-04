@@ -43,3 +43,70 @@ def register():
         "secret": "mock", "sessionKey": "mock",
         "isNewUser": True, "isTester": True, "country": "US"
     })
+
+# --- TSE ENDPOINTS MOCKS ---
+@user_bp.route('/rest/tse/event/<int:event_id>/team/user/<user_id>', methods=['GET', 'POST'])
+def get_tse_event_team(event_id, user_id):
+    """
+    Mocks the Timed Social Event / Team Request for the user.
+    """
+    import json
+    from flask import current_app
+    data = {
+        "eventId": event_id,
+        "team": {
+            "id": 1001,
+            "socialEventId": event_id,
+            "members": [{
+                "id": str(user_id),
+                "externalId": str(user_id),
+                "userId": str(user_id),
+                "type": 0,
+                "secret": "mock",
+                "sessionKey": "mock"
+            }],
+            "orderProgress": []
+        },
+        "userEvent": {
+            "rewardClaimed": False,
+            "invitations": []
+        },
+        "error": None
+    }
+    return current_app.response_class(
+        json.dumps(data, separators=(', ', ': ')),
+        mimetype='application/json'
+    )
+
+@user_bp.route('/rest/tse/event/<int:event_id>/teams', methods=['GET', 'POST'])
+def get_tse_teams(event_id):
+    import json
+    from flask import current_app
+    return current_app.response_class(
+        json.dumps({}, separators=(', ', ': ')),
+        mimetype='application/json'
+    )
+
+@user_bp.route('/rest/tse/event/<int:event_id>/team/<team_id>/user/<user_id>/<action>', methods=['GET', 'POST'])
+def tse_team_actions(event_id, team_id, user_id, action):
+    """ Mocks join/leave/invite/reject/order/reward etc. """
+    import json
+    from flask import current_app
+    data = {
+        "eventId": event_id,
+        "team": {
+            "id": int(team_id) if str(team_id).isdigit() else 1001,
+            "socialEventId": event_id,
+            "members": [],
+            "orderProgress": []
+        },
+        "userEvent": {
+            "rewardClaimed": True if action == "reward" else False,
+            "invitations": []
+        },
+        "error": None
+    }
+    return current_app.response_class(
+        json.dumps(data, separators=(', ', ': ')),
+        mimetype='application/json'
+    )

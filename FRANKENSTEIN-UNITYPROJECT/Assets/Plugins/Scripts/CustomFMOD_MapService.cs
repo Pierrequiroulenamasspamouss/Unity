@@ -1,6 +1,14 @@
 public static class CustomFMOD_MapService
 {
-	private static global::System.Func<global::FMOD.RESULT, bool> ERRCHECK = global::FMOD.Studio.UnityUtil.ERRCHECK;
+	private static bool ERRCHECK(global::FMOD.RESULT result)
+	{
+		if (result != global::FMOD.RESULT.OK)
+		{
+			global::UnityEngine.Debug.LogError(string.Format("FMOD Error: {0}", result));
+			return false;
+		}
+		return true;
+	}
 
 	public static bool TryGenerateFMODMapFiles(global::FMOD.Studio.System system)
 	{

@@ -23,7 +23,7 @@ public class MuteVolumeCommand : global::strange.extensions.command.impl.Command
 	private void MuteMusicBus(bool mute)
 	{
 		global::FMOD.Studio.Bus bus;
-		FMOD_StudioSystem.instance.System.getBus("bus:/Non-Diegetic/u_Music", out bus);
+		global::FMODUnity.RuntimeManager.StudioSystem.getBus("bus:/Non-Diegetic/u_Music", out bus);
 		if (bus != null)
 		{
 			bus.setMute(mute);

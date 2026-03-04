@@ -229,7 +229,7 @@ namespace Kampai.Common.Service.Audio
 				logger.Verbose("Trying to load audio bank: {0} from bundle: {2} [{1}]...", obj.name, _manifestService.GetBundleOriginalName(bundleName), bundleName);
 				byte[] bytes = (obj as global::UnityEngine.TextAsset).bytes;
 				global::FMOD.Studio.Bank bank = null;
-				global::FMOD.RESULT rESULT = FMOD_StudioSystem.instance.System.loadBankMemory(bytes, global::FMOD.Studio.LOAD_BANK_FLAGS.NORMAL, out bank);
+				global::FMOD.RESULT rESULT = global::FMODUnity.RuntimeManager.StudioSystem.loadBankMemory(bytes, global::FMOD.Studio.LOAD_BANK_FLAGS.NORMAL, out bank);
 				if (rESULT == global::FMOD.RESULT.OK)
 				{
 					logger.Info("Loaded audio bank: {0} from bundle: {2} [{1}]", obj.name, _manifestService.GetBundleOriginalName(bundleName), bundleName);
@@ -251,12 +251,12 @@ namespace Kampai.Common.Service.Audio
 			foreach (string bankFile in bankFiles)
 			{
 				global::FMOD.Studio.Bank bank = null;
-				global::FMOD.RESULT result = FMOD_StudioSystem.instance.System.loadBankFile(bankFile, global::FMOD.Studio.LOAD_BANK_FLAGS.NORMAL, out bank);
+				global::FMOD.RESULT result = global::FMODUnity.RuntimeManager.StudioSystem.loadBankFile(bankFile, global::FMOD.Studio.LOAD_BANK_FLAGS.NORMAL, out bank);
 				if (result == global::FMOD.RESULT.ERR_VERSION)
 				{
-					global::FMOD.Studio.UnityUtil.LogError("These banks were built with an incompatible version of FMOD Studio.");
+					global::UnityEngine.Debug.LogError("These banks were built with an incompatible version of FMOD Studio.");
 				}
-				global::FMOD.Studio.UnityUtil.Log("bank load: " + ((!(bank != null)) ? "failed!!" : "succeeded"));
+				global::UnityEngine.Debug.Log("bank load: " + ((!(bank != null)) ? "failed!!" : "succeeded"));
 				yield return null;
 			}
 		}
@@ -279,7 +279,7 @@ namespace Kampai.Common.Service.Audio
 		{
 			logger.Verbose("LoadLocalBank: try to load audio bank {0} from file system", bankFile);
 			global::FMOD.Studio.Bank bank = null;
-			global::FMOD.RESULT rESULT = FMOD_StudioSystem.instance.System.loadBankFile(bankFile, global::FMOD.Studio.LOAD_BANK_FLAGS.NORMAL, out bank);
+			global::FMOD.RESULT rESULT = global::FMODUnity.RuntimeManager.StudioSystem.loadBankFile(bankFile, global::FMOD.Studio.LOAD_BANK_FLAGS.NORMAL, out bank);
 			if (rESULT == global::FMOD.RESULT.ERR_VERSION)
 			{
 				logger.Error("These banks were built with an incompatible version of FMOD Studio.");
@@ -309,7 +309,7 @@ namespace Kampai.Common.Service.Audio
 				{
 					continue;
 				}
-				if (FMOD_StudioSystem.instance.IsPaused())
+				if (!global::FMODUnity.RuntimeManager.StudioSystem.isValid())
 				{
 					yield return null;
 				}
@@ -382,7 +382,7 @@ namespace Kampai.Common.Service.Audio
 		{
 			if (!global::System.IO.Directory.Exists(path))
 			{
-				global::FMOD.Studio.UnityUtil.LogError(path + " not found, no banks loaded.");
+				global::UnityEngine.Debug.LogError(path + " not found, no banks loaded.");
 			}
 			string[] directories = global::System.IO.Directory.GetDirectories(path, pattern, recursive ? global::System.IO.SearchOption.AllDirectories : global::System.IO.SearchOption.TopDirectoryOnly);
 			string[] array = directories;
