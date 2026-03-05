@@ -85,6 +85,7 @@ namespace Kampai.Download
 				}
 				else
 				{
+					networkModel.isConnectionLost = true;
 					networkConnectionLostSignal.Dispatch();
 				}
 			}

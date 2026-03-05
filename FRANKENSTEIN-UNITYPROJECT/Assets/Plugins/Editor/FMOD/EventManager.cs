@@ -462,6 +462,14 @@ namespace FMODUnity
         static float lastCheckTime;
         static void Update()
         {
+            // Don't touch FMOD while Unity is compiling - this causes a create/destroy loop
+            // because EditorUtils.Update() destroys the system when isCompiling is true,
+            // but accessing EditorUtils.System here would immediately recreate it.
+            if (EditorApplication.isCompiling)
+            {
+                return;
+            }
+
             if (firstUpdate)
             {
                 UpdateCache();
