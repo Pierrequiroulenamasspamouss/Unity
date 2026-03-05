@@ -101,15 +101,15 @@ namespace Kampai.Main
                 loadExternalScenesSignal.Dispatch();
                 loadAudioSignal.Dispatch();
 
-                LevelLoadSequence();
+                routineRunner.StartCoroutine(LevelLoadSequence());
             }
             logger.EventStop("MainCompleteCommand.Execute");
         }
 
-        private void LevelLoadSequence()
+        private global::System.Collections.IEnumerator LevelLoadSequence()
         {
 
-            // Removed yield return null
+            yield return null;
 
             logger.Debug("Starting Load Post External Scene");
             bundleSignal.Dispatch();
@@ -123,7 +123,8 @@ namespace Kampai.Main
             
             splashProgressDoneSignal.Dispatch(100, 5f);
 
-            // Removed yield return null
+            yield return null;
+            yield return null;
 
             
             logger.EventStop("MainCompleteCommand.LoadGame");
@@ -138,12 +139,17 @@ namespace Kampai.Main
             loadDevicePrefsSignal.Dispatch();
             logTapEventMetricsSignal.Dispatch();
             setupPushNotificationsSignal.Dispatch();
-            
+
+            DoLoadUI();
+        }
+
+        private void DoLoadUI()
+        {
             try
             {
                 socialEventService.GetPastEventsWithUnclaimedReward();
             }
-            catch(global::System.Exception ex)
+            catch(global::System.Exception)
             {
                 
             }
@@ -156,7 +162,7 @@ namespace Kampai.Main
                     loadInService.SaveTipsForNextLaunch(levelId);
                 }
             }
-            catch (global::System.Exception ex)
+            catch (global::System.Exception)
             {
             }
 

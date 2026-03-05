@@ -324,8 +324,6 @@ namespace Kampai.Util
 					.CrossContext();
 				injectionBinder.Bind<global::Kampai.Game.QuestScriptKernel>().ToSingleton().CrossContext();
 				// DIAGNOSTIC
-				var _ccb = (injectionBinder as strange.extensions.injector.impl.CrossContextInjectionBinder);
-				
 			injectionBinder.Bind<global::Kampai.Game.QuestScriptController>().CrossContext();
 				injectionBinder.Bind<global::Kampai.Game.IQuestScriptRunner>().To<global::Kampai.Game.LuaScriptRunner>().ToName(global::Kampai.Game.QuestRunnerLanguage.Lua)
 					.CrossContext();

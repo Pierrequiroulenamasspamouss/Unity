@@ -526,7 +526,7 @@ namespace Kampai.Game
 				}
 			}
 		}
-		catch (global::System.Exception ex)
+		catch (global::System.Exception)
 		{
 		}
 		

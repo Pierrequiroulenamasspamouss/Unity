@@ -176,6 +176,7 @@ namespace Kampai.Download
 			{
 				if (response.IsConnectionLost && !networkModel.isConnectionLost)
 				{
+					networkModel.isConnectionLost = true;
 					networkConnectionLostSignal.Dispatch();
 				}
 				global::Ea.Sharkbite.HttpPlugin.Http.Api.IRequest request = response.Request;
@@ -187,6 +188,11 @@ namespace Kampai.Download
 					{
 						int code = response.Code;
 						logger.Warning("Error downloading {0} HTTP RESPONSE => {1}", text, code);
+						if (!networkModel.isConnectionLost)
+						{
+							networkModel.isConnectionLost = true;
+							networkConnectionLostSignal.Dispatch();
+						}
 						if (networkModel.isConnectionLost)
 						{
 							requestQueue.Enqueue(request);

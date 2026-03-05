@@ -8,5 +8,5 @@
 [assembly: global::System.Reflection.AssemblyCopyright("Copyright 2001-2010 Mike Krueger, John Reilly")]
 [assembly: global::System.Reflection.AssemblyCompany("ICSharpCode.net")]
 [assembly: global::System.Runtime.InteropServices.ComVisible(false)]
-[assembly: global::System.CLSCompliant(true)]
+[assembly: global::System.CLSCompliant(false)]
 //[assembly: global::System.Reflection.AssemblyVersion("0.86.0.518")]

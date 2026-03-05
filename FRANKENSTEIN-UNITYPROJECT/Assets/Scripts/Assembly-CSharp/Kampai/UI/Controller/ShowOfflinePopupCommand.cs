@@ -21,8 +21,19 @@ namespace Kampai.UI.Controller
 				if (isShow)
 				{
 					string path = "UI/popup_Error_LostConnectivity";
-					global::UnityEngine.GameObject gameObject = global::UnityEngine.Object.Instantiate(global::UnityEngine.Resources.Load(path)) as global::UnityEngine.GameObject;
-					gameObject.transform.SetParent(overlayCanvas.transform, false);
+					global::UnityEngine.Object prefab = global::UnityEngine.Resources.Load(path);
+					if (prefab != null)
+					{
+						global::UnityEngine.GameObject gameObject = global::UnityEngine.Object.Instantiate(prefab) as global::UnityEngine.GameObject;
+						if (gameObject != null)
+						{
+							gameObject.transform.SetParent(overlayCanvas.transform, false);
+						}
+					}
+					else
+					{
+						global::UnityEngine.Debug.LogError("Could not find popup_Error_LostConnectivity in Resources!");
+					}
 				}
 			}
 			else if (!isShow)

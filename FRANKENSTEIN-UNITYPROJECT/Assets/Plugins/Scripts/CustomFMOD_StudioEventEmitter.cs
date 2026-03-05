@@ -156,17 +156,25 @@ public class CustomFMOD_StudioEventEmitter : global::UnityEngine.MonoBehaviour
 	{
 		if (evt == null)
 		{
-			if (asset != null)
+			try
 			{
-				evt = global::FMODUnity.RuntimeManager.CreateInstance(new global::System.Guid(asset.id));
+				if (asset != null)
+				{
+					evt = global::FMODUnity.RuntimeManager.CreateInstance(new global::System.Guid(asset.id));
+				}
+				else if (!string.IsNullOrEmpty(path))
+				{
+					evt = global::FMODUnity.RuntimeManager.CreateInstance(path);
+				}
+				else
+				{
+					global::UnityEngine.Debug.LogError("No asset or path specified for Event Emitter");
+				}
 			}
-			else if (!string.IsNullOrEmpty(path))
+			catch (global::System.Exception ex)
 			{
-				evt = global::FMODUnity.RuntimeManager.CreateInstance(path);
-			}
-			else
-			{
-				global::UnityEngine.Debug.LogError("No asset or path specified for Event Emitter");
+				global::UnityEngine.Debug.LogWarning("Caught Exception creating event (" + path + "): " + ex.Message);
+				evt = null;
 			}
 		}
 	}

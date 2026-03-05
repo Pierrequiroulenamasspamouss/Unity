@@ -8,7 +8,7 @@
 		public override void Execute()
 		{
 			global::UnityEngine.GameObject gameObject = new global::UnityEngine.GameObject("TimeEventService");
-			global::Kampai.Game.TimeEventService o = gameObject.AddComponent<global::Kampai.Game.TimeEventService>();
+			gameObject.AddComponent<global::Kampai.Game.TimeEventService>();
 			// Removed double bind causing BinderExceptions
 			gameObject.transform.parent = contextView.transform;
 		}

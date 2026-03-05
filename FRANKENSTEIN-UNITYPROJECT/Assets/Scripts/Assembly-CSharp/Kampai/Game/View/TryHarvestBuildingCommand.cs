@@ -64,7 +64,6 @@ namespace Kampai.Game.View
 				questService.HarvestTaskableComplete(definition.ID);
 				int iD = taskableBuilding.ID;
 				global::UnityEngine.Vector3 type = new global::UnityEngine.Vector3(taskableBuilding.Location.x, 0f, taskableBuilding.Location.y);
-				bool flag = false;
 				int transactionID = taskableBuilding.GetTransactionID(definitionService);
 				if (playerService.FinishTransaction(transactionID, global::Kampai.Game.TransactionTarget.HARVEST, new global::Kampai.Game.TransactionArg(iD)))
 				{

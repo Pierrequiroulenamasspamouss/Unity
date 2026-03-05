@@ -49,7 +49,7 @@ namespace Kampai.Common
 				videoPlayingCallback();
 			}
 			return;
-#endif
+#else
 			if (request == null)
 			{
 				request = new global::Kampai.Common.VideoRequest();
@@ -73,6 +73,7 @@ namespace Kampai.Common
 			{
 				logger.Error("[Video] Intro already playing");
 			}
+#endif
 		}
 
 		private string IntroVideoUri(string locale)

@@ -134,7 +134,7 @@ namespace Kampai.Game
 				}
 				throw new global::Newtonsoft.Json.JsonSerializationException("Unexpected end when deserializing object.");
 			}
-			catch (global::System.Exception ex)
+			catch (global::System.Exception)
 			{
                 global::UnityEngine.Debug.LogError(
                     string.Format("Definition Deserialization Error in {0}", this.GetType().Name)
