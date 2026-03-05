@@ -23,30 +23,34 @@ namespace Kampai.Main
 
         private global::System.Collections.IEnumerator EnableCameraAfterSceneLoads()
         {
-            // Wait for end of frame to ensure additive scenes are fully loaded
-            yield return new global::UnityEngine.WaitForEndOfFrame();
+            global::UnityEngine.Camera mainCam = null;
+            int maxRetries = 60; // Wait up to 60 frames (approx 1-2 seconds) for the camera to spawn
+            int currentRetry = 0;
 
-            // Now try to find and enable the camera
-            global::UnityEngine.Camera mainCam = global::UnityEngine.Camera.main;
-
-            // If Camera.main is null, try finding by tag
-            if (mainCam == null)
+            while (mainCam == null && currentRetry < maxRetries)
             {
-                global::UnityEngine.GameObject camGo = global::UnityEngine.GameObject.FindWithTag("MainCamera");
-                if (camGo != null)
+                yield return new global::UnityEngine.WaitForEndOfFrame();
+                mainCam = global::UnityEngine.Camera.main;
+
+                if (mainCam == null)
                 {
-                    mainCam = camGo.GetComponent<global::UnityEngine.Camera>();
+                    global::UnityEngine.GameObject camGo = global::UnityEngine.GameObject.FindWithTag("MainCamera");
+                    if (camGo != null)
+                    {
+                        mainCam = camGo.GetComponent<global::UnityEngine.Camera>();
+                    }
                 }
+                currentRetry++;
             }
 
             if (mainCam != null)
             {
                 mainCam.enabled = true;
-                logger.Info("AppStartCompleteCommand: Camera enabled - " + mainCam.gameObject.name);
+                logger.Info("AppStartCompleteCommand: Camera enabled on frame " + currentRetry + " - " + mainCam.gameObject.name);
             }
             else
             {
-                logger.Error("AppStartCompleteCommand: No camera found after scene load!");
+                logger.Error("AppStartCompleteCommand: No camera found after scene load! (Timed out after " + maxRetries + " frames)");
             }
         }
     }
