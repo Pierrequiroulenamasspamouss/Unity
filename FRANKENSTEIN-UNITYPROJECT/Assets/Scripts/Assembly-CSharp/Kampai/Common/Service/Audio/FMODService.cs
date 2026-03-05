@@ -135,8 +135,16 @@ namespace Kampai.Common.Service.Audio
 			{
 				return _nameIdMap[eventName];
 			}
+			
+			if (eventName == "Play_environment_everglades_01") return "event:/Environment/environment_everglades_01";
+			if (eventName == "Play_water_stream_light_01") return "event:/Environment/water_stream_light_01";
+			if (eventName.Contains("environment_everglades")) return "event:/Environment/environment_everglades_01";
+			if (eventName.Contains("water_stream")) return "event:/Environment/water_stream_light_01";
+			if (eventName == "Play_backGroundMusic_01") return "event:/Music/backgroundLoop_Debney_01";
+			if (eventName.Contains("backGroundMusic")) return "event:/Music/backgroundLoop_Debney_01";
+			
 			logger.Error("eventName '{0}' was not found in the dictionary.", eventName);
-			return null;
+			return eventName;
 		}
 
 		private bool IsRawAudioBank(string originalBundleName)

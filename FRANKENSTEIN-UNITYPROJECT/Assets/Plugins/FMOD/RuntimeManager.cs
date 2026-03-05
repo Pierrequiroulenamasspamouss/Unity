@@ -262,7 +262,10 @@ namespace FMODUnity
                 // Always load strings bank
                 try
                 { 
-                    LoadBank(fmodSettings.MasterBank + ".strings", fmodSettings.AutomaticSampleLoading);
+                    if (!string.IsNullOrEmpty(fmodSettings.MasterBank))
+                    {
+                        LoadBank(fmodSettings.MasterBank + ".strings", fmodSettings.AutomaticSampleLoading);
+                    }
                 }
                 catch (BankLoadException e)
                 {
@@ -273,7 +276,10 @@ namespace FMODUnity
                 {
                     try
                     {
-                        LoadBank(fmodSettings.MasterBank, fmodSettings.AutomaticSampleLoading);
+                        if (!string.IsNullOrEmpty(fmodSettings.MasterBank))
+                        {
+                            LoadBank(fmodSettings.MasterBank, fmodSettings.AutomaticSampleLoading);
+                        }
                     }
                     catch (BankLoadException e)
                     {

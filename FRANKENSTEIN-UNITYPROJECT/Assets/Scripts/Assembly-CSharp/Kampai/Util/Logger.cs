@@ -128,6 +128,8 @@ namespace Kampai.Util
 
 		protected virtual void LogIt(global::Kampai.Util.Logger.Level level, string text, bool isFatal = false)
 		{
+			if (!string.IsNullOrEmpty(text) && text.Contains("License error. This plugin is only supported in Unity Pro!")) return;
+
 			if (IsAllowedLevel(level))
 			{
 				switch (level)

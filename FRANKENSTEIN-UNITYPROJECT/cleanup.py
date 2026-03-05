@@ -1,6 +1,6 @@
 import os
 
-folder = r'c:\Unity\FRANKENSTEIN-UNITYPROJECT\Assets\StreamingAssets'
+folder = r'c:\Unity\FRANKENSTEIN-UNITYPROJECT\Assets\FMOD STUDIO'
 
 removed = 0
 for f in os.listdir(folder):

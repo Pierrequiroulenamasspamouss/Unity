@@ -1,7 +1,7 @@
 import os
 import uuid
 
-folder = r"c:\Unity\FRANKENSTEIN-UNITYPROJECT\Assets\StreamingAssets"
+folder = r"c:\Unity\FRANKENSTEIN-UNITYPROJECT\Assets\FMOD STUDIO"
 
 meta_template = """fileFormatVersion: 2
 guid: {guid}

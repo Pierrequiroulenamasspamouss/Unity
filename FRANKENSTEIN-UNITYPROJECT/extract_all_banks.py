@@ -16,7 +16,7 @@ def custom_from_str(version: str):
 UnityVersion.from_str = custom_from_str
 
 dump_dir = r"C:\Users\Pierr\Documents\Projects\Decompiles\Minions_Paradise"
-out_dir = r"c:\Unity\FRANKENSTEIN-UNITYPROJECT\Assets\StreamingAssets"
+out_dir = r"c:\Unity\FRANKENSTEIN-UNITYPROJECT\Assets\FMOD STUDIO"
 os.makedirs(out_dir, exist_ok=True)
 
 print(f"Scanning for banks recursively in {dump_dir}...")
