@@ -151,9 +151,8 @@ namespace Kampai.Game
             injectionBinder.Unbind<global::Kampai.Game.ITimedSocialEventService>();
             injectionBinder.Bind<global::Kampai.Game.ITimedSocialEventService>().To<global::Kampai.Game.TimedSocialEventService>().ToSingleton();
 
-            // [CRITICAL] UserSessionService depends on IPlayerService - must bind locally
-            injectionBinder.Unbind<global::Kampai.Game.IUserSessionService>();
-            injectionBinder.Bind<global::Kampai.Game.IUserSessionService>().To<global::Kampai.Game.UserSessionService>().ToSingleton();
+            // [FIX] Removed local binding of IUserSessionService. It holds critical login state from MainContext
+            // and must remain CrossContext.
 
             // [CRITICAL] PlayerDurationService depends on IPlayerService
             injectionBinder.Unbind<global::Kampai.Game.IPlayerDurationService>();

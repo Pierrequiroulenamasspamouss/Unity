@@ -588,7 +588,7 @@ namespace Kampai.Game.View
 					global::UnityEngine.RuntimeAnimatorController runtimeAnimatorController = global::Kampai.Util.KampaiResources.Load<global::UnityEngine.RuntimeAnimatorController>(item);
 					if (runtimeAnimatorController == null)
 					{
-						logger.Fatal(global::Kampai.Util.FatalCode.BV_ILLEGAL_ANIMATION_CONTROLLER, item);
+						logger.Warning("BV_ILLEGAL_ANIMATION_CONTROLLER: Missing animation controller: {0}", item);
 					}
 					animationControllers.Add(item, runtimeAnimatorController);
 				}
