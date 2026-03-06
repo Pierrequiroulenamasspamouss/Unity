@@ -13,20 +13,15 @@ namespace Kampai.Main
             logger.Debug("Start loading localization Service");
             logger.EventStart("LoadLocalizationServiceCommand.Execute");
 
-            if (localService.IsInitialized())
+            if (!localService.IsInitialized())
             {
-                localService.Update();
+                // Service wasn't initialized earlier — do it now with the device language.
+                string lang = global::Kampai.Util.Native.GetDeviceLanguage();
+                logger.Info("Localization not yet initialized. Initializing with language: {0}", lang);
+                localService.Initialize(lang);
             }
-            else
-            {
-                // --- FIX: CHANGED FATAL TO WARNING ---
-                // Do NOT stop the game. Just log it. 
-                // The UI might show string keys (e.g. "IDS_WELCOME"), but the game will run.
-                logger.Warning("Localization service hasn't been initialized yet. Skipping update to prevent FATAL crash.");
 
-                // Optional: Try to force a default if your ILocalizationService interface supports it.
-                // But simply removing the Fatal call is enough to unblock the flow.
-            }
+            localService.Update();
 
             logger.EventStop("LoadLocalizationServiceCommand.Execute");
         }
