@@ -37,7 +37,11 @@ namespace Kampai.Common
 			{
 				controlMode = global::UnityEngine.FullScreenMovieControlMode.CancelOnInput;
 			}
+#if UNITY_EDITOR || UNITY_STANDALONE
+			global::UnityEngine.Application.OpenURL("file://" + urlOrFilename);
+#else
 			global::UnityEngine.Handheld.PlayFullScreenMovie(urlOrFilename, global::UnityEngine.Color.black, controlMode, global::UnityEngine.FullScreenMovieScalingMode.AspectFit);
+#endif
 		}
 
 		public void playIntro(bool showControls, bool closeOnTouch, global::System.Action videoPlayingCallback, string videoUriTemplate = null)
