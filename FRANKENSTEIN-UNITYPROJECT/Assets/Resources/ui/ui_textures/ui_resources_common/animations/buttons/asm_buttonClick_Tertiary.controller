@@ -1,12 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1107 &-2023787626
+StateMachine:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Base Layer
+  m_DefaultState: {fileID: 110200000, guid: 54deb2c01c8142143a6e966212e49b2a, type: 2}
+  m_States:
+  - {fileID: 110264064}
+  - {fileID: 110264062}
+  - {fileID: 110264060}
+  - {fileID: 110264058}
+  m_ChildStateMachine: []
+  m_ChildStateMachinePosition: []
+  m_OrderedTransitions:
+    data:
+      first: {fileID: 0}
+      second:
+      - {fileID: 471835466}
+      - {fileID: 2115134635}
+  m_MotionSetCount: 0
+  m_AnyStatePosition: {x: 0, y: -100, z: 0}
+  m_ParentStateMachinePosition: {x: 0, y: -200, z: 0}
 --- !u!91 &9100000
 AnimatorController:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: asm_buttonClick_Tertiary
+  serializedVersion: 2
   m_AnimatorParameters:
   - m_Name: Normal
     m_Type: 9
@@ -35,7 +59,7 @@ AnimatorController:
   m_AnimatorLayers:
   - serializedVersion: 3
     m_Name: Base Layer
-    m_StateMachine: {fileID: 1107064789598696342}
+    m_StateMachine: {fileID: -2023787626}
     m_Mask: {fileID: 0}
     m_BlendingMode: 0
     m_SyncedLayerIndex: -1
@@ -44,36 +68,72 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!1107 &1107064789598696342
-StateMachine:
-  serializedVersion: 2
-  m_ObjectHideFlags: 1
+--- !u!1102 &110264058
+State:
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Base Layer
-  m_DefaultState: {fileID: 110200000, guid: 54deb2c01c8142143a6e966212e49b2a, type: 2}
-  m_States: []
-  m_ChildStateMachine: []
-  m_ChildStateMachinePosition: []
-  m_OrderedTransitions:
-    data:
-      first: {fileID: 0}
-      second:
-      - {fileID: 1101337191212098378}
-      - {fileID: 1101095991787021483}
-  m_MotionSetCount: 0
-  m_AnyStatePosition: {x: 0, y: -100, z: 0}
-  m_ParentStateMachinePosition: {x: 0, y: -200, z: 0}
---- !u!1101 &1101337191212098378
+  m_Name: Disabled
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions: []
+  m_ParentStateMachine: {fileID: -2023787626}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
+--- !u!1102 &110264060
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Pressed
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions: []
+  m_ParentStateMachine: {fileID: -2023787626}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
+--- !u!1102 &110264062
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Highlighted
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions: []
+  m_ParentStateMachine: {fileID: -2023787626}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
+--- !u!1102 &110264064
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Normal
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions: []
+  m_ParentStateMachine: {fileID: -2023787626}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
+--- !u!1101 &471835466
 Transition:
   serializedVersion: 2
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name:
+  m_Name: 
   m_SrcState: {fileID: 0}
   m_DstState: {fileID: 110200000, guid: 54deb2c01c8142143a6e966212e49b2a, type: 2}
-  m_TransitionDuration: 0.1
+  m_TransitionDuration: .100000001
   m_TransitionOffset: 0
   m_Conditions:
   - m_ConditionMode: 1
@@ -84,16 +144,16 @@ Transition:
   m_Solo: 0
   m_Mute: 0
   m_CanTransitionToSelf: 0
---- !u!1101 &1101095991787021483
+--- !u!1101 &2115134635
 Transition:
   serializedVersion: 2
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name:
+  m_Name: 
   m_SrcState: {fileID: 0}
   m_DstState: {fileID: 110200000, guid: 1d769f54183c7b440a7e35145022ee5b, type: 2}
-  m_TransitionDuration: 0.1
+  m_TransitionDuration: .100000001
   m_TransitionOffset: 0
   m_Conditions:
   - m_ConditionMode: 1

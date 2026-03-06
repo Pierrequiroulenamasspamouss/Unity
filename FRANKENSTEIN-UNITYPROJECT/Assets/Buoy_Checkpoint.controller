@@ -2,16 +2,16 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!91 &9100000
 AnimatorController:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Buoy_Checkpoint
+  serializedVersion: 2
   m_AnimatorParameters: []
   m_AnimatorLayers:
   - serializedVersion: 3
     m_Name: Base Layer
-    m_StateMachine: {fileID: 1107963179352567975}
+    m_StateMachine: {fileID: 830845095}
     m_Mask: {fileID: 0}
     m_BlendingMode: 0
     m_SyncedLayerIndex: -1
@@ -20,7 +20,63 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!1107 &1107963179352567975
+--- !u!1102 &110269198
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Normal
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions: []
+  m_ParentStateMachine: {fileID: 830845095}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
+--- !u!1102 &110269200
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Highlighted
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions: []
+  m_ParentStateMachine: {fileID: 830845095}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
+--- !u!1102 &110269202
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Pressed
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions: []
+  m_ParentStateMachine: {fileID: 830845095}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
+--- !u!1102 &110269204
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Disabled
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions: []
+  m_ParentStateMachine: {fileID: 830845095}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
+--- !u!1107 &830845095
 StateMachine:
   serializedVersion: 2
   m_ObjectHideFlags: 1
@@ -28,7 +84,11 @@ StateMachine:
   m_PrefabInternal: {fileID: 0}
   m_Name: Base Layer
   m_DefaultState: {fileID: 110200000, guid: a50a89f980b714e459ebd5e9508f210e, type: 2}
-  m_States: []
+  m_States:
+  - {fileID: 110269198}
+  - {fileID: 110269200}
+  - {fileID: 110269202}
+  - {fileID: 110269204}
   m_ChildStateMachine: []
   m_ChildStateMachinePosition: []
   m_OrderedTransitions: {}

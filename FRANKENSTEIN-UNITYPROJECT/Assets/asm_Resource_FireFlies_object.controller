@@ -1,12 +1,31 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1107 &-630148156
+StateMachine:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Base Layer
+  m_DefaultState: {fileID: 110200000, guid: a02c6962f6b527640a378112ae84adc1, type: 2}
+  m_States:
+  - {fileID: 110258234}
+  - {fileID: 110258236}
+  - {fileID: 110258238}
+  - {fileID: 110258240}
+  m_ChildStateMachine: []
+  m_ChildStateMachinePosition: []
+  m_OrderedTransitions: {}
+  m_MotionSetCount: 0
+  m_AnyStatePosition: {x: 0, y: -100, z: 0}
+  m_ParentStateMachinePosition: {x: 0, y: -200, z: 0}
 --- !u!91 &9100000
 AnimatorController:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: asm_Resource_FireFlies_object
+  serializedVersion: 2
   m_AnimatorParameters:
   - m_Name: OnStop
     m_Type: 9
@@ -29,7 +48,7 @@ AnimatorController:
   m_AnimatorLayers:
   - serializedVersion: 3
     m_Name: Base Layer
-    m_StateMachine: {fileID: 1107568221288969156}
+    m_StateMachine: {fileID: -630148156}
     m_Mask: {fileID: 0}
     m_BlendingMode: 0
     m_SyncedLayerIndex: -1
@@ -40,10 +59,10 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   - serializedVersion: 3
     m_Name: Pos2
-    m_StateMachine: {fileID: 1107568221288969156}
+    m_StateMachine: {fileID: -630148156}
     m_Mask: {fileID: 0}
     m_BlendingMode: 0
-    m_SyncedLayerIndex: 0
+    m_SyncedLayerIndex: -1
     m_StateMachineMotionSetIndex: 0
     m_DefaultWeight: 0
     m_IKPass: 0
@@ -51,10 +70,10 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   - serializedVersion: 3
     m_Name: Pos3
-    m_StateMachine: {fileID: 1107568221288969156}
+    m_StateMachine: {fileID: -630148156}
     m_Mask: {fileID: 0}
     m_BlendingMode: 0
-    m_SyncedLayerIndex: 0
+    m_SyncedLayerIndex: -1
     m_StateMachineMotionSetIndex: 0
     m_DefaultWeight: 0
     m_IKPass: 0
@@ -62,10 +81,10 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   - serializedVersion: 3
     m_Name: Pos1
-    m_StateMachine: {fileID: 1107568221288969156}
+    m_StateMachine: {fileID: -630148156}
     m_Mask: {fileID: 0}
     m_BlendingMode: 0
-    m_SyncedLayerIndex: 0
+    m_SyncedLayerIndex: -1
     m_StateMachineMotionSetIndex: 0
     m_DefaultWeight: 0
     m_IKPass: 0
@@ -73,27 +92,68 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   - serializedVersion: 3
     m_Name: AllPos
-    m_StateMachine: {fileID: 1107568221288969156}
+    m_StateMachine: {fileID: -630148156}
     m_Mask: {fileID: 0}
     m_BlendingMode: 0
-    m_SyncedLayerIndex: 0
+    m_SyncedLayerIndex: -1
     m_StateMachineMotionSetIndex: 0
     m_DefaultWeight: 1
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 1
     m_Controller: {fileID: 9100000}
---- !u!1107 &1107568221288969156
-StateMachine:
-  serializedVersion: 2
-  m_ObjectHideFlags: 1
+--- !u!1102 &110258234
+State:
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Base Layer
-  m_DefaultState: {fileID: 110200000, guid: a02c6962f6b527640a378112ae84adc1, type: 2}
-  m_States: []
-  m_ChildStateMachine: []
-  m_ChildStateMachinePosition: []
-  m_OrderedTransitions: {}
-  m_MotionSetCount: 0
-  m_AnyStatePosition: {x: 0, y: -100, z: 0}
-  m_ParentStateMachinePosition: {x: 0, y: -200, z: 0}
+  m_Name: Normal
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions: []
+  m_ParentStateMachine: {fileID: -630148156}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
+--- !u!1102 &110258236
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Highlighted
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions: []
+  m_ParentStateMachine: {fileID: -630148156}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
+--- !u!1102 &110258238
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Pressed
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions: []
+  m_ParentStateMachine: {fileID: -630148156}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
+--- !u!1102 &110258240
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Disabled
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions: []
+  m_ParentStateMachine: {fileID: -630148156}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
