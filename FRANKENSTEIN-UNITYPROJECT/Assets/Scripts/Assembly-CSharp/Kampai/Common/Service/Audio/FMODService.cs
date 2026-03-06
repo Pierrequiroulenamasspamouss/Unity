@@ -136,12 +136,12 @@ namespace Kampai.Common.Service.Audio
 				return _nameIdMap[eventName];
 			}
 			
-			if (eventName == "Play_environment_everglades_01") return "event:/Environment/environment_everglades_01";
-			if (eventName == "Play_water_stream_light_01") return "event:/Environment/water_stream_light_01";
-			if (eventName.Contains("environment_everglades")) return "event:/Environment/environment_everglades_01";
-			if (eventName.Contains("water_stream")) return "event:/Environment/water_stream_light_01";
-			if (eventName == "Play_backGroundMusic_01") return "event:/Music/backgroundLoop_Debney_01";
-			if (eventName.Contains("backGroundMusic")) return "event:/Music/backgroundLoop_Debney_01";
+			if (eventName == "Play_environment_everglades_01") return "{f4dc7751-f4cc-43e9-8ec2-2e2e224774ab}";
+			if (eventName == "Play_water_stream_light_01") return "{c29c6356-7371-49bc-879c-593bbff0726f}";
+			if (eventName.Contains("environment_everglades")) return "{f4dc7751-f4cc-43e9-8ec2-2e2e224774ab}";
+			if (eventName.Contains("water_stream")) return "{c29c6356-7371-49bc-879c-593bbff0726f}";
+			if (eventName == "Play_backGroundMusic_01") return "{0fab9988-7e2c-447c-9852-c2a652624cfb}";
+			if (eventName.Contains("backGroundMusic")) return "{0fab9988-7e2c-447c-9852-c2a652624cfb}";
 			
 			logger.Error("eventName '{0}' was not found in the dictionary.", eventName);
 			return eventName;

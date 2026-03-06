@@ -1646,7 +1646,7 @@ namespace Kampai.Util
 
 			public const string COUNTRY_CODE = "X-Kampai-Country";
 
-			public const string VIDEO_PATH = "https://eaassets-a.akamaihd.net/cdn-kampai/videos/intro_{0}.mp4";
+			public static string VIDEO_PATH = global::Kampai.Util.GameConstants.StaticConfig.CDN_URL + "/video.mp4";
 
 			public const string PLATFORM_UNKNOWN = "unknown";
 
@@ -1676,6 +1676,8 @@ namespace Kampai.Util
 			public static string ENVIRONMENT { get; private set; }
 
 			public static string CDN_METADATA_URL { get; private set; }
+
+			public static string CDN_URL { get; private set; }
 
 			public static string UPSIGHT_TOKEN { get; private set; }
 
@@ -1718,6 +1720,7 @@ namespace Kampai.Util
 				SERVER_URL = dictionary["server"].ToString();
 				ENVIRONMENT = dictionary["env"].ToString();
 				CDN_METADATA_URL = dictionary["cdn_metadata_url"].ToString();
+				CDN_URL = dictionary["cdn_url"].ToString();
 				UPSIGHT_TOKEN = dictionary["upsight_t"].ToString();
 				UPSIGHT_SECRET = dictionary["upsight_s"].ToString();
 				HOCKEY_APP_ID = dictionary["hockey"].ToString();

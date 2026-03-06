@@ -17,10 +17,19 @@ namespace Kampai.Game
 		public override void Execute()
 		{
 			global::Kampai.Game.LevelUpDefinition levelUpDefinition = definitionService.Get<global::Kampai.Game.LevelUpDefinition>(88888);
+			int levelIndex = (int)(playerService.GetQuantity(global::Kampai.Game.StaticItem.LEVEL_ID) - 1);
+
 			if (playerService.GetUnlockedQuantityOfID(0) == -1)
 			{
-				global::Kampai.Game.Transaction.TransactionDefinition type = definitionService.Get<global::Kampai.Game.Transaction.TransactionDefinition>(levelUpDefinition.transactionList[(int)(playerService.GetQuantity(global::Kampai.Game.StaticItem.LEVEL_ID) - 1)]);
-				awardLevelSignal.Dispatch(type);
+				if (levelIndex >= 0 && levelIndex < levelUpDefinition.transactionList.Count)
+				{
+					global::Kampai.Game.Transaction.TransactionDefinition type = definitionService.Get<global::Kampai.Game.Transaction.TransactionDefinition>(levelUpDefinition.transactionList[levelIndex]);
+					awardLevelSignal.Dispatch(type);
+				}
+				else
+				{
+					logger.Warning("ReconcileLevelUnlocksCommand: levelIndex {0} is out of bounds for transactionList (Count {1})", levelIndex, levelUpDefinition.transactionList.Count);
+				}
 				return;
 			}
 			global::Kampai.Game.Transaction.TransactionDefinition transactionDefinition = new global::Kampai.Game.Transaction.TransactionDefinition();

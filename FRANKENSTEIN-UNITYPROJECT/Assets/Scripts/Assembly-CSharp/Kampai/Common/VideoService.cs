@@ -73,7 +73,7 @@ namespace Kampai.Common
 
 		private string IntroVideoUri(string locale)
 		{
-			string format = ((request.videoUriTemplate != null) ? request.videoUriTemplate : "https://eaassets-a.akamaihd.net/cdn-kampai/videos/intro_{0}.mp4");
+			string format = ((request.videoUriTemplate != null) ? request.videoUriTemplate : global::Kampai.Util.GameConstants.Server.VIDEO_PATH);
 			return string.Format(format, locale);
 		}
 
