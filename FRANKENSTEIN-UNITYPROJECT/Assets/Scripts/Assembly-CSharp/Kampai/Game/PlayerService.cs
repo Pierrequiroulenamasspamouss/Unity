@@ -327,8 +327,9 @@ namespace Kampai.Game
                         global::Kampai.Game.PlayerSerializerV3 serializer = new global::Kampai.Game.PlayerSerializerV3();
                         loadedPlayer = serializer.Deserialize(serialized, definitionService, logger);
                     }
-                    catch (global::System.Exception)
+                    catch (global::System.Exception ex)
                     {
+                        logger.Error("Exception in LoadPlayerData: {0}\nStack: {1}", ex.Message, ex.StackTrace);
                         loadFailed = true;
                     }
                 }

@@ -26,21 +26,24 @@ namespace Kampai.Game
 					player.Add(building);
 				}
 				global::Kampai.Game.PurchasedLandExpansion byInstanceId = player.GetByInstanceId<global::Kampai.Game.PurchasedLandExpansion>(354);
-				if (!byInstanceId.HasPurchased(197379) && !byInstanceId.IsAdjacentExpansion(197379))
+				if (byInstanceId != null)
 				{
-					byInstanceId.AdjacentExpansions.Add(197379);
-				}
-				if (!byInstanceId.HasPurchased(789516) && !byInstanceId.IsAdjacentExpansion(789516))
-				{
-					byInstanceId.AdjacentExpansions.Add(789516);
-				}
-				if (byInstanceId.HasPurchased(592137))
-				{
-					byInstanceId.PurchasedExpansions.Remove(592137);
-				}
-				if (byInstanceId.IsAdjacentExpansion(592137))
-				{
-					byInstanceId.AdjacentExpansions.Remove(592137);
+					if (!byInstanceId.HasPurchased(197379) && !byInstanceId.IsAdjacentExpansion(197379))
+					{
+						byInstanceId.AdjacentExpansions.Add(197379);
+					}
+					if (!byInstanceId.HasPurchased(789516) && !byInstanceId.IsAdjacentExpansion(789516))
+					{
+						byInstanceId.AdjacentExpansions.Add(789516);
+					}
+					if (byInstanceId.HasPurchased(592137))
+					{
+						byInstanceId.PurchasedExpansions.Remove(592137);
+					}
+					if (byInstanceId.IsAdjacentExpansion(592137))
+					{
+						byInstanceId.AdjacentExpansions.Remove(592137);
+					}
 				}
 				player.Version = 2;
 			}

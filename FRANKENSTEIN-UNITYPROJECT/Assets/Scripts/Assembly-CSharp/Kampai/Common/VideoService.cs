@@ -42,14 +42,6 @@ namespace Kampai.Common
 
 		public void playIntro(bool showControls, bool closeOnTouch, global::System.Action videoPlayingCallback, string videoUriTemplate = null)
 		{
-#if UNITY_EDITOR
-			logger.Info("[Video] Bypassing Intro Video in Editor to prevent JNI crashes.");
-			if (videoPlayingCallback != null)
-			{
-				videoPlayingCallback();
-			}
-			return;
-#else
 			if (request == null)
 			{
 				request = new global::Kampai.Common.VideoRequest();
@@ -73,7 +65,6 @@ namespace Kampai.Common
 			{
 				logger.Error("[Video] Intro already playing");
 			}
-#endif
 		}
 
 		private string IntroVideoUri(string locale)

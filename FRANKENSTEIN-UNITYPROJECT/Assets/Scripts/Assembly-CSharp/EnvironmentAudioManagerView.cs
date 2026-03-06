@@ -6,6 +6,10 @@ public class EnvironmentAudioManagerView : global::strange.extensions.mediation.
 
 	private void Update()
 	{
+		if (mainCamera == null)
+		{
+			return;
+		}
 		global::UnityEngine.Plane plane = new global::UnityEngine.Plane(global::UnityEngine.Vector3.up, global::UnityEngine.Vector3.zero);
 		global::UnityEngine.Ray ray = new global::UnityEngine.Ray(mainCamera.transform.position, mainCamera.transform.forward);
 		float enter;
