@@ -20,17 +20,26 @@ def generate_new_player_profile(user_id_str):
         "ID": str(numeric_id),
         "nextId": 1000,
         
-        # [FIX] OrderBoard is now correctly seeded on account creation
+        # [FIX] All Required Buildings are now correctly seeded with State and Location on account creation
         "inventory": [
             {
-                "ID": 3022, # OrderBoard definition
+                "ID": 3022,
                 "version": 0,
                 "Definition": 3022,
-                "Placed": {"x": 2, "y": 48}, # Typical start location
+                "Location": {"x": 2, "y": 48},
                 "Level": 1,
+                "State": 3, # Idle
                 "BuildStartTime": 0,
                 "IsNew": False
-            }
+            },
+            { "ID": 3041, "version": 0, "Definition": 3041, "Location": {"x": 3, "y": 50}, "Level": 1, "State": 3, "BuildStartTime": 0, "IsNew": False },
+            { "ID": 3054, "version": 0, "Definition": 3054, "Location": {"x": 4, "y": 50}, "Level": 1, "State": 3, "BuildStartTime": 0, "IsNew": False },
+            { "ID": 3055, "version": 0, "Definition": 3055, "Location": {"x": 5, "y": 50}, "Level": 1, "State": 3, "BuildStartTime": 0, "IsNew": False },
+            { "ID": 3070, "version": 0, "Definition": 3070, "Location": {"x": 6, "y": 50}, "Level": 1, "State": 3, "BuildStartTime": 0, "IsNew": False },
+            { "ID": 3042, "version": 0, "Definition": 3042, "Location": {"x": 7, "y": 50}, "Level": 1, "State": 3, "BuildStartTime": 0, "IsNew": False },
+            { "ID": 3043, "version": 0, "Definition": 3043, "Location": {"x": 8, "y": 50}, "Level": 1, "State": 3, "BuildStartTime": 0, "IsNew": False },
+            { "ID": 3044, "version": 0, "Definition": 3044, "Location": {"x": 9, "y": 50}, "Level": 1, "State": 3, "BuildStartTime": 0, "IsNew": False },
+            { "ID": 3553, "version": 0, "Definition": 3553, "Location": {"x": 10, "y": 50}, "Level": 1, "State": 3, "BuildStartTime": 0, "IsNew": False }
         ],
         
         "villainQueue": [],

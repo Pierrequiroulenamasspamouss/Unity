@@ -15,22 +15,55 @@ Properties {
 }
 	//DummyShaderTextExporter
 	
-	SubShader{
+	SubShader {
 		Tags { "RenderType" = "Opaque" }
 		LOD 200
-		CGPROGRAM
-#pragma surface surf Lambert
-#pragma target 3.0
-		sampler2D _MainTex;
-		struct Input
-		{
-			float2 uv_MainTex;
-		};
-		void surf(Input IN, inout SurfaceOutput o)
-		{
-			float4 c = tex2D(_MainTex, IN.uv_MainTex);
-			o.Albedo = c.rgb;
+
+		Pass {
+			CGPROGRAM
+			#pragma vertex vert
+			#pragma fragment frag
+			#include "UnityCG.cginc"
+
+			sampler2D _MainTex;
+			float4 _MainTex_ST;
+			sampler2D _MatCapBase;
+			float4 _LightColor;
+
+			struct appdata_t {
+				float4 vertex : POSITION;
+				float3 normal : NORMAL;
+				float2 texcoord : TEXCOORD0;
+			};
+
+			struct v2f {
+				float4 vertex : SV_POSITION;
+				float2 texcoord : TEXCOORD0;
+				float2 matcapUV : TEXCOORD1;
+			};
+
+			v2f vert (appdata_t v)
+			{
+				v2f o;
+				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
+				
+                float3 viewNormal = normalize(mul((float3x3)UNITY_MATRIX_IT_MV, v.normal));
+                o.matcapUV = viewNormal.xy * 0.5 + 0.5;
+
+				return o;
+			}
+
+			fixed4 frag (v2f i) : SV_Target
+			{
+				fixed4 col = tex2D(_MainTex, i.texcoord);
+				fixed4 mc = tex2D(_MatCapBase, i.matcapUV) * _LightColor;
+				
+				col.rgb *= mc.rgb * 2.0;
+
+				return col;
+			}
+			ENDCG
 		}
-		ENDCG
 	}
 }

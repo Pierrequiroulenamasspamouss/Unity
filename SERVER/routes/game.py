@@ -6,7 +6,7 @@ from utils.profile import generate_new_player_profile
 game_bp = Blueprint('game', __name__)
 
 BASE_HOST = "http://localhost"
-VIDEO_PATH = r"C:\Unity\SERVER\video.mp4"
+VIDEO_PATH = r"C:\Unity\SERVER\assets\video.mp4"
 DEFINITIONS_PATH = r"C:\Unity\SERVER\definitions.json"
 
 @game_bp.route('/video.mp4')
