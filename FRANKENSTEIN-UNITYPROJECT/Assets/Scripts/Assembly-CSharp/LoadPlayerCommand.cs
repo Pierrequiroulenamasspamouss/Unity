@@ -207,6 +207,19 @@
 				logger.Fatal(global::Kampai.Util.FatalCode.PS_EMPTY_SERVER_JSON);
 				return;
 			}
+
+			// Persist the canonical server JSON to disk NOW, before any game system
+			// can trigger an autosave that would overwrite it with a blank/fallback player.
+			try
+			{
+				string savePath = global::UnityEngine.Application.persistentDataPath + "/player_save.json";
+				global::System.IO.File.WriteAllText(savePath, text, global::System.Text.Encoding.UTF8);
+				logger.Info("[LoadPlayerCommand] Server JSON persisted to: " + savePath);
+			}
+			catch (global::System.Exception ex)
+			{
+				logger.Error("[LoadPlayerCommand] Failed to persist server JSON to disk: " + ex.Message);
+			}
 		}
 		loadedPlayerDataSignal.Dispatch(text);
 	}

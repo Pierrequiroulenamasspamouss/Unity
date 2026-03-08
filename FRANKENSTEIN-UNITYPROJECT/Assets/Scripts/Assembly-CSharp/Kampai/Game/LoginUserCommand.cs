@@ -17,13 +17,18 @@ namespace Kampai.Game
             logger.EventStart("LoginUserCommand.Execute");
 
             // =================================================================
-            // LECTURE DIRECTE (BYPASS TOTAL)
+            // STANDARD LOGIN
             // =================================================================
-            string rawID = global::UnityEngine.PlayerPrefs.GetString("MOCK_UserID");
-            string rawSecret = global::UnityEngine.PlayerPrefs.GetString("MOCK_Secret");
-            string rawKey = global::UnityEngine.PlayerPrefs.GetString("MOCK_AnonID");
+            string rawID = LocalPersistService.GetData("UserID");
+            string encSecret = LocalPersistService.GetData("AnonymousSecret");
+            string encKey = LocalPersistService.GetData("AnonymousID");
 
-            logger.Log(global::Kampai.Util.Logger.Level.Info, true, string.Format("[MOCK LOGIN] Direct Read -> ID: '{0}', Secret: '{1}', Key: '{2}'", rawID, rawSecret, rawKey));
+            string rawSecret = null;
+            if (!string.IsNullOrEmpty(encSecret)) encryptionService.TryDecrypt(encSecret, "Kampai!", out rawSecret);
+            string rawKey = null;
+            if (!string.IsNullOrEmpty(encKey)) encryptionService.TryDecrypt(encKey, "Kampai!", out rawKey);
+
+            logger.Log(global::Kampai.Util.Logger.Level.Info, true, string.Format("Login Data Read -> ID: '{0}'", rawID));
 
             // VERIFICATION
             if (string.IsNullOrEmpty(rawID) || string.IsNullOrEmpty(rawSecret) || string.IsNullOrEmpty(rawKey))

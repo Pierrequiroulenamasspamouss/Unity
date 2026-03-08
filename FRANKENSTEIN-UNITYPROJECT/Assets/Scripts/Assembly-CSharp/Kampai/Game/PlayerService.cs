@@ -4,6 +4,10 @@ namespace Kampai.Game
 	{
 		protected global::Kampai.Game.Player player;
 
+		// Safety flag: do NOT save/upload until the server's player data has been fully deserialized.
+		// This prevents the blank Init() player from overwriting the server's canonical save.
+		private bool _isPlayerReadyForSave = false;
+
 		private object mutex = new object();
 
 		protected global::Kampai.Game.TransactionEngine _engine;
@@ -346,6 +350,12 @@ namespace Kampai.Game
                     loadedPlayer.HighestFtueLevel = 999;
                     loadedPlayer.Version = 3;
                 }
+                else
+                {
+                    // A real player was successfully deserialized from the server.
+                    // Mark the service as safe to write back to disk / server.
+                    _isPlayerReadyForSave = true;
+                }
 
                 EnsureCriticalDataIntegrity(loadedPlayer);
             }
@@ -431,6 +441,11 @@ namespace Kampai.Game
 
         public void Deserialize(string serialized, bool isRetry = false)
         {
+            // Unblock saves FIRST: the raw server JSON was already written to player_save.json
+            // by LoadPlayerCommand, so even if LoadPlayerData fails below, disk state is correct.
+            _isPlayerReadyForSave = true;
+            logger.Info("[PlayerService] Deserialize called — saves are now enabled.");
+
             var loaded = LoadPlayerData(serialized);
             player = loaded;
             LastSave = loaded;
@@ -445,8 +460,18 @@ namespace Kampai.Game
             }
         }
 
+
+
         public byte[] SavePlayerData(global::Kampai.Game.Player playerData)
 		{
+			// Guard: do not write until player has been properly loaded from server.
+			// This prevents the blank Init() player from overwriting the server's canonical save.
+			if (!_isPlayerReadyForSave)
+			{
+				logger.Warning("[PlayerService] SavePlayerData blocked: player not yet loaded from server.");
+				return null;
+			}
+
 			byte[] result = null;
 			lock (mutex)
 			{

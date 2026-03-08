@@ -58,8 +58,8 @@
                     return;
                 }
                 
-                global::UnityEngine.PlayerPrefs.SetString("MOCK_UserID", UserSession.UserID);
-                global::UnityEngine.PlayerPrefs.Save();
+                // global::UnityEngine.PlayerPrefs.SetString("MOCK_UserID", UserSession.UserID);
+                // global::UnityEngine.PlayerPrefs.Save();
 
                 userSessionGrantedSignal.Dispatch();
                 LocalPersistService.PutData("LoadMode", "remote");
@@ -109,13 +109,15 @@
                 userIdentity.UserID = sID;
                 userIdentity.Secret = sSecret;
                 userIdentity.SessionKey = sKey;
+                userIdentity.ExternalID = sSecret;
+                userIdentity.ID = sKey;
                 
                 logger.Info(string.Format("[REGISTER] ID: {0}, Secret: {1}, Key: {2}", sID, sSecret, sKey));
 
-                global::UnityEngine.PlayerPrefs.SetString("MOCK_UserID", sID);
-                global::UnityEngine.PlayerPrefs.SetString("MOCK_Secret", sSecret);
-                global::UnityEngine.PlayerPrefs.SetString("MOCK_AnonID", sKey);
-                global::UnityEngine.PlayerPrefs.Save(); 
+                // global::UnityEngine.PlayerPrefs.SetString("MOCK_UserID", sID);
+                // global::UnityEngine.PlayerPrefs.SetString("MOCK_Secret", sSecret);
+                // global::UnityEngine.PlayerPrefs.SetString("MOCK_AnonID", sKey);
+                // global::UnityEngine.PlayerPrefs.Save(); 
 
                 setupHockeyAppUser.Dispatch(userIdentity.UserID);
                 userRegisteredSignal.Dispatch(userIdentity);

@@ -20,10 +20,10 @@ def generate_new_player_profile(user_id_str):
         "ID": str(numeric_id),
         "nextId": 1000,
         
-        # [FIX] All Required Buildings are now correctly seeded with State and Location on account creation
+        # [FIX] All Required Buildings are now correctly seeded with precise Instance IDs defined in StaticItem.cs
         "inventory": [
             {
-                "ID": 3022,
+                "ID": 309, # ORDERBOARD_BUILDING_INSTANCE_ID
                 "version": 0,
                 "Definition": 3022,
                 "Location": {"x": 2, "y": 48},
@@ -32,8 +32,9 @@ def generate_new_player_profile(user_id_str):
                 "BuildStartTime": 0,
                 "IsNew": False
             },
-            { "ID": 3041, "version": 0, "Definition": 3041, "Location": {"x": 3, "y": 50}, "Level": 1, "State": 3, "BuildStartTime": 0, "IsNew": False },
-            { "ID": 3054, "version": 0, "Definition": 3054, "Location": {"x": 4, "y": 50}, "Level": 1, "State": 3, "BuildStartTime": 0, "IsNew": False },
+            { "ID": 313, "version": 0, "Definition": 3041, "Location": {"x": 3, "y": 50}, "Level": 1, "State": 3, "BuildStartTime": 0, "IsNew": False }, # TIKI_BAR_INSTANCE_ID
+            { "ID": 314, "version": 0, "Definition": 3018, "Location": {"x": 4, "y": 52}, "Level": 1, "State": 3, "BuildStartTime": 0, "IsNew": False }, # STORAGE_BUILDING_INSTANCE_ID
+            { "ID": 370, "version": 0, "Definition": 3054, "Location": {"x": 4, "y": 50}, "Level": 1, "State": 3, "BuildStartTime": 0, "IsNew": False }, # STAGE_BUILDING_INSTANCE_ID
             { "ID": 3055, "version": 0, "Definition": 3055, "Location": {"x": 5, "y": 50}, "Level": 1, "State": 3, "BuildStartTime": 0, "IsNew": False },
             { "ID": 3070, "version": 0, "Definition": 3070, "Location": {"x": 6, "y": 50}, "Level": 1, "State": 3, "BuildStartTime": 0, "IsNew": False },
             { "ID": 3042, "version": 0, "Definition": 3042, "Location": {"x": 7, "y": 50}, "Level": 1, "State": 3, "BuildStartTime": 0, "IsNew": False },
