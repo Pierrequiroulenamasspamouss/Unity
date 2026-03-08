@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!43 &4300000
 Mesh:
-  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: VFX_Mesh_Expansion_ElephantLeafB_PlantShadow
+  serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
     firstByte: 0
@@ -15,15 +15,15 @@ Mesh:
     firstVertex: 0
     vertexCount: 5
     localAABB:
-      m_Center: {x: -0.110217065, y: -1.2947637E-16, z: -0.11812997}
-      m_Extent: {x: 0.8540968, y: 1.7991538E-16, z: 0.7281252}
+      m_Center: {x: -.110217065, y: -1.29476371e-16, z: -.118129969}
+      m_Extent: {x: .85409677, y: 1.79915383e-16, z: .728125215}
   m_Shapes:
     vertices: []
     shapes: []
     channels: []
     fullWeights: []
   m_BindPose: []
-  m_BoneNameHashes:
+  m_BoneNameHashes: 
   m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
@@ -33,7 +33,7 @@ Mesh:
   m_IndexBuffer: 000001000200000003000100000004000300
   m_Skin: []
   m_VertexData:
-    m_CurrentChannels: 9
+    m_CurrentChannels: 11
     m_VertexCount: 5
     m_Channels:
     - stream: 0
@@ -41,15 +41,15 @@ Mesh:
       format: 0
       dimension: 3
     - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
       offset: 12
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 24
       format: 0
       dimension: 2
     - stream: 0
@@ -61,9 +61,9 @@ Mesh:
       format: 0
       dimension: 0
     m_Streams:
-    - channelMask: 9
+    - channelMask: 11
       offset: 0
-      stride: 20
+      stride: 32
       dividerOp: 0
       frequency: 0
     - channelMask: 0
@@ -81,65 +81,65 @@ Mesh:
       stride: 0
       dividerOp: 0
       frequency: 0
-    m_DataSize: 100
-    _typelessdata: 45dd76bf2a5ab2a5b8fcd8be0000000000000000e66e3e3ffbd8c9a4ebb9173d2bdef53e85efb93e297ca63d2a5ab2a52ea458bf727bc43ea4fbdf309901253de1f522a49f5c0c3fdcad453e0d9ade3e1cf00bbfdc9b6824a6281c3f1c4616317443c23e
+    m_DataSize: 160
+    _typelessdata: 45dd76bf2a5ab2a5b8fcd8bebf4831a40000803fbaa089a50000000000000000e66e3e3ffbd8c9a4ebb9173d1ed4afa40000803f302865a52bdef53e85efb93e297ca63d2a5ab2a52ea458bfb391b3a40000803f7b395ea5727bc43ea4fbdf309901253de1f522a49f5c0c3f98c666a30000803f9d109ba5dcad453e0d9ade3e1cf00bbfdc9b6824a6281c3f6450f2240000803f401fe1a51c4616317443c23e
   m_CompressedMesh:
     m_Vertices:
       m_NumItems: 0
       m_Range: 0
       m_Start: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_UV:
       m_NumItems: 0
       m_Range: 0
       m_Start: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_BindPoses:
       m_NumItems: 0
       m_Range: 0
       m_Start: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_Normals:
       m_NumItems: 0
       m_Range: 0
       m_Start: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_Tangents:
       m_NumItems: 0
       m_Range: 0
       m_Start: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_Weights:
       m_NumItems: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_NormalSigns:
       m_NumItems: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_TangentSigns:
       m_NumItems: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_BoneIndices:
       m_NumItems: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_Triangles:
       m_NumItems: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_Colors:
       m_NumItems: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
   m_LocalAABB:
-    m_Center: {x: -0.110217065, y: -1.2947637E-16, z: -0.11812997}
-    m_Extent: {x: 0.8540968, y: 1.7991538E-16, z: 0.7281252}
+    m_Center: {x: -.110217065, y: -1.29476371e-16, z: -.118129969}
+    m_Extent: {x: .85409677, y: 1.79915383e-16, z: .728125215}
   m_MeshUsageFlags: 0
   m_MeshOptimized: 1
