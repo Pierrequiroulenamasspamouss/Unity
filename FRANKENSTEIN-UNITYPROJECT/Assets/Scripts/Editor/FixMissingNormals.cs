@@ -14,10 +14,10 @@ public class FixMissingNormals
         {
             string path = AssetDatabase.GUIDToAssetPath(guid);
             ModelImporter importer = AssetImporter.GetAtPath(path) as ModelImporter;
-            if (importer != null && importer.importNormals == ModelImporterNormals.None)
+            if (importer != null && importer.normalImportMode == ModelImporterTangentSpaceMode.None)
             {
-                importer.importNormals = ModelImporterNormals.Calculate;
-                importer.SaveAndReimport();
+                importer.normalImportMode = ModelImporterTangentSpaceMode.Calculate;
+                AssetDatabase.ImportAsset(path);
                 count++;
             }
         }
@@ -27,7 +27,7 @@ public class FixMissingNormals
         foreach (string guid in guids)
         {
             string path = AssetDatabase.GUIDToAssetPath(guid);
-            Mesh mesh = AssetDatabase.LoadAssetAtPath<Mesh>(path);
+            Mesh mesh = AssetDatabase.LoadAssetAtPath(path, typeof(Mesh)) as Mesh;
             if (mesh != null && (mesh.normals == null || mesh.normals.Length == 0) && mesh.vertexCount > 0)
             {
                 mesh.RecalculateNormals();
