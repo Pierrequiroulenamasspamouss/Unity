@@ -22,6 +22,8 @@ namespace Kampai.Game
 				logger.Error("Unable to instantiate Cruise Ship");
 				return;
 			}
+			gameObject2.name = gameObject.name;
+			global::Kampai.Util.KampaiResources.FixShaders(gameObject2);
 			gameObject2.transform.position = new global::UnityEngine.Vector3(129.7f, 0f, 192.5f);
 			gameObject2.transform.parent = contextView.transform;
 		}

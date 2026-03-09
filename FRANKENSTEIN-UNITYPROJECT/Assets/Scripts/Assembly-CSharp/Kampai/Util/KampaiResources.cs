@@ -178,5 +178,24 @@ namespace Kampai.Util
             return result;
         }
 
+        public static void FixShaders(global::UnityEngine.GameObject go)
+        {
+            if (go == null) return;
+
+            global::UnityEngine.Renderer[] renderers = go.GetComponentsInChildren<global::UnityEngine.Renderer>(true);
+            foreach (global::UnityEngine.Renderer r in renderers)
+            {
+                foreach (global::UnityEngine.Material mat in r.sharedMaterials)
+                {
+                    if (mat == null) continue;
+                    if (mat.shader == null || !mat.shader.isSupported || mat.shader.name == "Hidden/InternalErrorShader")
+                    {
+                        global::UnityEngine.Shader fallback = global::UnityEngine.Shader.Find("Mobile/Diffuse");
+                        if (fallback != null) mat.shader = fallback;
+                    }
+                }
+            }
+        }
+
     }
 }

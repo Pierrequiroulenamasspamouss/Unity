@@ -83109,7 +83109,7 @@ ParticleSystemRenderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 6572239977bc5ab459a2ade0f4bcec43, type: 2}
+  - {fileID: 2100000, guid: 274b212ee29e2034f97aa85c661ff13f, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -83154,8 +83154,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d89499ecb6ece84dc1445654100a4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instatiationEvent: 0
-  PrefabName: butterfly_catch_dragonfly_pre
 --- !u!114 &5741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83167,10 +83165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50173bc841f8c1c762a498106b2dad08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Path: {fileID: 4900000, guid: b9c08f23dc6e91e42a928146d91f338c, type: 3}
-  SplineColor: {r: 1, g: 0, b: 1, a: 1}
-  Duration: 35
-  Reverse: 0
 --- !u!114 &5742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83182,11 +83176,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c51992bbc6935b8441df2e3f557cf65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colliders:
-  - {fileID: 1227}
-  - {fileID: 883}
-  - {fileID: 747}
-  - {fileID: 543}
 --- !u!114 &5743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83198,8 +83187,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d89499ecb6ece84dc1445654100a4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instatiationEvent: 0
-  PrefabName: butterfly_catch_dragonfly_pre
 --- !u!114 &5744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83211,10 +83198,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50173bc841f8c1c762a498106b2dad08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Path: {fileID: 4900000, guid: 90a0c5af4c51f8a4f8c040d0cb41762b, type: 3}
-  SplineColor: {r: 1, g: 0, b: 1, a: 1}
-  Duration: 80
-  Reverse: 0
 --- !u!114 &5745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83226,8 +83209,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d89499ecb6ece84dc1445654100a4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instatiationEvent: 0
-  PrefabName: Ambient_Bee_Prefab
 --- !u!114 &5746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83239,10 +83220,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50173bc841f8c1c762a498106b2dad08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Path: {fileID: 4900000, guid: d0eae5f72572c3641be6b8d122624e6d, type: 3}
-  SplineColor: {r: 1, g: 0, b: 1, a: 1}
-  Duration: 35
-  Reverse: 0
 --- !u!114 &5747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83254,8 +83231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d89499ecb6ece84dc1445654100a4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instatiationEvent: 0
-  PrefabName: butterfly_catch_dragonfly_pre
 --- !u!114 &5748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83267,10 +83242,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50173bc841f8c1c762a498106b2dad08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Path: {fileID: 4900000, guid: 3a293ae40f1b2c04eba21e3350dad84e, type: 3}
-  SplineColor: {r: 1, g: 0, b: 1, a: 1}
-  Duration: 30
-  Reverse: 0
 --- !u!114 &5749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83307,8 +83278,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d89499ecb6ece84dc1445654100a4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instatiationEvent: 0
-  PrefabName: Ambient_Bee_Prefab
 --- !u!114 &5752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83320,10 +83289,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50173bc841f8c1c762a498106b2dad08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Path: {fileID: 4900000, guid: 6e9d5013d1a5fa0418bc767df8d368d0, type: 3}
-  SplineColor: {r: 1, g: 0, b: 1, a: 1}
-  Duration: 30
-  Reverse: 0
 --- !u!114 &5753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83335,8 +83300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d89499ecb6ece84dc1445654100a4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instatiationEvent: 0
-  PrefabName: Ambient_Bee_Prefab
 --- !u!114 &5754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83348,10 +83311,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50173bc841f8c1c762a498106b2dad08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Path: {fileID: 4900000, guid: 69e1464caf1e5824794497fb16ffdf30, type: 3}
-  SplineColor: {r: 1, g: 0, b: 1, a: 1}
-  Duration: 35
-  Reverse: 0
 --- !u!114 &5755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83391,8 +83350,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d89499ecb6ece84dc1445654100a4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instatiationEvent: 0
-  PrefabName: Ambient_Bee_Prefab
 --- !u!114 &5758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83404,10 +83361,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50173bc841f8c1c762a498106b2dad08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Path: {fileID: 4900000, guid: 6699cacfd227b224b866c31dc7221aa3, type: 3}
-  SplineColor: {r: 1, g: 0, b: 1, a: 1}
-  Duration: 25
-  Reverse: 0
 --- !u!114 &5759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83419,10 +83372,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50173bc841f8c1c762a498106b2dad08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Path: {fileID: 4900000, guid: 1608bbd938f48474bac155210e7869e1, type: 3}
-  SplineColor: {r: 1, g: 0, b: 1, a: 1}
-  Duration: 35
-  Reverse: 0
 --- !u!114 &5760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83434,8 +83383,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d89499ecb6ece84dc1445654100a4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instatiationEvent: 0
-  PrefabName: Ambient_Bee_Prefab
 --- !u!114 &5761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83486,8 +83433,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d89499ecb6ece84dc1445654100a4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instatiationEvent: 0
-  PrefabName: butterfly_catch_dragonfly_pre
 --- !u!114 &5765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83499,10 +83444,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50173bc841f8c1c762a498106b2dad08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Path: {fileID: 4900000, guid: aaf14af3d35e1c249a3d935cad21cf7d, type: 3}
-  SplineColor: {r: 1, g: 0, b: 1, a: 1}
-  Duration: 50
-  Reverse: 0
 --- !u!114 &5766
 MonoBehaviour:
   m_ObjectHideFlags: 0
