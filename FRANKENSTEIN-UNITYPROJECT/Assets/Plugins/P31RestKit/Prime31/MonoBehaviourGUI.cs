@@ -17,10 +17,7 @@ namespace Prime31
 		private bool _isShowingLogConsole;
 
 		private float _doubleClickDelay = 0.15f;
-
 		private float _previousClickTime;
-
-		private float _lastTwoFingerTouchTime = -1f;
 
 		private bool _isWindowsPhone;
 

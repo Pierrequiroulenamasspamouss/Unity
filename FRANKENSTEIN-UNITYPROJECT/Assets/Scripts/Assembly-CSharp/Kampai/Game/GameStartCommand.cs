@@ -354,7 +354,7 @@ namespace Kampai.Game
 			Debug.Log("[GameStartCommand] Dispatching setupBuildingSignal...");
 			setupBuildingSignal.Dispatch();
 			Debug.Log("[GameStartCommand] setupBuildingSignal dispatched");
-			cruiseShipSignal.Dispatch();
+			//cruiseShipSignal.Dispatch();
 			updateVolumeSignal.Dispatch();
 			muteVolumeSignal.Dispatch();
 			setupMinionsSignal.Dispatch();

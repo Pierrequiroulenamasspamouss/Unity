@@ -1,86 +1,11 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!29 &3
-SceneSettings:
-  m_ObjectHideFlags: 0
-  m_PVSData:
-  m_PVSObjectsArray: []
-  m_PVSPortalsArray: []
-  m_OcclusionBakeSettings:
-    smallestOccluder: 0
-    smallestHole: 0
-    backfaceThreshold: 0
---- !u!104 &4
-RenderSettings:
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_FogMode: 3
-  m_FogDensity: 0.01
-  m_LinearFogStart: 0
-  m_LinearFogEnd: 300
-  m_AmbientLight: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-  m_SkyboxMaterial: {fileID: 0}
-  m_HaloStrength: 0.5
-  m_FlareStrength: 1
-  m_FlareFadeSpeed: 3
-  m_HaloTexture: {fileID: 0}
-  m_SpotCookie: {fileID: 0}
-  m_ObjectHideFlags: 0
---- !u!127 &5
-HaloManager:
-  m_ObjectHideFlags: 0
---- !u!157 &6
-LightmapSettings:
-  m_ObjectHideFlags: 0
-  m_LightProbes: {fileID: 0}
-  m_Lightmaps: []
-  m_LightmapsMode: 1
-  m_BakedColorSpace: 0
-  m_UseDualLightmapsInForward: 0
-  m_LightmapEditorSettings:
-    m_Resolution: 2
-    m_LastUsedResolution: 0
-    m_TextureWidth: 1024
-    m_TextureHeight: 1024
-    m_BounceBoost: 1
-    m_BounceIntensity: 1
-    m_SkyLightColor: {r: 0.86, g: 0.93, b: 1, a: 1}
-    m_SkyLightIntensity: 0
-    m_Quality: 0
-    m_Bounces: 1
-    m_FinalGatherRays: 1000
-    m_FinalGatherContrastThreshold: 0.05
-    m_FinalGatherGradientThreshold: 0
-    m_FinalGatherInterpolationPoints: 15
-    m_AOAmount: 0
-    m_AOMaxDistance: 1
-    m_AOContrast: 1
-    m_LODSurfaceMappingDistance: 1
-    m_Padding: 2
-    m_TextureCompression: 1
-    m_LockAtlas: 0
---- !u!196 &7
-NavMeshSettings:
-  m_ObjectHideFlags: 0
-  m_BuildSettings:
-    agentRadius: 0.5
-    agentHeight: 2
-    agentSlope: 45
-    agentClimb: 0.4
-    ledgeDropHeight: 0
-    maxJumpAcrossDistance: 0
-    accuratePlacement: 0
-    minRegionArea: 2
-    widthInaccuracy: 0
-    heightInaccuracy: 0
-    tileSizeHint: 0
-  m_NavMesh: {fileID: 0}
 --- !u!1 &1
 GameObject:
-  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
   m_Component:
   - 4: {fileID: 2}
   - 114: {fileID: 8}
@@ -103,6 +28,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!29 &3
+SceneSettings:
+  m_ObjectHideFlags: 0
+  m_PVSData: 
+  m_PVSObjectsArray: []
+  m_PVSPortalsArray: []
+  m_OcclusionBakeSettings:
+    smallestOccluder: 0
+    smallestHole: 0
+    backfaceThreshold: 0
+--- !u!104 &4
+RenderSettings:
+  m_Fog: 0
+  m_FogColor: {r: .5, g: .5, b: .5, a: 1}
+  m_FogMode: 3
+  m_FogDensity: .00999999978
+  m_LinearFogStart: 0
+  m_LinearFogEnd: 300
+  m_AmbientLight: {r: .200000003, g: .200000003, b: .200000003, a: 1}
+  m_SkyboxMaterial: {fileID: 0}
+  m_HaloStrength: .5
+  m_FlareStrength: 1
+  m_FlareFadeSpeed: 3
+  m_HaloTexture: {fileID: 0}
+  m_SpotCookie: {fileID: 0}
+  m_ObjectHideFlags: 0
+--- !u!127 &5
+LevelGameManager:
+  m_ObjectHideFlags: 0
+--- !u!157 &6
+LightmapSettings:
+  m_ObjectHideFlags: 0
+  m_LightProbes: {fileID: 0}
+  m_Lightmaps: []
+  m_LightmapsMode: 1
+  m_BakedColorSpace: 0
+  m_UseDualLightmapsInForward: 0
+  m_LightmapEditorSettings:
+    m_Resolution: 2
+    m_LastUsedResolution: 0
+    m_TextureWidth: 1024
+    m_TextureHeight: 1024
+    m_BounceBoost: 1
+    m_BounceIntensity: 1
+    m_SkyLightColor: {r: .860000014, g: .930000007, b: 1, a: 1}
+    m_SkyLightIntensity: 0
+    m_Quality: 0
+    m_Bounces: 1
+    m_FinalGatherRays: 1000
+    m_FinalGatherContrastThreshold: .0500000007
+    m_FinalGatherGradientThreshold: 0
+    m_FinalGatherInterpolationPoints: 15
+    m_AOAmount: 0
+    m_AOMaxDistance: 1
+    m_AOContrast: 1
+    m_LODSurfaceMappingDistance: 1
+    m_Padding: 2
+    m_TextureCompression: 1
+    m_LockAtlas: 0
+--- !u!196 &7
+NavMeshSettings:
+  m_ObjectHideFlags: 0
+  m_BuildSettings:
+    agentRadius: .5
+    agentHeight: 2
+    agentSlope: 45
+    agentClimb: .400000006
+    ledgeDropHeight: 0
+    maxJumpAcrossDistance: 0
+    accuratePlacement: 0
+    minRegionArea: 2
+    widthInaccuracy: 0
+    heightInaccuracy: 0
+    tileSizeHint: 0
+  m_NavMesh: {fileID: 0}
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e12009f1045fe437fcedad47e59b9bab, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  PanelPrefab: {fileID: 1158689435107864, guid: a39443fb53b7eb2459bb3419ab08b345, type: 2}
+  m_Script: {fileID: 11500000, guid: a2e7990adbd2c3a4e91d0afb3339e5b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PanelPrefab: {fileID: 0}

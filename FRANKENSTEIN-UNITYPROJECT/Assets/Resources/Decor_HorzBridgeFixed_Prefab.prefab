@@ -11,6 +11,7 @@ GameObject:
   - 33: {fileID: 3369284}
   - 23: {fileID: 2369284}
   - 95: {fileID: 9569284}
+  - 64: {fileID: 6423582}
   m_Layer: 0
   m_Name: Decor_BridgeFixed
   m_TagString: Untagged
@@ -52,7 +53,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 169286}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 24.4260635, y: 51.350193, z: 109.484192}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 469284}
@@ -70,7 +71,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: -1680381527, guid: 00000000000000000000000000000000, type: 0}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -84,7 +85,20 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 169284}
-  m_Mesh: {fileID: -277144247, guid: 00000000000000000000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 51d39d13beada1e4fa1ef19d4454c4d8, type: 2}
+--- !u!64 &6423582
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 169284}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_SmoothSphereCollisions: 0
+  m_Convex: 0
+  m_Mesh: {fileID: 4300000, guid: 51d39d13beada1e4fa1ef19d4454c4d8, type: 2}
 --- !u!95 &9569284
 Animator:
   serializedVersion: 3

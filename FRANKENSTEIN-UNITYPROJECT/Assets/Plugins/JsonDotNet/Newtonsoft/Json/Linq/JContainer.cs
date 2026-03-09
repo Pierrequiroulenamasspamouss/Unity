@@ -23,7 +23,9 @@ namespace Newtonsoft.Json.Linq
 
 		private object _syncRoot;
 
+#pragma warning disable 0649
 		private bool _busy;
+#pragma warning restore 0649
 
 		protected abstract global::System.Collections.Generic.IList<global::Newtonsoft.Json.Linq.JToken> ChildrenTokens { get; }
 
