@@ -29,7 +29,7 @@ namespace Kampai.Main
 		public override void Execute()
 		{
 			int prestigeDefinitionId = 40004;
-			global::Kampai.Game.Prestige prestige = prestigeService.GetPrestige(prestigeDefinitionId);
+			global::Kampai.Game.Prestige prestige = prestigeService.GetPrestige(prestigeDefinitionId, false);
 			int quantity = (int)playerService.GetQuantity(global::Kampai.Game.StaticItem.LEVEL_ID);
 			int preUnlockLevel = (int)definitionService.Get<global::Kampai.Game.PrestigeDefinition>(40004).PreUnlockLevel;
 			if (quantity < preUnlockLevel)

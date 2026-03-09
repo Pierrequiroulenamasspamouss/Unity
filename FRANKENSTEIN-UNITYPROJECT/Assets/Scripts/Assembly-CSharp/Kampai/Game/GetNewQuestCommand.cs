@@ -168,14 +168,14 @@ namespace Kampai.Game
 			}
 			if (questDefinition.SurfaceType == global::Kampai.Game.QuestSurfaceType.Character || (questDefinition.SurfaceType == global::Kampai.Game.QuestSurfaceType.Automatic && questDefinition.SurfaceID > 0))
 			{
-				global::Kampai.Game.Prestige prestige = characterService.GetPrestige(questDefinition.SurfaceID);
+				global::Kampai.Game.Prestige prestige = characterService.GetPrestige(questDefinition.SurfaceID, false);
 				if (prestige == null || (prestige.state != global::Kampai.Game.PrestigeState.Questing && prestige.state != global::Kampai.Game.PrestigeState.TaskableWhileQuesting))
 				{
 					return false;
 				}
 				if (questLine.GivenByCharacterID != 0)
 				{
-					global::Kampai.Game.Prestige prestige2 = characterService.GetPrestige(questLine.GivenByCharacterID);
+					global::Kampai.Game.Prestige prestige2 = characterService.GetPrestige(questLine.GivenByCharacterID, false);
 					if (prestige2 == null || (prestige2.state != global::Kampai.Game.PrestigeState.Questing && prestige2.state != global::Kampai.Game.PrestigeState.TaskableWhileQuesting) || prestige2.CurrentPrestigeLevel < questLine.GivenByCharacterPrestigeLevel)
 					{
 						return false;

@@ -26,7 +26,7 @@ namespace Kampai.Game
 					global::Kampai.Game.Transaction.TransactionDefinition type = definitionService.Get<global::Kampai.Game.Transaction.TransactionDefinition>(levelUpDefinition.transactionList[levelIndex]);
 					awardLevelSignal.Dispatch(type);
 				}
-				else
+				else if (levelIndex != -1)
 				{
 					logger.Warning("ReconcileLevelUnlocksCommand: levelIndex {0} is out of bounds for transactionList (Count {1})", levelIndex, levelUpDefinition.transactionList.Count);
 				}

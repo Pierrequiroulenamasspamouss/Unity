@@ -24,30 +24,51 @@ namespace Kampai.Game
 
             // 2. LE FIX : On cherche "type" (minuscule) OU "TYPE" (majuscule)
             // Le script Python a mis "TYPE", donc le code d'origine échouait ici.
-            global::Newtonsoft.Json.Linq.JProperty jProperty = jObject.Property("type");
-            if (jProperty == null) jProperty = jObject.Property("TYPE");
-            if (jProperty == null) jProperty = jObject.Property("BuildingType");
-            if (jProperty == null) jProperty = jObject.Property("Type");
-
-            if (jProperty != null)
+            if (buildingType == BuildingType.BuildingTypeIdentifier.UNKNOWN)
             {
-                string value = jProperty.Value.ToString();
-                try
+                bool hasType = false;
+                string typeValue = null;
+                if (jObject.Property("type") != null)
                 {
-                    // 3. LE FIX : On ajoute 'true' à la fin de Enum.Parse pour ignorer la casse
-                    // Ça marchera que le JSON contienne "Crafting", "CRAFTING" ou "crafting"
-                    buildingType = (BuildingType.BuildingTypeIdentifier)global::System.Enum.Parse(typeof(BuildingType.BuildingTypeIdentifier), value, true);
+                    typeValue = jObject.Property("type").Value.ToString();
+                    hasType = true;
                 }
-                catch
+                else if (jObject.Property("TYPE") != null)
                 {
-                    // Si le type est invalide, on ne fait rien, ça tombera dans le default du Create()
-                    // ou on peut logger un warning ici.
-                    Debug.LogWarning("BuildingDefinitionFastConverter: Impossible de parser le type: " + value);
+                    typeValue = jObject.Property("TYPE").Value.ToString();
+                    hasType = true;
                 }
-            }
-            else
-            {
-                Debug.LogWarning("BuildingDefinitionFastConverter: Propriété 'type' introuvable dans le JSON.");
+                else if (jObject.Property("BuildingType") != null)
+                {
+                    typeValue = jObject.Property("BuildingType").Value.ToString();
+                    hasType = true;
+                }
+                else if (jObject.Property("Type") != null)
+                {
+                    typeValue = jObject.Property("Type").Value.ToString();
+                    hasType = true;
+                }
+                if (hasType)
+                {
+                    try
+                    {
+                        buildingType = (BuildingType.BuildingTypeIdentifier)global::System.Enum.Parse(typeof(BuildingType.BuildingTypeIdentifier), typeValue, true);
+                    }
+                    catch (global::System.Exception)
+                    {
+                        global::UnityEngine.Debug.LogWarning("BuildingDefinitionFastConverter: Type inconnu (" + typeValue + "). Fallback sur Decoration.");
+                        buildingType = BuildingType.BuildingTypeIdentifier.DECORATION;
+                    }
+                }
+                else if (jObject.Property("prefab") != null)
+                {
+                    global::UnityEngine.Debug.LogWarning("BuildingDefinitionFastConverter: Propriété 'type' introuvable dans le JSON pour l'objet avec prefab " + jObject.Property("prefab").Value.ToString() + ". Fallback sur Decoration.");
+                    buildingType = BuildingType.BuildingTypeIdentifier.DECORATION;
+                }
+                else
+                {
+                    buildingType = BuildingType.BuildingTypeIdentifier.DECORATION;
+                }
             }
 
             reader = jObject.CreateReader();
@@ -98,7 +119,7 @@ namespace Kampai.Game
                 default:
                     // FIX DE SURVIE : Si le type est inconnu (ex: "UNKNOWN"), on renvoie un bâtiment générique
                     // au lieu de faire crasher tout le jeu.
-                    Debug.LogWarning("BuildingDefinitionFastConverter: Type inconnu ou null (" + buildingType + "). Fallback sur Decoration.");
+                    global::UnityEngine.Debug.Log("BuildingDefinitionFastConverter: Type inconnu ou null (" + buildingType + "). Fallback sur Decoration.");
                     return new global::Kampai.Game.DecorationBuildingDefinition();
             }
         }
