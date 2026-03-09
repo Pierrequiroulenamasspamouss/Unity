@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Unique_CruiseShipDock_Shadow_D
-  m_Shader: {fileID: -1042965455, guid: 00000000000000000000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 1616ab99c91b6d946965c6f15e87e6e4, type: 3}
   m_ShaderKeywords:
   - ALPHA_MASK
   m_CustomRenderQueue: 1999
@@ -16,16 +16,16 @@ Material:
     m_TexEnvs:
       data:
         first:
-          name: _MainTex
+          name: _AlphaTex
         second:
-          m_Texture: {fileID: 204199920, guid: 00000000000000000000000000000000, type: 0}
+          m_Texture: {fileID: 2800000, guid: 719cbbf47c3566048b614dfe7bd585ed, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _AlphaTex
+          name: _MainTex
         second:
-          m_Texture: {fileID: 255266984, guid: 00000000000000000000000000000000, type: 0}
+          m_Texture: {fileID: 2800000, guid: 96ffcb11427f1d04da394a1d188812ab, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -38,10 +38,6 @@ Material:
     m_Floats:
       data:
         first:
-          name: _ColorMask
-        second: 15
-      data:
-        first:
           name: _Alpha
         second: 0
       data:
@@ -52,6 +48,10 @@ Material:
         first:
           name: _Boost
         second: 1
+      data:
+        first:
+          name: _ColorMask
+        second: 15
       data:
         first:
           name: _Cull
@@ -131,12 +131,12 @@ Material:
     m_Colors:
       data:
         first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
           name: _BlendedColor
         second: {r: 0, g: 0, b: 0, a: 0}
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
           name: _UVScroll

@@ -395,27 +395,17 @@ namespace Newtonsoft.Json
 				char c;
 				if (((int?)_lastChar).HasValue)
 				{
-					c = (char)_lastChar; // Use explicit cast since we checked HasValue
+					c = (char)_lastChar;
 					_lastChar = null;
-                    UnityEngine.Debug.LogWarning("Processing _lastChar: " + c + " (Hex: " + (int)c + "), State: " + base.CurrentState);
 				}
 				else
 				{
 					c = MoveNext();
-                    // Avoid excessive logging, only log near error
-                    if (_currentLinePosition > 560 || c == '"') 
-                        UnityEngine.Debug.LogWarning("Processing MoveNext: " + c + " (Hex: " + (int)c + "), State: " + base.CurrentState);
 				}
 				if (c == '\0' && _end)
 				{
 					break;
 				}
-                
-                // Trace critical characters around the failure point
-                if (_currentLinePosition > 570)
-                {
-                     UnityEngine.Debug.LogWarning("ReadInternal Loop: Char='" + c + "' State=" + base.CurrentState);
-                }
 
 
 				switch (base.CurrentState)
@@ -435,7 +425,6 @@ namespace Newtonsoft.Json
 				case global::Newtonsoft.Json.JsonReader.State.Object:
 					return ParseObject(c);
 				case global::Newtonsoft.Json.JsonReader.State.PostValue:
-                    UnityEngine.Debug.LogWarning("Calling ParsePostValue with: " + c);
 					if (ParsePostValue(c))
 					{
 						return true;
@@ -477,8 +466,6 @@ namespace Newtonsoft.Json
 				}
 				if (!char.IsWhiteSpace(currentChar))
 				{
-                    UnityEngine.Debug.LogError("Error in ParsePostValue with char: " + currentChar + " (Hex: " + (int)currentChar + ")");
-                    LogStack();
 					throw CreateJsonReaderException("After parsing a value an unexpected character was encountered: {0}. Line {1}, position {2}.", currentChar, _currentLineNumber, _currentLinePosition);
 				}
 			}
