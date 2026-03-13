@@ -35,6 +35,11 @@ namespace Kampai.UI.View
 			view.Init();
 			view.Open();
 			button = view.retryButton.GetComponent<global::UnityEngine.UI.Button>();
+			if (button != null)
+			{
+				button.onClick.RemoveListener(view.retryButton.OnClickEvent);
+				button.onClick.AddListener(view.retryButton.OnClickEvent);
+			}
 		}
 
 		public override void OnRemove()

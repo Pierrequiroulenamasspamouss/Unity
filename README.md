@@ -1,14 +1,16 @@
-This repository is an attempt at a partial restoration of the game Minions Paradise. 
+This repository is an attempt at a partial restoration of the game Minions Paradise.
 
-What has been done : 
+What has been done :
 
 
-* Shaders 
+
+* Shaders
 * Login
-* Server attempt (works locally) 
-* Json parsing fixing ( using FastJsonParser fork, since ne Mono builtin one was struggling with playr deserialization.
+* Server attempt (works locally)
+* Json parsing fixing ( using FastJsonParser fork, since ne Mono builtin one was struggling with playr deserialization.)
 * Audio partial restoration
 * FMOD integration fix
+* 
 
 
 
@@ -19,18 +21,18 @@ What has to be done :
 * Fixing meshes
 * Fix missing textures
 * Fix game launch
-* Fix some issues with textures blending. 
+* Fix some issues with textures blending.
 * Port to Windows
 
 
 
 
 
-This has been achieved using AssetRipper, AssetStudioGUI, Google Antigravity, and a bunch of custon python scripts. 
+This has been achieved using AssetRipper, AssetStudioGUI, Google Antigravity, and a bunch of custon python scripts.
 
 
 
-LICENSING : 
+LICENSING :
 
 This is free and unencumbered software released into the public domain.
 
@@ -75,6 +77,4 @@ OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 
 OTHER DEALINGS IN THE SOFTWARE.
-
-
 

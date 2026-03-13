@@ -23,11 +23,32 @@ namespace Kampai.UI.View
 
 		internal void Open()
 		{
-			if (!isOpened && animator != null)
+			if (!isOpened)
 			{
-				animator.Play("Open");
 				isOpened = true;
+				if (animator != null)
+				{
+					animator.Play("Open");
+				}
+				else
+				{
+					StartCoroutine(FallbackOpenAnimation());
+				}
 			}
+		}
+
+		private global::System.Collections.IEnumerator FallbackOpenAnimation()
+		{
+			float t = 0;
+			global::UnityEngine.Vector3 targetScale = global::UnityEngine.Vector3.one;
+			transform.localScale = global::UnityEngine.Vector3.zero;
+			while (t < 1f)
+			{
+				t += global::UnityEngine.Time.deltaTime * 5f;
+				transform.localScale = global::UnityEngine.Vector3.Lerp(global::UnityEngine.Vector3.zero, targetScale, t);
+				yield return null;
+			}
+			transform.localScale = targetScale;
 		}
 
 		internal void Close(bool instant = false)
@@ -45,9 +66,21 @@ namespace Kampai.UI.View
 					animator.Play("Close");
 					return;
 				}
-				logger.Log(global::Kampai.Util.Logger.Level.Error, "PopupMenuView has a NULL animator on Close!!!");
-				DestroyMenu();
+				StartCoroutine(FallbackCloseAnimation());
 			}
+		}
+
+		private global::System.Collections.IEnumerator FallbackCloseAnimation()
+		{
+			float t = 0;
+			global::UnityEngine.Vector3 startScale = transform.localScale;
+			while (t < 1f)
+			{
+				t += global::UnityEngine.Time.deltaTime * 5f;
+				transform.localScale = global::UnityEngine.Vector3.Lerp(startScale, global::UnityEngine.Vector3.zero, t);
+				yield return null;
+			}
+			DestroyMenu();
 		}
 
 		public void DestroyMenu()
